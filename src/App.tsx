@@ -1,13 +1,12 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import client from './services/ApolloClient';
 import './App.css';
+import TestComponent from './testComponent';
 
 const App: React.FC = () => (
-  <ApolloProvider client={client}>
-    <div />
-  </ApolloProvider>
+  <div>
+    <h1>Ola</h1>
+    <TestComponent />
+  </div>
 );
-
 
 export default App;
