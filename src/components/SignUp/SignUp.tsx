@@ -15,9 +15,13 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  const [signup, { data }] = useMutation(SIGN_UP, {
-    variables: { name: userName, email, password },
-  });
+  const [signup] = useMutation(SIGN_UP,
+    {
+      variables: { name: userName, email, password },
+      onCompleted(data) {
+        localStorage.setItem('token', data.signup);
+      },
+    });
 
   // handle submit
   const handleSubmit = (e:any) => {
@@ -51,18 +55,21 @@ const SignUp: React.FC = () => {
           name="name"
           onChange={handleChange}
           value={userName}
+          required
         />
         <input
           type="text"
           name="email"
           onChange={handleChange}
           value={email}
+          required
         />
         <input
           type="text"
           name="password"
           onChange={handleChange}
           value={password}
+          required
         />
         <button type="submit">SIGN UP</button>
       </form>
