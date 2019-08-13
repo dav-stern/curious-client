@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.css';
-import TestComponent from './testComponent';
+import FormContainer from './containers/FormContainer/FormContainer';
+
 
 const App: React.FC = () => (
-  <div>
-    <h1>Ola</h1>
-    <TestComponent />
-  </div>
+  <FormContainer />
 );
 
 export default App;
