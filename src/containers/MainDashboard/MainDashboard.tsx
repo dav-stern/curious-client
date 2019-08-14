@@ -26,7 +26,9 @@ const ADD_ROADMAP = gql`
 `;
 
 const MainDashboard: React.FC = () => {
-  const [title, setTitle] = useState('');
+  const [titleInput, setTitleInput] = useState('');
+  const [selectionInput, setSelectionInput] = useState('');
+
   const { data } = useQuery(GET_ROADMAPS, {
     variables: { id: 7 },
   });
@@ -44,10 +46,23 @@ const MainDashboard: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
     const { value } = target;
-    setTitle(value);
+    setTitleInput(value);
   };
 
-  if (!data) {
+  const handleSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { target } = e;
+    const { value } = target;
+    setSelectionInput(value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTitleInput(titleInput);
+    roadmap();
+    setTitleInput('');
+  };
+
+  if (data.roadmaps.length) {
     return (
       <div className="container">
         <Button handleClick={routeToDiscover} value="browse" />
@@ -57,7 +72,12 @@ const MainDashboard: React.FC = () => {
   }
   return (
     <div className="container">
-      <RoadmapItem handleChange={handleChange} title={title} />
+      <RoadmapItem
+        handleChange={handleChange}
+        handleSelection={handleSelection}
+        handleSubmit={handleSubmit}
+        titleInput={titleInput}
+      />
     </div>
   );
 };
