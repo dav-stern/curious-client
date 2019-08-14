@@ -28,6 +28,7 @@ const ADD_ROADMAP = gql`
 const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('');
+  const [flag, setFlag] = useState(false);
 
   const { data } = useQuery(GET_ROADMAPS, {
     variables: { id: 7 },
@@ -59,15 +60,17 @@ const MainDashboard: React.FC = () => {
     e.preventDefault();
     setTitleInput(titleInput);
     setSelectionInput(selectionInput);
-    // roadmap(); ONCE TOKEN WORKS
+    addRoadmap();
     setTitleInput('');
   };
 
-  if (!data.roadmaps.length) {
+  const changeFlag = () => { setFlag(true); };
+
+  if (!data.roadmaps.length && !flag) {
     return (
       <div className="button-container">
         <Button handleClick={routeToDiscover} value="Browse" />
-        <Button handleClick={addRoadmap} value="Add new Roadmap" />
+        <Button handleClick={changeFlag} value="Add new Roadmap" />
       </div>
     );
   }

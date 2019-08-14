@@ -25,7 +25,7 @@ const RoadmapItem: React.FC<RoadmapItemProps> = ({
       <option value="Music">Music</option>
       <option value="Sports">Sports</option>
     </select>
-    <button type="submit"> ADD ROADMAP</button>
+    <button type="submit">ADD</button>
   </form>
 );
 

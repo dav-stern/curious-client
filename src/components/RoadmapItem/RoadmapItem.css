@@ -8,3 +8,34 @@
   height: 120px;
   width: 120px;
 }
+
+#roadmap-form input {
+  width: 80%;
+  margin-top: 5px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+#roadmap-form select {
+  width: 80%;
+  margin-top: 5px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+#roadmap-form button{
+    text-decoration: none;
+    background: lightgray;
+    color: #FFF;
+    margin-top: 5px;
+    width: 40%;
+    height: 20%;
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
+    outline: none;
+}
+
+#roadmap-form button:active{
+    border-bottom: none;
+}
