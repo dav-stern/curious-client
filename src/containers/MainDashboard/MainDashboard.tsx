@@ -16,8 +16,8 @@ const GET_ROADMAPS = gql`
 
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
-  mutation createroadmaps($title: String!, $category: String!) {
-    createRoadmap(title: $title, category: $category) {
+  mutation createroadmaps($UserId: ID!, $title: String!, $category: String!) {
+    createRoadmap(UserId: $UserId, title: $title, category: $category) {
       id
       title
       category
@@ -29,19 +29,17 @@ const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
+  const [roadmaps, setRoadmaps] = useState();
 
   const { data } = useQuery(GET_ROADMAPS, {
     variables: { id: 7 },
   });
-  const [roadmap] = useMutation(ADD_ROADMAP);
+  const [roadmap] = useMutation(ADD_ROADMAP, {
+    variables: { UserId: 7, title: titleInput, category: selectionInput },
+  });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log('routeToDiscover', e); // eslint-disable-line no-console
-  };
-
-  const addRoadmap = async () => {
-    const newRoadmap = await roadmap();
-    console.log(newRoadmap); // eslint-disable-line no-console
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,11 +54,12 @@ const MainDashboard: React.FC = () => {
     setSelectionInput(value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTitleInput(titleInput);
     setSelectionInput(selectionInput);
-    addRoadmap();
+    const newRoadmap: any = await roadmap();
+    setRoadmaps({ roadmaps: [...roadmaps, newRoadmap] });
     setTitleInput('');
   };
 
