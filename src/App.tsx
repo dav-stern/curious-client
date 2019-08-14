@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import FormContainer from './containers/FormContainer/FormContainer';
-
+import Signup from './containers/Signup/Signup';
+// import Login from './containers/Login/Login';
 
 const App: React.FC = () => (
-  <FormContainer />
+  <Signup />
 );
 
 export default App;
