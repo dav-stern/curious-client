@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import FormContainer from './containers/FormContainer/FormContainer';
+import MainDashboard from './containers/MainDashboard/MainDashboard';
 
 
 const App: React.FC = () => (
-  <FormContainer />
+  <MainDashboard />
 );
 
 export default App;
