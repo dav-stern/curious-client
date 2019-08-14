@@ -58,20 +58,29 @@ const MainDashboard: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTitleInput(titleInput);
-    roadmap();
+    setSelectionInput(selectionInput);
+    // roadmap(); ONCE TOKEN WORKS
     setTitleInput('');
   };
 
-  if (data.roadmaps.length) {
+  if (!data.roadmaps.length) {
     return (
-      <div className="container">
-        <Button handleClick={routeToDiscover} value="browse" />
+      <div className="button-container">
+        <Button handleClick={routeToDiscover} value="Browse" />
         <Button handleClick={addRoadmap} value="Add new Roadmap" />
       </div>
     );
   }
   return (
-    <div className="container">
+    <div className="roadmap-container">
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
+      <div id="roadmaps">EXISTING ROADMAP</div>
       <RoadmapItem
         handleChange={handleChange}
         handleSelection={handleSelection}
