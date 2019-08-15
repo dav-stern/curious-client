@@ -12,6 +12,10 @@ interface IRoadmap {
   __typename: string;
 }
 
+interface IUserID {
+  id: number;
+}
+
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getroadmaps($id: ID!) {
@@ -33,11 +37,11 @@ const GET_LOCAL_ROADMAPS = gql`
 }
 `;
 
-/* const GET_USER_ID = gql`
+const GET_USER_ID = gql`
 {
   id
 }
-`; */
+`;
 
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
@@ -57,15 +61,16 @@ const MainDashboard: React.FC = () => {
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
   // get userID from cache
-  // const userID = client.cache.readQuery({ query: GET_USER_ID });
+  const userID: IUserID | any = client.cache.readQuery({ query: GET_USER_ID });
+
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
-    variables: { id: 26 },
+    variables: { id: userID.id },
   });
 
   // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { UserId: 26, title: titleInput, category: selectionInput },
+    variables: { id: userID.id, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
