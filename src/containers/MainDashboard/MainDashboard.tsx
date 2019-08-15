@@ -25,11 +25,13 @@ const ADD_ROADMAP = gql`
   }
 `;
 
+
 const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
-  const [roadmaps, setRoadmaps] = useState();
+  const initialRoadmap: any = [];
+  const [roadmaps, setRoadmaps] = useState(initialRoadmap);
 
   const { data } = useQuery(GET_ROADMAPS, {
     variables: { id: 7 },
