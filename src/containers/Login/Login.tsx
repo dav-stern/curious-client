@@ -12,47 +12,35 @@ const LOGIN = gql`
 
 const Login: React.FC = () => {
   const client = useApolloClient();
-  const [passwordInput, setPasswordInput] = useState('');
-  const [emailInput, setEmailInput] = useState('');
+  const [inputs, setInputs] = useState({ email: '', password: '' });
   const [errorMsg, setErrorMsg] = useState('');
 
-  const [login] = useMutation(
-    LOGIN,
-    {
-      variables: { email: emailInput, password: passwordInput },
-      onCompleted(data) {
-        localStorage.setItem('token', data.signup);
-        if (data.signup) {
-          const { id, name, email } = data.signup && jwtDecode(data.signup);
-          client.writeData({ data: { id, name, email } });
-        } else {
-          // TODO: Send some warning to the user
-          setErrorMsg('Email or password are wrong!');
-        }
-      },
-    },
-  );
+  const [login] = useMutation(LOGIN, {
+    variables: { email: inputs.email, password: inputs.password },
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login();
-    // setPasswordInput('');
-    // setEmailInput('');
+    // TODO: any??
+    const res: any = await login();
+    localStorage.setItem('token', res.data.signup);
+    if (res.data.signup) {
+      const { id, name, email } = res.data.signup && jwtDecode(res.data.signup);
+      client.writeData({ data: { id, name, email } });
+      setInputs({ email: '', password: '' });
+    } else {
+      setErrorMsg('Email or password are wrong!');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    if (name === 'email') {
-      setEmailInput(value);
-    } else if (name === 'password') {
-      setPasswordInput(value);
-    }
+    setInputs({ ...inputs, [name]: value });
   };
 
   return (
     <AuthForm
-      email={emailInput}
-      password={passwordInput}
+      inputs={inputs}
       handleSubmit={handleSubmit}
       handleChange={handleChange}
       errorMsg={errorMsg}
