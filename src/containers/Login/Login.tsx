@@ -6,7 +6,7 @@ import AuthForm from '../../components/AuthForm/AuthForm';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
-    signup(email: $email, password: $password)
+    login(email: $email, password: $password)
   }
 `;
 
