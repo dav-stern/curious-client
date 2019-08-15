@@ -1,13 +1,15 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import client from './services/ApolloClient';
 import './App.css';
+import Signup from './containers/Signup/Signup';
+import Login from './containers/Login/Login';
+import MainDashboard from './containers/MainDashboard/MainDashboard';
 
 const App: React.FC = () => (
-  <ApolloProvider client={client}>
-    <div />
-  </ApolloProvider>
+  <div>
+    <Signup />
+    <Login />
+    <MainDashboard />
+  </div>
 );
-
 
 export default App;

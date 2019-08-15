@@ -6,16 +6,24 @@
     "@apollo/react-hooks": "^3.0.0",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "24.0.17",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "12.7.1",
     "@types/react": "16.9.1",
     "@types/react-dom": "16.8.5",
     "apollo-boost": "^0.4.4",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-link-context": "^1.0.18",
+    "apollo-link-http": "^1.5.15",
+    "dotenv": "^8.0.0",
     "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "jwt-decode": "^2.2.0",
+    "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.0",
-    "typescript": "3.5.3",
-    "dotenv": "^8.0.0"
+    "typescript": "3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@types/prop-types": "^15.7.1",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "eslint-config-airbnb": "^18.0.0",
