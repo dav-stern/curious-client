@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import AuthForm from '../../components/AuthForm/AuthForm';
 
@@ -23,8 +24,8 @@ const Login: React.FC = () => {
     e.preventDefault();
     // TODO: any??
     const res: any = await login();
-    localStorage.setItem('token', res.data.login);
     if (res.data.login) {
+      localStorage.setItem('token', res.data.login);
       const { id, name, email } = res.data.login && jwtDecode(res.data.login);
       client.writeData({ data: { id, name, email } });
       setInputs({ email: '', password: '' });
@@ -37,6 +38,10 @@ const Login: React.FC = () => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
+
+  if (localStorage.getItem('token')) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <AuthForm
