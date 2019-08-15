@@ -23,7 +23,7 @@ query getroadmaps($id: ID!) {
 }
 `;
 
-/* const GET_LOCAL_ROADMAPS = gql`
+const GET_LOCAL_ROADMAPS = gql`
 {
   roadmaps {
     title
@@ -31,7 +31,7 @@ query getroadmaps($id: ID!) {
     category
   }
 }
-`; */
+`;
 
 /* const GET_USER_ID = gql`
 {
@@ -58,15 +58,14 @@ const MainDashboard: React.FC = () => {
   const [flag, setFlag] = useState(false);
   // get userID from cache
   // const userID = client.cache.readQuery({ query: GET_USER_ID });
-
   // fetching roadmaps from database
-  const { loading, data } = useQuery(GET_ROADMAPS, {
-    variables: { id: 30 },
+  const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
+    variables: { id: 26 },
   });
 
   // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { UserId: 30, title: titleInput, category: selectionInput },
+    variables: { UserId: 26, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -90,11 +89,12 @@ const MainDashboard: React.FC = () => {
     setTitleInput(titleInput);
     setSelectionInput(selectionInput);
     const newRoadmap: any = await roadmap();
-    client.writeData({ data: { roadmaps: [newRoadmap.data.createRoadmap] } });
-    // const current = client.cache.readQuery({ query: GET_LOCAL_ROADMAPS });
+    const previousRoadmaps: any = client.cache.readQuery({ query: GET_LOCAL_ROADMAPS });
+    client.writeData({
+      data: { roadmaps: [...previousRoadmaps.roadmaps].concat(newRoadmap.data.createRoadmap) },
+    });
+    refetch();
     setTitleInput('');
-    // const result = client.readQuery({ query: GET_ROADMAPS });
-    // console.log(result);
   };
 
   // check if user has roadmaps created
@@ -107,7 +107,11 @@ const MainDashboard: React.FC = () => {
     );
   }
   if (!loading) {
-    const roadmaps = data.roadmaps.map((item: IRoadmap) => <div id="roadmaps" key={item.id}>{item.title}</div>);
+    // store roadmaps in cache and render them on dashboard
+    client.writeData({ data: { roadmaps: data.roadmaps } });
+    const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
+    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <div id="roadmaps" key={item.id}>{item.title}</div>);
+
     return (
       <div className="roadmap-container">
         {roadmaps}
