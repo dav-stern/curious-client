@@ -1,62 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-interface AuthFormProps {
+interface inputsType {
   name?: string,
   email: string,
   password: string,
+  [key: string]: string | undefined,
+}
+
+interface AuthFormProps {
+  inputs: inputsType,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   errorMsg: string,
 }
 
 const AuthForm: React.SFC<AuthFormProps> = ({
-  name,
-  email,
-  password,
+  inputs,
   handleSubmit,
   handleChange,
   errorMsg,
-}) => (
-  <div>
-    <form
-      onSubmit={handleSubmit}
-    >
-      <input
-        type="text"
-        name="name"
-        onChange={handleChange}
-        value={name}
-        required
-      />
-      <input
-        type="text"
-        name="email"
-        onChange={handleChange}
-        value={email}
-        required
-      />
-      <input
-        type="text"
-        name="password"
-        onChange={handleChange}
-        value={password}
-        required
-      />
-      <button type="submit">SIGN UP</button>
-    </form>
-    <div><p>{errorMsg}</p></div>
-  </div>
-);
+}) => {
+  const inputsJSX = Object.keys(inputs).map((key: string) => (
+    <input type="text" name={key} key={key} onChange={handleChange} value={inputs[key]} required />
+  ));
 
-AuthForm.defaultProps = {
-  name: undefined,
+  return (
+    <div>
+      <form
+        onSubmit={handleSubmit}
+      >
+        {inputsJSX}
+        <button type="submit">{inputsJSX.length > 2 ? 'SIGN UP' : 'LOGIN'}</button>
+      </form>
+      <div><p>{errorMsg}</p></div>
+    </div>
+  );
 };
 
 AuthForm.propTypes = {
-  name: PropTypes.string,
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
+  inputs: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   errorMsg: PropTypes.string.isRequired,

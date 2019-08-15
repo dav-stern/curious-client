@@ -10,13 +10,6 @@ const SIGN_UP = gql`
   }
 `;
 
-// interface token {
-//   signup: string
-// }
-// interface dataSignup {
-//   data: token
-// }
-
 const Signup: React.FC = () => {
   const client = useApolloClient();
   const [inputs, setInputs] = useState({ name: '', email: '', password: '' });
@@ -40,7 +33,6 @@ const Signup: React.FC = () => {
     }
   };
 
-  // TODO: abstract handleChange on the component
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
@@ -48,9 +40,7 @@ const Signup: React.FC = () => {
 
   return (
     <AuthForm
-      name={inputs.name}
-      email={inputs.email}
-      password={inputs.password}
+      inputs={inputs}
       handleSubmit={handleSubmit}
       handleChange={handleChange}
       errorMsg={errorMsg}

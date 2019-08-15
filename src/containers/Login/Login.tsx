@@ -33,7 +33,6 @@ const Login: React.FC = () => {
     }
   };
 
-  // TODO: abstract handleChange on the component
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
@@ -41,8 +40,7 @@ const Login: React.FC = () => {
 
   return (
     <AuthForm
-      email={inputs.email}
-      password={inputs.password}
+      inputs={inputs}
       handleSubmit={handleSubmit}
       handleChange={handleChange}
       errorMsg={errorMsg}
