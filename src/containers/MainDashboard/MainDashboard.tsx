@@ -27,6 +27,7 @@ const ADD_ROADMAP = gql`
 
 
 const MainDashboard: React.FC = () => {
+  // const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
@@ -61,6 +62,7 @@ const MainDashboard: React.FC = () => {
     setTitleInput(titleInput);
     setSelectionInput(selectionInput);
     const newRoadmap: any = await roadmap();
+    // client.writeData({ roadmaps: [...roadmaps, newRoadmap] })
     setRoadmaps({ roadmaps: [...roadmaps, newRoadmap] });
     setTitleInput('');
   };
