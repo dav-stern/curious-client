@@ -33,11 +33,11 @@ query getroadmaps($id: ID!) {
 }
 `; */
 
-const GET_USER_ID = gql`
+/* const GET_USER_ID = gql`
 {
   id
 }
-`;
+`; */
 
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
@@ -57,14 +57,16 @@ const MainDashboard: React.FC = () => {
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
   // get userID from cache
-  const userID = client.cache.readQuery({ query: GET_USER_ID });
+  // const userID = client.cache.readQuery({ query: GET_USER_ID });
+
   // fetching roadmaps from database
   const { loading, data } = useQuery(GET_ROADMAPS, {
-    variables: { id: 26 },
+    variables: { id: 30 },
   });
 
+  // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { UserId: userID, title: titleInput, category: selectionInput },
+    variables: { UserId: 30, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -94,13 +96,13 @@ const MainDashboard: React.FC = () => {
     // const result = client.readQuery({ query: GET_ROADMAPS });
     // console.log(result);
   };
-  const changeFlag = () => { setFlag(true); };
 
+  // check if user has roadmaps created
   if (!data && !flag) {
     return (
       <div className="button-container">
         <Button handleClick={routeToDiscover} value="Browse" />
-        <Button handleClick={changeFlag} value="Add new Roadmap" />
+        <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
       </div>
     );
   }
