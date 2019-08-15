@@ -1,18 +1,43 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
-import RoadmapItem from '../../components/RoadmapItem/RoadmapItem';
+import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
+
+interface IRoadmap {
+  title: string;
+  id: string;
+  category: string;
+  __typename: string;
+}
 
 // roadmaps (query)
 const GET_ROADMAPS = gql`
-{
-  roadmaps {
+query getroadmaps($id: ID!) {
+  roadmaps(id: $id) {
     title
+    id
+    category
   }
 }
 `;
+
+/* const GET_LOCAL_ROADMAPS = gql`
+{
+  roadmaps {
+    title
+    id
+    category
+  }
+}
+`; */
+
+/* const GET_USER_ID = gql`
+{
+  id
+}
+`; */
 
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
@@ -27,18 +52,21 @@ const ADD_ROADMAP = gql`
 
 
 const MainDashboard: React.FC = () => {
-  // const client = useApolloClient();
+  const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
-  const initialRoadmap: any = [];
-  const [roadmaps, setRoadmaps] = useState(initialRoadmap);
+  // get userID from cache
+  // const userID = client.cache.readQuery({ query: GET_USER_ID });
 
-  const { data } = useQuery(GET_ROADMAPS, {
-    variables: { id: 7 },
+  // fetching roadmaps from database
+  const { loading, data } = useQuery(GET_ROADMAPS, {
+    variables: { id: 30 },
   });
+
+  // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { UserId: 7, title: titleInput, category: selectionInput },
+    variables: { UserId: 30, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,39 +90,37 @@ const MainDashboard: React.FC = () => {
     setTitleInput(titleInput);
     setSelectionInput(selectionInput);
     const newRoadmap: any = await roadmap();
-    // client.writeData({ roadmaps: [...roadmaps, newRoadmap] })
-    setRoadmaps({ roadmaps: [...roadmaps, newRoadmap] });
+    client.writeData({ data: { roadmaps: [newRoadmap.data.createRoadmap] } });
+    // const current = client.cache.readQuery({ query: GET_LOCAL_ROADMAPS });
     setTitleInput('');
+    // const result = client.readQuery({ query: GET_ROADMAPS });
+    // console.log(result);
   };
 
-  const changeFlag = () => { setFlag(true); };
-
-  if (!data.roadmaps.length && !flag) {
+  // check if user has roadmaps created
+  if (!data && !flag) {
     return (
       <div className="button-container">
         <Button handleClick={routeToDiscover} value="Browse" />
-        <Button handleClick={changeFlag} value="Add new Roadmap" />
+        <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
       </div>
     );
   }
-  return (
-    <div className="roadmap-container">
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <RoadmapItem
-        handleChange={handleChange}
-        handleSelection={handleSelection}
-        handleSubmit={handleSubmit}
-        titleInput={titleInput}
-      />
-    </div>
-  );
+  if (!loading) {
+    const roadmaps = data.roadmaps.map((item: IRoadmap) => <div id="roadmaps" key={item.id}>{item.title}</div>);
+    return (
+      <div className="roadmap-container">
+        {roadmaps}
+        <RoadmapItemForm
+          handleChange={handleChange}
+          handleSelection={handleSelection}
+          handleSubmit={handleSubmit}
+          titleInput={titleInput}
+        />
+      </div>
+    );
+  }
+  return (null);
 };
 
 

@@ -28,8 +28,8 @@ const client = new ApolloClient({
 
 cache.writeData({
   data: {
-    id: '',
-    user: '',
+    id: 0,
+    name: '',
     email: '',
     roadmaps: [],
   },

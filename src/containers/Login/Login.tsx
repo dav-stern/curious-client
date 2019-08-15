@@ -6,7 +6,7 @@ import AuthForm from '../../components/AuthForm/AuthForm';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
-    signup(email: $email, password: $password)
+    login(email: $email, password: $password)
   }
 `;
 
@@ -23,9 +23,9 @@ const Login: React.FC = () => {
     e.preventDefault();
     // TODO: any??
     const res: any = await login();
-    localStorage.setItem('token', res.data.signup);
-    if (res.data.signup) {
-      const { id, name, email } = res.data.signup && jwtDecode(res.data.signup);
+    localStorage.setItem('token', res.data.login);
+    if (res.data.login) {
+      const { id, name, email } = res.data.login && jwtDecode(res.data.login);
       client.writeData({ data: { id, name, email } });
       setInputs({ email: '', password: '' });
     } else {

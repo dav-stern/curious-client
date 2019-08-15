@@ -1,15 +1,15 @@
 import React from 'react';
-import './RoadmapItem.css';
+import './RoadmapItemForm.css';
 import PropTypes from 'prop-types';
 
-interface RoadmapItemProps {
+interface RoadmapItemFormProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   handleSelection: (e:React.ChangeEvent<HTMLSelectElement>) => void,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
   titleInput: string,
 }
 
-const RoadmapItem: React.FC<RoadmapItemProps> = ({
+const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
   handleChange, handleSelection, handleSubmit, titleInput,
 }) => (
   <form id="roadmap-form" onSubmit={handleSubmit}>
@@ -20,7 +20,7 @@ const RoadmapItem: React.FC<RoadmapItemProps> = ({
       value={titleInput}
       required
     />
-    <select name="categories" form="roadmap-form" onChange={handleSelection}>
+    <select name="categories" form="roadmap-form" onChange={handleSelection} required>
       <option value="IT">IT</option>
       <option value="Music">Music</option>
       <option value="Sports">Sports</option>
@@ -29,11 +29,11 @@ const RoadmapItem: React.FC<RoadmapItemProps> = ({
   </form>
 );
 
-RoadmapItem.propTypes = {
+RoadmapItemForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleSelection: PropTypes.func.isRequired,
   titleInput: PropTypes.string.isRequired,
 };
 
-export default RoadmapItem;
+export default RoadmapItemForm;
