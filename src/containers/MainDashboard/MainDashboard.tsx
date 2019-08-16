@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
+import jwtDecode from 'jwt-decode';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
@@ -37,12 +38,6 @@ const GET_LOCAL_ROADMAPS = gql`
 }
 `;
 
-const GET_USER_ID = gql`
-{
-  id
-}
-`;
-
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
   mutation createroadmaps($UserId: ID!, $title: String!, $category: String!) {
@@ -61,16 +56,17 @@ const MainDashboard: React.FC = () => {
   const [selectionInput, setSelectionInput] = useState('');
   const [flag, setFlag] = useState(false);
   // get userID from cache
-  const userID: IUserID | any = client.cache.readQuery({ query: GET_USER_ID });
+  const token: any = localStorage.getItem('token');
+  const { id } = jwtDecode(token);
 
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
-    variables: { id: userID.id },
+    variables: { id },
   });
 
   // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { id: userID.id, title: titleInput, category: selectionInput },
+    variables: { id, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
