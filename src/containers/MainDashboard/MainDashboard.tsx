@@ -9,8 +9,8 @@ import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
 
 interface IRoadmap {
-  title: string;
   id: string;
+  title: string;
   category: string;
   __typename: string;
 }
@@ -45,7 +45,7 @@ query getRoadmap($id: ID!) {
 const GET_LOCAL_ROADMAPS = gql`
 {
   roadmaps {
-   id
+    id
     title
     category
     topics {
@@ -59,7 +59,7 @@ const GET_LOCAL_ROADMAPS = gql`
         title
         completed
       }
-    }
+    }    
   }
 }
 `;
@@ -75,15 +75,23 @@ const ADD_ROADMAP = gql`
   }
 `;
 
+// delete roadmap (mutation)
+const DELETE_ROADMAP = gql`
+  mutation deleteroadmap($id: ID!) {
+    deleteRoadmap(id: $id)
+  }
+`
+
 
 const MainDashboard: React.FC = () => {
+
   const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('IT');
   const [flag, setFlag] = useState(false);
   // get userID from cache
   const token: any = localStorage.getItem('token');
-  const { id } = jwtDecode(token);
+  const { id } = jwtDecode(token) || { id: 1 };
 
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
@@ -93,6 +101,8 @@ const MainDashboard: React.FC = () => {
   const [roadmap] = useMutation(ADD_ROADMAP, {
     variables: { id, title: titleInput, category: selectionInput },
   });
+  // deleting roadmap
+  const [deleteRoadmap]: any = useMutation(DELETE_ROADMAP);
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log('routeToDiscover', e); // eslint-disable-line no-console
@@ -122,13 +132,24 @@ const MainDashboard: React.FC = () => {
     setTitleInput('');
   };
 
+  // const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: any) => {
+    e.preventDefault();
+    await deleteRoadmap({
+      variables: { id }
+    }) && refetch();
+  }
+
   // check if user has roadmaps created
   if (!data && !flag) {
     return (
       <div>
-        <div className="button-container">
-          <Button handleClick={routeToDiscover} value="Browse" />
-          <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
+        <Navbar />
+        <div>
+          <div className="button-container">
+            <Button handleClick={routeToDiscover} value="Browse" />
+            <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
+          </div>
         </div>
       </div>
     );
@@ -137,10 +158,17 @@ const MainDashboard: React.FC = () => {
     // store roadmaps in cache and render them on dashboard
     client.writeData({ data: { roadmaps: data.roadmaps } });
     const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
-    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>);
 
+    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => {
+      return (
+        <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+          <button onClick={e => handleDelete(e, item.id)}>❌</button>
+          {item.title}
+        </Link>
+      )
+    });
     return (
-      <>
+      <div>
         <Navbar />
         <div className="container">
           {roadmaps}
@@ -151,7 +179,7 @@ const MainDashboard: React.FC = () => {
             titleInput={titleInput}
           />
         </div>
-      </>
+      </div>
     );
   }
   return (null);
