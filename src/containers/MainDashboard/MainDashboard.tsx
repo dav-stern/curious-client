@@ -60,12 +60,12 @@ const MainDashboard: React.FC = () => {
   // const userID = client.cache.readQuery({ query: GET_USER_ID });
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
-    variables: { id: 26 },
+    variables: { id: 1 },
   });
 
   // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { UserId: 26, title: titleInput, category: selectionInput },
+    variables: { UserId: 1, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
