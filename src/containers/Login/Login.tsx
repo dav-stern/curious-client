@@ -21,6 +21,7 @@ const Login: React.FC = () => {
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // TODO: abstract the signup logic to a service
     e.preventDefault();
     // TODO: any??
     const res: any = await login();
