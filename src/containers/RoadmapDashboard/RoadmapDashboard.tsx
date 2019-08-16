@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 // import Button from '../../components/Button/Button';
 import './RoadmapDashboard.css';
 import RoadmapTree from '../../components/RoadmapTree/RoadmapTree';
@@ -22,6 +23,14 @@ const GET_TOPICS = gql`
     }
 }`;
 
+const CREATE_TOPIC = gql`
+  mutation createtopic($RoadmapId: ID!, $title: String!) {
+    createTopic(RoadmapId: $RoadmapId, title: $title) {
+      title
+      id
+    }
+}`;
+
 // TREE COMPONENT:
 // Create function to add Topic to the tree and send it via props
 
@@ -29,18 +38,44 @@ const GET_TOPICS = gql`
 // DETAIL COMPONENT:
 // Create function to send the id of the clicked topic via props
 
+type TParams = { id: string };
 
-const RoadmapDashboard: React.FC = () => {
-  // const RoadmapId = 77; // TODO: make this dynamic ('/roadmap/id')
-  const { data, loading } = useQuery(GET_TOPICS, {
-    variables: { id: 77 },
+interface IChecklistItem {
+  title: string,
+  completed: boolean,
+}
+
+interface ITopic {
+  id: string
+  title: string
+  description: string
+  resources: string
+  completed: boolean
+  checklist: IChecklistItem[]
+}
+
+// TODO: Review component's types
+const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
+  const { data, loading, refetch } = useQuery(GET_TOPICS, {
+    variables: { id: match.params.id },
   });
 
-  if (loading) return <p>Loading...</p>;
+  const [createTopic] = useMutation(CREATE_TOPIC, {
+    variables: { RoadmapId: match.params.id, title: 'urso' },
+  });
 
+  async function handleCreateTopic() {
+    createTopic();
+    refetch();
+  }
+
+  if (loading) return <p>Loading...</p>;
   return (
     <div>
-      <RoadmapTree topics={data.topics} />
+      <RoadmapTree
+        topics={data.topics}
+        handleCreateTopic={handleCreateTopic}
+      />
       <TopicDetails />
     </div>
   );

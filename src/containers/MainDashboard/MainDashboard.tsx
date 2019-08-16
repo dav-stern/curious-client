@@ -134,7 +134,7 @@ const MainDashboard: React.FC = () => {
     // store roadmaps in cache and render them on dashboard
     client.writeData({ data: { roadmaps: data.roadmaps } });
     const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
-    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to="/signup">{item.title}</Link>);
+    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>);
 
     return (
       <div className="container">
@@ -150,6 +150,5 @@ const MainDashboard: React.FC = () => {
   }
   return (null);
 };
-
 
 export default MainDashboard;
