@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
+import jwtDecode from 'jwt-decode';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
@@ -18,11 +20,23 @@ interface IUserID {
 
 // roadmaps (query)
 const GET_ROADMAPS = gql`
-query getroadmaps($id: ID!) {
+query getRoadmap($id: ID!) {
   roadmaps(id: $id) {
-    title
     id
+    title
     category
+    topics {
+      id
+      title
+      description
+      resources
+      completed
+      checklist {
+        id
+        title
+        completed
+      }
+    }
   }
 }
 `;
@@ -30,23 +44,29 @@ query getroadmaps($id: ID!) {
 const GET_LOCAL_ROADMAPS = gql`
 {
   roadmaps {
+   id
     title
-    id
     category
+    topics {
+      id
+      title
+      description
+      resources
+      completed
+      checklist {
+        id
+        title
+        completed
+      }
+    }
   }
-}
-`;
-
-const GET_USER_ID = gql`
-{
-  id
 }
 `;
 
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
-  mutation createroadmaps($UserId: ID!, $title: String!, $category: String!) {
-    createRoadmap(UserId: $UserId, title: $title, category: $category) {
+  mutation createroadmaps($id: ID!, $title: String!, $category: String!) {
+    createRoadmap(UserId: $id, title: $title, category: $category) {
       id
       title
       category
@@ -58,19 +78,19 @@ const ADD_ROADMAP = gql`
 const MainDashboard: React.FC = () => {
   const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
-  const [selectionInput, setSelectionInput] = useState('');
+  const [selectionInput, setSelectionInput] = useState('IT');
   const [flag, setFlag] = useState(false);
   // get userID from cache
-  const userID: IUserID | any = client.cache.readQuery({ query: GET_USER_ID });
+  const token: any = localStorage.getItem('token');
+  const { id } = jwtDecode(token);
 
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
-    variables: { id: userID.id },
+    variables: { id },
   });
-
   // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { id: userID.id, title: titleInput, category: selectionInput },
+    variables: { id, title: titleInput, category: selectionInput },
   });
 
   const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,7 +112,6 @@ const MainDashboard: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTitleInput(titleInput);
-    setSelectionInput(selectionInput);
     const newRoadmap: any = await roadmap();
     const previousRoadmaps: any = client.cache.readQuery({ query: GET_LOCAL_ROADMAPS });
     client.writeData({
@@ -115,10 +134,10 @@ const MainDashboard: React.FC = () => {
     // store roadmaps in cache and render them on dashboard
     client.writeData({ data: { roadmaps: data.roadmaps } });
     const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
-    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <div id="roadmaps" key={item.id}>{item.title}</div>);
+    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to="/signup">{item.title}</Link>);
 
     return (
-      <div className="roadmap-container">
+      <div className="container">
         {roadmaps}
         <RoadmapItemForm
           handleChange={handleChange}
