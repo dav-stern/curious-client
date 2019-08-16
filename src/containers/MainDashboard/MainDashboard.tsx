@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
@@ -133,10 +134,10 @@ const MainDashboard: React.FC = () => {
     // store roadmaps in cache and render them on dashboard
     client.writeData({ data: { roadmaps: data.roadmaps } });
     const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
-    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <div id="roadmaps" key={item.id}>{item.title}</div>);
+    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to="/signup">{item.title}</Link>);
 
     return (
-      <div className="roadmap-container">
+      <div className="container">
         {roadmaps}
         <RoadmapItemForm
           handleChange={handleChange}
