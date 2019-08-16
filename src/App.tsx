@@ -6,13 +6,8 @@ import './App.css';
 import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup';
 import MainDashboard from './containers/MainDashboard/MainDashboard';
-// import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
+import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
 // import Discover from './containers/Discover/Discover';
-
-const defaultProtectedRouteProps: ProtectedRouteProps = {
-  isAuthenticated: !!localStorage.getItem('token'),
-  authenticationPath: '/login',
-};
 
 const App: React.FC = () => (
   <Router>
@@ -20,12 +15,12 @@ const App: React.FC = () => (
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <ProtectedRoute
-        { ...defaultProtectedRouteProps } // eslint-disable-line
+        authenticationPath="/login"
         exact
         path="/dashboard"
         component={MainDashboard}
       />
-      {/* <ProtectedRoute path="/roadmap/:id" component={RoadmapDashboard} /> */}
+      <ProtectedRoute authenticationPath="/login" path="/roadmap/:id" component={RoadmapDashboard} />
       {/* <ProtectedRoute path="/discover" component={Discover} /> */}
       <Redirect exact from="/" to="/dashboard" />
     </Switch>
@@ -33,14 +28,13 @@ const App: React.FC = () => (
 );
 
 export interface ProtectedRouteProps extends RouteProps {
-  isAuthenticated: boolean;
   authenticationPath: string;
 }
 
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
   public render() {
     let redirectPath: string = '';
-    if (this.props.isAuthenticated) {
+    if (!(localStorage.getItem('token'))) {
       redirectPath = this.props.authenticationPath;
     }
     if (redirectPath) {
@@ -53,7 +47,7 @@ export class ProtectedRoute extends Route<ProtectedRouteProps> {
         />
       );
     }
-    return <Route {...this.props} />; // eslint-disable-line
+    return <Route path={this.props.path} component={this.props.component} />; // eslint-disable-line
   }
 }
 
