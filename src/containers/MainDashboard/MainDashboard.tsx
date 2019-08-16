@@ -19,11 +19,23 @@ interface IUserID {
 
 // roadmaps (query)
 const GET_ROADMAPS = gql`
-query getroadmaps($id: ID!) {
+query getRoadmap($id: ID!) {
   roadmaps(id: $id) {
-    title
     id
+    title
     category
+    topics {
+      id
+      title
+      description
+      resources
+      completed
+      checklist {
+        id
+        title
+        completed
+      }
+    }
   }
 }
 `;
@@ -31,9 +43,21 @@ query getroadmaps($id: ID!) {
 const GET_LOCAL_ROADMAPS = gql`
 {
   roadmaps {
+   id
     title
-    id
     category
+    topics {
+      id
+      title
+      description
+      resources
+      completed
+      checklist {
+        id
+        title
+        completed
+      }
+    }
   }
 }
 `;
@@ -53,7 +77,7 @@ const ADD_ROADMAP = gql`
 const MainDashboard: React.FC = () => {
   const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
-  const [selectionInput, setSelectionInput] = useState('');
+  const [selectionInput, setSelectionInput] = useState('IT');
   const [flag, setFlag] = useState(false);
   // get userID from cache
   const token: any = localStorage.getItem('token');
@@ -63,7 +87,6 @@ const MainDashboard: React.FC = () => {
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
     variables: { id },
   });
-
   // adding roadmap
   const [roadmap] = useMutation(ADD_ROADMAP, {
     variables: { id, title: titleInput, category: selectionInput },
@@ -88,7 +111,6 @@ const MainDashboard: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTitleInput(titleInput);
-    setSelectionInput(selectionInput);
     const newRoadmap: any = await roadmap();
     const previousRoadmaps: any = client.cache.readQuery({ query: GET_LOCAL_ROADMAPS });
     client.writeData({
