@@ -4,6 +4,7 @@ import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
+import Navbar from '../../components/Navbar/Navbar';
 
 interface IRoadmap {
   title: string;
@@ -105,9 +106,12 @@ const MainDashboard: React.FC = () => {
   // check if user has roadmaps created
   if (!data && !flag) {
     return (
-      <div className="button-container">
-        <Button handleClick={routeToDiscover} value="Browse" />
-        <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
+      <div>
+        <Navbar />
+        <div className="button-container">
+          <Button handleClick={routeToDiscover} value="Browse" />
+          <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
+        </div>
       </div>
     );
   }
@@ -118,14 +122,17 @@ const MainDashboard: React.FC = () => {
     const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <div id="roadmaps" key={item.id}>{item.title}</div>);
 
     return (
-      <div className="roadmap-container">
-        {roadmaps}
-        <RoadmapItemForm
-          handleChange={handleChange}
-          handleSelection={handleSelection}
-          handleSubmit={handleSubmit}
-          titleInput={titleInput}
-        />
+      <div>
+        <Navbar />
+        <div className="roadmap-container">
+          {roadmaps}
+          <RoadmapItemForm
+            handleChange={handleChange}
+            handleSelection={handleSelection}
+            handleSubmit={handleSubmit}
+            titleInput={titleInput}
+          />
+        </div>
       </div>
     );
   }
