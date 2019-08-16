@@ -1,0 +1,27 @@
+#linkbar-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+  align-items: flex-start;
+  background: #f7f8fa;
+  border-bottom: 1px solid #dedfe0;
+  height: 44px;
+  padding: 0;
+  font-family: open sans,helvetica neue,Helvetica,Arial,sans-serif;
+}
+
+#linkbar-container a {
+  color: #007791;
+  background-color: transparent;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+#linkbar-category {
+  display: block;
+  color: #686f7a;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 12px 16px;
+}
