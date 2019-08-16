@@ -40,8 +40,8 @@ const GET_LOCAL_ROADMAPS = gql`
 
 // create roadmap (mutation)
 const ADD_ROADMAP = gql`
-  mutation createroadmaps($UserId: ID!, $title: String!, $category: String!) {
-    createRoadmap(UserId: $UserId, title: $title, category: $category) {
+  mutation createroadmaps($id: ID!, $title: String!, $category: String!) {
+    createRoadmap(UserId: $id, title: $title, category: $category) {
       id
       title
       category
