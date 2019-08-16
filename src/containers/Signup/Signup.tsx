@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import AuthForm from '../../components/AuthForm/AuthForm';
 
@@ -28,7 +29,6 @@ const Signup: React.FC = () => {
       const { id, name, email } = jwtDecode(res.data.signup);
       client.writeData({ data: { id, name, email } });
       setInputs({ name: '', email: '', password: '' });
-      setErrorMsg('');
     } else {
       setErrorMsg('This email already exists!');
     }
@@ -39,13 +39,17 @@ const Signup: React.FC = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
+  if (localStorage.getItem('token')) return <Redirect to="/dashboard" />;
   return (
-    <AuthForm
-      inputs={inputs}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      errorMsg={errorMsg}
-    />
+    <div>
+      <AuthForm
+        inputs={inputs}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        errorMsg={errorMsg}
+      />
+      <Link to="/Login">Login</Link>
+    </div>
   );
 };
 
