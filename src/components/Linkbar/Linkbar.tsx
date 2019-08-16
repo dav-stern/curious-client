@@ -3,6 +3,7 @@ import './Linkbar.css';
 import PropTypes from 'prop-types';
 
 interface ICategory {
+  id: number;
   name: string;
   iconPath: string;
 }
@@ -12,7 +13,7 @@ interface LinkBarProps {
 }
 
 const Linkbar: React.FC<LinkBarProps> = ({ categories }) => {
-  const categoryJSX = categories.map((category: ICategory) => <a href="/"><div id="linkbar-category">{category.name}</div></a>);
+  const categoryJSX = categories.map((category: ICategory) => <a href="/" key={category.id}><div id="linkbar-category">{category.name}</div></a>);
   return (
     <div id="linkbar-container">
       {categoryJSX}

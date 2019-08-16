@@ -11,6 +11,7 @@ interface RoadmapItemFormProps {
 }
 
 interface ICategory {
+  id: number;
   name: string;
   iconPath: string;
 }
@@ -19,9 +20,11 @@ interface ICategory {
 const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
   handleChange, handleSelection, handleSubmit, titleInput, categories,
 }) => {
-  const categoryJSX = categories.map(
-    (category: ICategory) => <option value={category.name}>{category.name}</option>,
-  );
+  const categoryJSX = categories.map((category: ICategory) => (
+    <option key={category.id} value={category.name}>
+      {category.name}
+    </option>
+  ));
 
   return (
     <form id="roadmap-form" onSubmit={handleSubmit}>

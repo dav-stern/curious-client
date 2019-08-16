@@ -16,10 +16,6 @@ interface IRoadmap {
   __typename: string;
 }
 
-interface IUserID {
-  id: number;
-}
-
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getRoadmap($id: ID!) {
