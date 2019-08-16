@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import AuthForm from '../../components/AuthForm/AuthForm';
 
@@ -40,17 +40,17 @@ const Login: React.FC = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  if (localStorage.getItem('token')) {
-    return <Redirect to="/dashboard" />;
-  }
-
+  if (localStorage.getItem('token')) return <Redirect to="/dashboard" />;
   return (
-    <AuthForm
-      inputs={inputs}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      errorMsg={errorMsg}
-    />
+    <div>
+      <AuthForm
+        inputs={inputs}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        errorMsg={errorMsg}
+      />
+      <Link to="/signup">Signup</Link>
+    </div>
   );
 };
 
