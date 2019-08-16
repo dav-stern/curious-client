@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
+import categories from '../../categories';
 
 interface IRoadmap {
   title: string;
@@ -149,6 +150,7 @@ const MainDashboard: React.FC = () => {
             handleSelection={handleSelection}
             handleSubmit={handleSubmit}
             titleInput={titleInput}
+            categories={categories}
           />
         </div>
       </>
