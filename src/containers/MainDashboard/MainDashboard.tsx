@@ -126,7 +126,6 @@ const MainDashboard: React.FC = () => {
   if (!data && !flag) {
     return (
       <div>
-        <Navbar />
         <div className="button-container">
           <Button handleClick={routeToDiscover} value="Browse" />
           <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
@@ -141,15 +140,18 @@ const MainDashboard: React.FC = () => {
     const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>);
 
     return (
-      <div className="container">
-        {roadmaps}
-        <RoadmapItemForm
-          handleChange={handleChange}
-          handleSelection={handleSelection}
-          handleSubmit={handleSubmit}
-          titleInput={titleInput}
-        />
-      </div>
+      <>
+        <Navbar />
+        <div className="container">
+          {roadmaps}
+          <RoadmapItemForm
+            handleChange={handleChange}
+            handleSelection={handleSelection}
+            handleSubmit={handleSubmit}
+            titleInput={titleInput}
+          />
+        </div>
+      </>
     );
   }
   return (null);
