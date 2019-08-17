@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Discover.css';
 import gql from 'graphql-tag';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -33,14 +33,8 @@ const Discover: React.FC = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
-  // REMOVE ONCE QUERY IS WORKING
-  const token: any = localStorage.getItem('token');
-  const { id } = jwtDecode(token);
-
   // fetching roadmaps from database
-  const { data, loading } = useQuery(ALL_ROADMAPS, {
-    variables: { id },
-  });
+  const { data, loading } = useQuery(ALL_ROADMAPS);
 
   let renderSearchResults;
   const handleChange = () => {
@@ -59,28 +53,26 @@ const Discover: React.FC = () => {
     handleChange();
   }, [query]);
 
-  if (!loading) {
-    return (
-      <>
-        <Navbar />
-        <Linkbar categories={categories} />
-        <div className="search-container">
-          <label className="search-label" htmlFor="search-input">
-            <input
-              type="text"
-              id="search-input"
-              placeholder="Search for..."
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
-              value={query}
-            />
-            <FontAwesomeIcon icon={faSearch} className="search-icon" />
-          </label>
-          {results}
-        </div>
-      </>
-    );
-  }
-  return (null);
+  if (loading) return null;
+  return (
+    <>
+      <Navbar />
+      <Linkbar categories={categories} />
+      <div className="search-container">
+        <label className="search-label" htmlFor="search-input">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search for..."
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
+            value={query}
+          />
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        </label>
+        {results}
+      </div>
+    </>
+  );
 };
 
 
