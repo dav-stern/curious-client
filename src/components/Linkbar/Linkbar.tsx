@@ -18,9 +18,12 @@ const Linkbar: React.FC<LinkBarProps> = ({ categories, handleClick }) => {
     (category: ICategory) => <button type="button" onClick={() => handleClick(category.name)} key={category.id} id="linkbar-category">{category.name}</button>,
   );
   return (
-    <div id="linkbar-container">
-      {categoryJSX}
-    </div>
+    <>
+      <div id="linkbar-container">
+        <button type="button" onClick={() => handleClick('Popular')} id="linkbar-category">Popular</button>
+        {categoryJSX}
+      </div>
+    </>
   );
 };
 

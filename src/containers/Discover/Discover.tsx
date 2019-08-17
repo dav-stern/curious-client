@@ -107,6 +107,8 @@ const Discover: React.FC = () => {
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
           </div>
         </label>
+      </div>
+      <div className="results-container">
         {results}
       </div>
     </>
