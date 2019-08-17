@@ -1,31 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 // import Button from '../../components/Button/Button';
 import './RoadmapDashboard.css';
-import RoadmapTree from '../../components/RoadmapTree/RoadmapTree';
+import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
 
 // Set up query to get all topics for the Roadmap
 const GET_TOPICS = gql`
   query gettopics($id: ID!) {
-    topics(id: $id) {
+    topics(RoadmapId: $id) {
       id
       title
-      description
-      resources
-      completed
-      checklist {
-        title
-        completed
-      }
+      rowNumber
     }
 }`;
 
 const CREATE_TOPIC = gql`
-  mutation createtopic($RoadmapId: ID!, $title: String!) {
-    createTopic(RoadmapId: $RoadmapId, title: $title) {
+  mutation createtopic($RoadmapId: ID!, $title: String!, $rowNumber: Int!) {
+    createTopic(RoadmapId: $RoadmapId, title: $title, rowNumber: $rowNumber) {
       title
       id
     }
@@ -48,25 +42,28 @@ interface IChecklistItem {
 interface ITopic {
   id: string
   title: string
-  description: string
-  resources: string
-  completed: boolean
-  checklist: IChecklistItem[]
+  rowNumber: number,
 }
 
 // TODO: Review component's types
 const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
+  const [selectedTopic, setSelectedTopic] = useState(0);
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
     variables: { id: match.params.id },
   });
 
   const [createTopic] = useMutation(CREATE_TOPIC, {
-    variables: { RoadmapId: match.params.id, title: 'urso' },
+    variables: { RoadmapId: match.params.id, title: 'urso', rowNumber: 0 },
   });
 
   async function handleCreateTopic() {
-    createTopic();
+    await createTopic();
     refetch();
+  }
+
+  async function handleSelectTopic(e: React.MouseEvent<HTMLElement>) {
+    setSelectedTopic(Number(e.currentTarget.id));
+    // set state of topic id to pass it to TopicDetails
   }
 
   if (loading) return <p>Loading...</p>;
@@ -75,8 +72,9 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
       <RoadmapTree
         topics={data.topics}
         handleCreateTopic={handleCreateTopic}
+        handleSelectTopic={handleSelectTopic}
       />
-      <TopicDetails />
+      <TopicDetails topicId={selectedTopic} />
     </div>
   );
 };

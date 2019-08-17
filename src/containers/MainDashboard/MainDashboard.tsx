@@ -26,6 +26,18 @@ query getRoadmap($id: ID!) {
     id
     title
     category
+    topics {
+      id
+      title
+      description
+      resources
+      completed
+      checklist {
+        id
+        title
+        completed
+      }
+    }
   }
 }
 `;
@@ -68,13 +80,14 @@ const MainDashboard: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // console.log((document.querySelector('[name="title"]'))!.value);
     await createRoadmap();
     setTitleInput('');
     refetch();
   };
 
   // if the data is still loading
-  if (loading) return <p>Loading</p>;
+  if (loading) return null;
   // else if user has no roadmaps yet show two buttons: 'Discover' and 'Add New Roadmap'
   if (data.roadmaps.length < 1 && !flag) {
     return (
