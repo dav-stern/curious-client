@@ -3,39 +3,18 @@ import { Link } from 'react-router-dom';
 import './Discover.css';
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../components/Navbar/Navbar';
 import Linkbar from '../../components/Linkbar/Linkbar';
 import categories from '../../categories';
 
-const GET_ROADMAPS = gql`
-query getRoadmap($id: ID!) {
-  roadmaps(id: $id) {
-    id
-    title
-    category
-    topics {
-      id
-      title
-      description
-      resources
-      completed
-      checklist {
-        id
-        title
-        completed
-      }
-    }
-  }
-}
-`;
 
-const GET_LOCAL_ROADMAPS = gql`
-{
-  roadmaps {
-   id
+const ALL_ROADMAPS = gql`
+query allRoadmaps {
+  allRoadmaps {
+    id
     title
     category
   }
@@ -51,7 +30,6 @@ interface IRoadmap {
 
 
 const Discover: React.FC = () => {
-  const client = useApolloClient();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
@@ -60,20 +38,19 @@ const Discover: React.FC = () => {
   const { id } = jwtDecode(token);
 
   // fetching roadmaps from database
-  const { data, loading } = useQuery(GET_ROADMAPS, {
+  const { data, loading } = useQuery(ALL_ROADMAPS, {
     variables: { id },
   });
 
-  // store roadmaps in cache and render them on dashboard
-  client.writeData({ data: { roadmaps: data.roadmaps } });
-  const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
-
   let renderSearchResults;
   const handleChange = () => {
-    const { roadmaps } = roadmapsCache;
-    const match = roadmaps.filter((roadmap: IRoadmap) => roadmap.title === query);
+    const match = data.allRoadmaps && data.allRoadmaps.filter(
+      (roadmap: IRoadmap) => roadmap.title === query,
+    );
     if (match) {
-      renderSearchResults = match.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>);
+      renderSearchResults = match.map(
+        (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
+      );
       setResults(renderSearchResults);
     }
   };

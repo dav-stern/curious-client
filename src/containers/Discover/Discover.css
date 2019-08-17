@@ -1,11 +1,12 @@
 .search-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 	margin: 36px auto;
 	width: 100%;
 	max-width: 800px;
 }
-.search-label {
-	position: relative;
-}
+
 .search-container input {
 	width: 100%;
 	padding: 16px;
@@ -16,7 +17,6 @@
 	outline: none;
 }
 .search-icon {
-	position: relative;
 	font-size: 24px;
 	color: #555;
 	right: 18px;
