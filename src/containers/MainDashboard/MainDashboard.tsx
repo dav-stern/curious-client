@@ -16,10 +16,6 @@ interface IRoadmap {
   __typename: string;
 }
 
-interface IUserID {
-  id: number;
-}
-
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getRoadmap($id: ID!) {
@@ -63,7 +59,7 @@ const DELETE_ROADMAP = gql`
 
 const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
-  const [selectionInput, setSelectionInput] = useState('IT');
+  const [selectionInput, setSelectionInput] = useState('Music');
   const [flag, setFlag] = useState(false);
   // get userID from token
   const token: string | null = localStorage.getItem('token');
@@ -91,7 +87,6 @@ const MainDashboard: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log((document.querySelector('[name="title"]'))!.value);
     await createRoadmap();
     setTitleInput('');
     refetch();
@@ -114,13 +109,12 @@ const MainDashboard: React.FC = () => {
       <div>
         <Navbar />
         <div className="button-container">
-          <Link to="'/discover"><Button handleClick={() => {}} value="Discover" /></Link>
+          <Link to="/discover"><Button handleClick={() => {}} value="Discover" /></Link>
           <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
         </div>
       </div>
     );
   }
-    
   // else render roadmaps on dashboard
   const roadmaps = data.roadmaps.map((item: IRoadmap) => (
     <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
