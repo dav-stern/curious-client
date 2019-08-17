@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './Discover.css';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -31,13 +30,10 @@ interface IRoadmap {
 
 const Discover: React.FC = () => {
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('Popular');
   const [results, setResults] = useState([]);
 
   // fetching roadmaps from database
   const { data, loading } = useQuery(ALL_ROADMAPS);
-  // store search results temporarily
-  let searchResults: any;
 
   const renderSearchResults = () => {
     // regex for search functionality
@@ -48,19 +44,16 @@ const Discover: React.FC = () => {
     const escapedValue = escapeRegexCharacters(query.trim());
     const regex = new RegExp(`^${escapedValue}`, 'i');
     // return search results if match is found
-    const match = data.roadmaps && data.roadmaps.filter(
-      (roadmap: IRoadmap) => roadmap.category === category && regex.test(roadmap.title),
+    const match = results && results.filter(
+      (roadmap: IRoadmap) => regex.test(roadmap.title),
     );
-    if (match) {
-      searchResults = match.map(
-        (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
-      );
-    }
+    setResults(match);
   };
 
   // filter for clicked category only
   const renderCategories = (clickedCat: string) => {
     let match;
+    // do query to database/cache here once implemented
     if (clickedCat === 'Popular') {
       match = data.roadmaps;
     } else {
@@ -68,15 +61,11 @@ const Discover: React.FC = () => {
         (roadmap: IRoadmap) => roadmap.category === clickedCat,
       );
     }
-    searchResults = match.map(
-      (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
-    );
-    setResults(searchResults);
+    setResults(match);
   };
 
   // store clicked category in local state
   const handleClick = (clicked: string) => {
-    setCategory(clicked);
     renderCategories(clicked);
     setQuery('');
   };
@@ -84,7 +73,6 @@ const Discover: React.FC = () => {
   // change render componented depending on user input
   const handleChange = () => {
     renderSearchResults();
-    setResults(searchResults);
   };
 
   // render when query is updated only
@@ -94,11 +82,6 @@ const Discover: React.FC = () => {
 
 
   if (loading) return null;
-  const roadmaps = data.roadmaps.map((item: IRoadmap) => (
-    <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-      {item.title}
-    </Link>
-  ));
   return (
     <>
       <Navbar />
@@ -118,7 +101,7 @@ const Discover: React.FC = () => {
           </div>
         </label>
       </div>
-      <RoadmapList results={results} roadmaps={roadmaps} />
+      <RoadmapList results={results} data={data.roadmaps} />
     </>
   );
 };

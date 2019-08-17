@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 interface IRoadmap {
@@ -9,17 +10,25 @@ interface IRoadmap {
 }
 
 interface RoadmapListProps {
-  results: IRoadmap[];
-  roadmaps?: IRoadmap[];
+  results: IRoadmap[] | any;
+  data?: IRoadmap[];
 }
 
-const RoadmapList: React.FC<RoadmapListProps> = ({ results, roadmaps }) => {
-  if (results) {
-    return (
-      <div className="container">
-        {results}
-      </div>
-    );
+const RoadmapList: React.FC<RoadmapListProps> = ({ results, data }) => {
+  let roadmaps;
+  if (!results.length) {
+    /* roadmaps = data && data.map((item: IRoadmap) => (
+      <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+        {item.title}
+      </Link>
+    )); */
+    roadmaps = [];
+  } else {
+    roadmaps = results && results.map((item: IRoadmap) => (
+      <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+        {item.title}
+      </Link>
+    ));
   }
   return (
     <div className="container">
@@ -29,8 +38,12 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ results, roadmaps }) => {
 };
 
 RoadmapList.propTypes = {
-  results: PropTypes.arrayOf(PropTypes.any).isRequired,
-  roadmaps: PropTypes.arrayOf(PropTypes.any).isRequired,
+  results: PropTypes.arrayOf(PropTypes.any),
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
+
+RoadmapList.defaultProps = {
+  results: [],
 };
 
 
