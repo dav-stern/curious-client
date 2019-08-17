@@ -7,12 +7,13 @@
   height: 100vh;
 }
 
-.roadmap-container {
+.container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
 }
+
 
 #roadmaps {
   display: flex;
@@ -24,4 +25,7 @@
   border: 1px solid black;
   height: 120px;
   width: 120px;
+  color: black;
+  text-decoration: none;
 }
+

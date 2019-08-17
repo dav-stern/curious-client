@@ -1,23 +1,51 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
+import jwtDecode from 'jwt-decode';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
-import RoadmapItem from '../../components/RoadmapItem/RoadmapItem';
+import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 
+interface IRoadmap {
+  title: string;
+  id: string;
+  category: string;
+  __typename: string;
+}
+
+interface IUserID {
+  id: number;
+}
+
+// TODO: do we need to query for category? Should we render it on each roadmap item?
 // roadmaps (query)
 const GET_ROADMAPS = gql`
-{
-  roadmaps {
+query getRoadmap($id: ID!) {
+  roadmaps(id: $id) {
+    id
     title
+    category
+    topics {
+      id
+      title
+      description
+      resources
+      completed
+      checklist {
+        id
+        title
+        completed
+      }
+    }
   }
 }
 `;
 
 // create roadmap (mutation)
-const ADD_ROADMAP = gql`
-  mutation createroadmaps($UserId: ID!, $title: String!, $category: String!) {
-    createRoadmap(UserId: $UserId, title: $title, category: $category) {
+const CREATE_ROADMAP = gql`
+  mutation createroadmaps($id: ID!, $title: String!, $category: String!) {
+    createRoadmap(UserId: $id, title: $title, category: $category) {
       id
       title
       category
@@ -25,69 +53,56 @@ const ADD_ROADMAP = gql`
   }
 `;
 
-
 const MainDashboard: React.FC = () => {
-  // const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
-  const [selectionInput, setSelectionInput] = useState('');
+  const [selectionInput, setSelectionInput] = useState('IT');
   const [flag, setFlag] = useState(false);
-  const initialRoadmap: any = [];
-  const [roadmaps, setRoadmaps] = useState(initialRoadmap);
+  // get userID from token
+  const token: string | null = localStorage.getItem('token');
+  const { id } = jwtDecode(token!);
 
-  const { data } = useQuery(GET_ROADMAPS, {
-    variables: { id: 7 },
+  // fetching roadmaps from database
+  const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
+    variables: { id },
   });
-  const [roadmap] = useMutation(ADD_ROADMAP, {
-    variables: { UserId: 7, title: titleInput, category: selectionInput },
+  // creating 'ADD_ROADMAP' mutation
+  const [createRoadmap] = useMutation(CREATE_ROADMAP, {
+    variables: { id, title: titleInput, category: selectionInput },
   });
-
-  const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('routeToDiscover', e); // eslint-disable-line no-console
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { target } = e;
-    const { value } = target;
-    setTitleInput(value);
+    setTitleInput(e.target.value);
   };
 
   const handleSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { target } = e;
-    const { value } = target;
-    setSelectionInput(value);
+    setSelectionInput(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTitleInput(titleInput);
-    setSelectionInput(selectionInput);
-    const newRoadmap: any = await roadmap();
-    // client.writeData({ roadmaps: [...roadmaps, newRoadmap] })
-    setRoadmaps({ roadmaps: [...roadmaps, newRoadmap] });
+    // console.log((document.querySelector('[name="title"]'))!.value);
+    await createRoadmap();
     setTitleInput('');
+    refetch();
   };
 
-  const changeFlag = () => { setFlag(true); };
-
-  if (!data.roadmaps.length && !flag) {
+  // if the data is still loading
+  if (loading) return null;
+  // else if user has no roadmaps yet show two buttons: 'Discover' and 'Add New Roadmap'
+  if (data.roadmaps.length < 1 && !flag) {
     return (
       <div className="button-container">
-        <Button handleClick={routeToDiscover} value="Browse" />
-        <Button handleClick={changeFlag} value="Add new Roadmap" />
+        <Link to="'/discover"><Button handleClick={() => {}} value="Discover" /></Link>
+        <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
       </div>
     );
   }
+  // else render roadmaps on dashboard
+  const roadmaps = data.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>);
   return (
-    <div className="roadmap-container">
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <div id="roadmaps">EXISTING ROADMAP</div>
-      <RoadmapItem
+    <div className="container">
+      {roadmaps}
+      <RoadmapItemForm
         handleChange={handleChange}
         handleSelection={handleSelection}
         handleSubmit={handleSubmit}
@@ -96,6 +111,5 @@ const MainDashboard: React.FC = () => {
     </div>
   );
 };
-
 
 export default MainDashboard;

@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import AuthForm from '../../components/AuthForm/AuthForm';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
-    signup(email: $email, password: $password)
+    login(email: $email, password: $password)
   }
 `;
 
@@ -20,12 +21,12 @@ const Login: React.FC = () => {
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // TODO: abstract the signup logic to a service
     e.preventDefault();
-    // TODO: any??
     const res: any = await login();
-    localStorage.setItem('token', res.data.signup);
-    if (res.data.signup) {
-      const { id, name, email } = res.data.signup && jwtDecode(res.data.signup);
+    if (res.data.login) {
+      localStorage.setItem('token', res.data.login);
+      const { id, name, email } = res.data.login && jwtDecode(res.data.login);
       client.writeData({ data: { id, name, email } });
       setInputs({ email: '', password: '' });
     } else {
@@ -38,13 +39,17 @@ const Login: React.FC = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
+  if (localStorage.getItem('token')) return <Redirect to="/dashboard" />;
   return (
-    <AuthForm
-      inputs={inputs}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      errorMsg={errorMsg}
-    />
+    <div>
+      <AuthForm
+        inputs={inputs}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        errorMsg={errorMsg}
+      />
+      <Link to="/signup">Signup</Link>
+    </div>
   );
 };
 
