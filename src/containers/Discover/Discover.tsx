@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../components/Navbar/Navbar';
 import Linkbar from '../../components/Linkbar/Linkbar';
+import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import categories from '../../categories';
 
 
@@ -91,7 +92,13 @@ const Discover: React.FC = () => {
     handleChange();
   }, [query]);
 
+
   if (loading) return null;
+  const roadmaps = data.roadmaps.map((item: IRoadmap) => (
+    <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+      {item.title}
+    </Link>
+  ));
   return (
     <>
       <Navbar />
@@ -111,9 +118,7 @@ const Discover: React.FC = () => {
           </div>
         </label>
       </div>
-      <div className="results-container">
-        {results}
-      </div>
+      <RoadmapList results={results} roadmaps={roadmaps} />
     </>
   );
 };

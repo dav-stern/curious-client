@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
+import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import categories from '../../categories';
 
 interface IRoadmap {
@@ -116,7 +117,7 @@ const MainDashboard: React.FC = () => {
     );
   }
   // else render roadmaps on dashboard
-  const roadmaps = data.roadmaps.map((item: IRoadmap) => (
+  const results = data.roadmaps.map((item: IRoadmap) => (
     <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
       <button type="button" onClick={(e) => handleDelete(e, item.id)}><span role="img" aria-label="delete">❌</span></button>
       {item.title}
@@ -125,8 +126,8 @@ const MainDashboard: React.FC = () => {
   return (
     <div>
       <Navbar />
+      <RoadmapList results={results} />
       <div className="container">
-        {roadmaps}
         <RoadmapItemForm
           handleChange={handleChange}
           handleSelection={handleSelection}
