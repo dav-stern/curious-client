@@ -43,6 +43,7 @@ const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
   );
 };
 
+
 RoadmapItemForm.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.any).isRequired,
   handleChange: PropTypes.func.isRequired,

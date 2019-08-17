@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 // import Button from '../../components/Button/Button';
 import './RoadmapDashboard.css';
-import RoadmapTree from '../../components/RoadmapTree/RoadmapTree';
+import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
+import Navbar from '../../components/Navbar/Navbar';
 
 // Set up query to get all topics for the Roadmap
 const GET_TOPICS = gql`
   query gettopics($id: ID!) {
-    topics(id: $id) {
+    topics(RoadmapId: $id) {
       id
       title
-      description
-      resources
-      completed
-      checklist {
-        title
-        completed
-      }
+      rowNumber
+    }
+}`;
+
+const CREATE_TOPIC = gql`
+  mutation createtopic($RoadmapId: ID!, $title: String!, $rowNumber: Int!) {
+    createTopic(RoadmapId: $RoadmapId, title: $title, rowNumber: $rowNumber) {
+      title
+      id
     }
 }`;
 
@@ -29,19 +33,50 @@ const GET_TOPICS = gql`
 // DETAIL COMPONENT:
 // Create function to send the id of the clicked topic via props
 
+type TParams = { id: string };
 
-const RoadmapDashboard: React.FC = () => {
-  // const RoadmapId = 77; // TODO: make this dynamic ('/roadmap/id')
-  const { data, loading } = useQuery(GET_TOPICS, {
-    variables: { id: 77 },
+interface IChecklistItem {
+  title: string,
+  completed: boolean,
+}
+
+interface ITopic {
+  id: string
+  title: string
+  rowNumber: number,
+}
+
+// TODO: Review component's types
+const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
+  const [selectedTopic, setSelectedTopic] = useState(0);
+  const { data, loading, refetch } = useQuery(GET_TOPICS, {
+    variables: { id: match.params.id },
   });
 
-  if (loading) return <p>Loading...</p>;
+  const [createTopic] = useMutation(CREATE_TOPIC, {
+    variables: { RoadmapId: match.params.id, title: 'urso', rowNumber: 0 },
+  });
 
+  async function handleCreateTopic() {
+    await createTopic();
+    refetch();
+  }
+
+  async function handleSelectTopic(e: React.MouseEvent<HTMLElement>) {
+    setSelectedTopic(Number(e.currentTarget.id));
+    // set state of topic id to pass it to TopicDetails
+  }
+
+  if (loading) return <p>Loading...</p>;
   return (
     <div>
-      <RoadmapTree topics={data.topics} />
-      <TopicDetails />
+      <Navbar />
+      <RoadmapTree
+        topics={data.topics}
+        handleCreateTopic={handleCreateTopic}
+        handleSelectTopic={handleSelectTopic}
+      />
+      <TopicDetails topicId={selectedTopic} />
     </div>
   );
 };

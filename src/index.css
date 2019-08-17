@@ -32,7 +32,7 @@ img {
   height: auto;
 }
 
-button, input {
+button {
   outline: none;
   border: none;
 }
