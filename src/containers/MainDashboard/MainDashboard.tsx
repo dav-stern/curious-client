@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
@@ -19,6 +19,7 @@ interface IUserID {
   id: number;
 }
 
+// TODO: do we need to query for category? Should we render it on each roadmap item?
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getRoadmap($id: ID!) {
@@ -42,30 +43,8 @@ query getRoadmap($id: ID!) {
 }
 `;
 
-const GET_LOCAL_ROADMAPS = gql`
-{
-  roadmaps {
-    id
-    title
-    category
-    topics {
-      id
-      title
-      description
-      resources
-      completed
-      checklist {
-        id
-        title
-        completed
-      }
-    }    
-  }
-}
-`;
-
 // create roadmap (mutation)
-const ADD_ROADMAP = gql`
+const CREATE_ROADMAP = gql`
   mutation createroadmaps($id: ID!, $title: String!, $category: String!) {
     createRoadmap(UserId: $id, title: $title, category: $category) {
       id
@@ -75,61 +54,48 @@ const ADD_ROADMAP = gql`
   }
 `;
 
+
 // delete roadmap (mutation)
 const DELETE_ROADMAP = gql`
   mutation deleteroadmap($id: ID!) {
     deleteRoadmap(id: $id)
   }
 `
-
-
+        
 const MainDashboard: React.FC = () => {
-
-  const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('IT');
   const [flag, setFlag] = useState(false);
-  // get userID from cache
-  const token: any = localStorage.getItem('token');
-  const { id } = jwtDecode(token) || { id: 1 };
+  // get userID from token
+  const token: string | null = localStorage.getItem('token');
+  const { id } = jwtDecode(token!);
+
 
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
     variables: { id },
   });
-  // adding roadmap
-  const [roadmap] = useMutation(ADD_ROADMAP, {
+  // creating 'ADD_ROADMAP' mutation
+  const [createRoadmap] = useMutation(CREATE_ROADMAP, {
     variables: { id, title: titleInput, category: selectionInput },
   });
   // deleting roadmap
   const [deleteRoadmap]: any = useMutation(DELETE_ROADMAP);
 
-  const routeToDiscover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('routeToDiscover', e); // eslint-disable-line no-console
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { target } = e;
-    const { value } = target;
-    setTitleInput(value);
+    setTitleInput(e.target.value);
   };
 
   const handleSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { target } = e;
-    const { value } = target;
-    setSelectionInput(value);
+    setSelectionInput(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTitleInput(titleInput);
-    const newRoadmap: any = await roadmap();
-    const previousRoadmaps: any = client.cache.readQuery({ query: GET_LOCAL_ROADMAPS });
-    client.writeData({
-      data: { roadmaps: [...previousRoadmaps.roadmaps].concat(newRoadmap.data.createRoadmap) },
-    });
-    refetch();
+    // console.log((document.querySelector('[name="title"]'))!.value);
+    await createRoadmap();
     setTitleInput('');
+    refetch();
   };
 
   // const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -140,50 +106,33 @@ const MainDashboard: React.FC = () => {
     }) && refetch();
   }
 
-  // check if user has roadmaps created
-  if (!data && !flag) {
+  // if the data is still loading
+  if (loading) return null;
+  // else if user has no roadmaps yet show two buttons: 'Discover' and 'Add New Roadmap'
+  if (data.roadmaps.length < 1 && !flag) {
     return (
-      <div>
-        <Navbar />
-        <div>
-          <div className="button-container">
-            <Button handleClick={routeToDiscover} value="Browse" />
-            <Button handleClick={() => setFlag(true)} value="Add new Roadmap" />
-          </div>
-        </div>
+      <div className="button-container">
+        <Link to="'/discover"><Button handleClick={() => {}} value="Discover" /></Link>
+        <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
       </div>
     );
   }
-  if (!loading) {
-    // store roadmaps in cache and render them on dashboard
-    client.writeData({ data: { roadmaps: data.roadmaps } });
-    const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
-
-    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => {
-      return (
-        <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-          <button onClick={e => handleDelete(e, item.id)}>❌</button>
-          {item.title}
-        </Link>
-      )
-    });
-    return (
-      <div>
-        <Navbar />
-        <div className="container">
-          {roadmaps}
-          <RoadmapItemForm
-            handleChange={handleChange}
-            handleSelection={handleSelection}
-            handleSubmit={handleSubmit}
-            titleInput={titleInput}
-          />
-        </div>
-      </div>
-    );
-  }
-  return (null);
+  // else render roadmaps on dashboard
+  const roadmaps = data.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+    <button onClick={e => handleDelete(e, item.id)}>❌</button>
+    {item.title}
+  </Link>);
+  return (
+    <div className="container">
+      {roadmaps}
+      <RoadmapItemForm
+        handleChange={handleChange}
+        handleSelection={handleSelection}
+        handleSubmit={handleSubmit}
+        titleInput={titleInput}
+      />
+    </div>
+  );
 };
-
 
 export default MainDashboard;

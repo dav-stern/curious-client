@@ -15,7 +15,7 @@ const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
   <form id="roadmap-form" onSubmit={handleSubmit}>
     <input
       type="text"
-      name="name"
+      name="title"
       onChange={handleChange}
       value={titleInput}
       required
