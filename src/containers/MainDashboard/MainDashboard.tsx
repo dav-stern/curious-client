@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
+import categories from '../../categories';
 
 interface IRoadmap {
   id: string;
@@ -19,7 +20,6 @@ interface IUserID {
   id: number;
 }
 
-// TODO: do we need to query for category? Should we render it on each roadmap item?
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getRoadmap($id: ID!) {
@@ -120,6 +120,7 @@ const MainDashboard: React.FC = () => {
       </div>
     );
   }
+    
   // else render roadmaps on dashboard
   const roadmaps = data.roadmaps.map((item: IRoadmap) => (
     <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
@@ -137,6 +138,7 @@ const MainDashboard: React.FC = () => {
           handleSelection={handleSelection}
           handleSubmit={handleSubmit}
           titleInput={titleInput}
+          categories={categories}
         />
       </div>
     </div>

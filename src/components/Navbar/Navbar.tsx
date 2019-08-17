@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
         <nav className="navbar__nav__container">
           <ul className="navbar__nav">
             <li className="navbar__nav__item">
-              <NavLink to="#">Discover</NavLink>
+              <NavLink to="/discover">Discover</NavLink>
             </li>
             <li className="navbar__nav__item">
               <NavLink to="/" onClick={handleLogout}>Sign Out</NavLink>

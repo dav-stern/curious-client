@@ -7,7 +7,7 @@ import Login from './containers/Login/Login';
 import Signup from './containers/Signup/Signup';
 import MainDashboard from './containers/MainDashboard/MainDashboard';
 import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
-// import Discover from './containers/Discover/Discover';
+import Discover from './containers/Discover/Discover';
 
 const App: React.FC = () => (
   <Router>
@@ -21,7 +21,7 @@ const App: React.FC = () => (
         component={MainDashboard}
       />
       <ProtectedRoute authenticationPath="/login" path="/roadmap/:id" component={RoadmapDashboard} />
-      {/* <ProtectedRoute path="/discover" component={Discover} /> */}
+      <ProtectedRoute authenticationPath="/login" path="/discover" component={Discover} />
       <Redirect exact from="/" to="/dashboard" />
     </Switch>
   </Router>
