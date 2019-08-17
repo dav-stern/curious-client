@@ -8,7 +8,7 @@ interface TopicProps {
 }
 
 const Topic: React.FC<TopicProps> = ({ id, title }) => (
-  <div>
+  <div className="topic-container">
     <div>{id}</div>
     <div>{title}</div>
   </div>
