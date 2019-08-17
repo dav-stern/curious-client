@@ -1,9 +1,11 @@
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom'; //eslint-disable-line
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import AuthForm from '../../components/AuthForm/AuthForm';
+
+import './Login.css';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -42,14 +44,30 @@ const Login: React.FC = () => {
 
   if (localStorage.getItem('token')) return <Redirect to="/dashboard" />;
   return (
-    <div>
-      <AuthForm
-        inputs={inputs}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        errorMsg={errorMsg}
-      />
-      <Link to="/signup">Signup</Link>
+    <div className="external__container">
+      <div className="banner">
+        <h1 className="us">CURIO.US</h1>
+      </div>
+      <div className="LISU__container">
+        <div className="LISU__wrapper">
+          <div className="form__header">
+            <div className="login__selector selected">
+              <p>Login</p>
+            </div>
+            <div className="signup__selector">
+              <p>Sign-Up</p>
+            </div>
+
+          </div>
+          <AuthForm
+            inputs={inputs}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            errorMsg={errorMsg}
+          />
+          {/* <Link to="/signup">Signup</Link> */}
+        </div>
+      </div>
     </div>
   );
 };

@@ -80,11 +80,10 @@ const DELETE_ROADMAP = gql`
   mutation deleteroadmap($id: ID!) {
     deleteRoadmap(id: $id)
   }
-`
+`;
 
 
 const MainDashboard: React.FC = () => {
-
   const client = useApolloClient();
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('IT');
@@ -133,12 +132,10 @@ const MainDashboard: React.FC = () => {
   };
 
   // const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: any) => {
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, RmID: any) => {
     e.preventDefault();
-    await deleteRoadmap({
-      variables: { id }
-    }) && refetch();
-  }
+    await deleteRoadmap({ variables: { id: RmID }, }) && refetch(); // eslint-disable-line
+  };
 
   // check if user has roadmaps created
   if (!data && !flag) {
@@ -159,13 +156,18 @@ const MainDashboard: React.FC = () => {
     client.writeData({ data: { roadmaps: data.roadmaps } });
     const roadmapsCache = client.readQuery({ query: GET_LOCAL_ROADMAPS });
 
-    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => {
+    const roadmaps = roadmapsCache.roadmaps.map((item: IRoadmap) => { //eslint-disable-line
       return (
         <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-          <button onClick={e => handleDelete(e, item.id)}>❌</button>
+          <button
+            type="button"
+            onClick={(e) => handleDelete(e, item.id)}
+          >
+            <span role="img" aria-label="delete roadmap button">❌</span>
+          </button>
           {item.title}
         </Link>
-      )
+      );
     });
     return (
       <div>

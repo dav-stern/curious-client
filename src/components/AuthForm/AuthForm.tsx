@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './AuthForm.css';
+
 interface inputsType {
   name?: string,
   email: string,
@@ -22,7 +24,7 @@ const AuthForm: React.SFC<AuthFormProps> = ({
   errorMsg,
 }) => {
   const inputsJSX = Object.keys(inputs).map((key: string) => (
-    <input type="text" name={key} key={key} onChange={handleChange} value={inputs[key]} required />
+    <input type="text" name={key} key={key} onChange={handleChange} value={inputs[key]} placeholder={key.toUpperCase()} required />
   ));
 
   return (
