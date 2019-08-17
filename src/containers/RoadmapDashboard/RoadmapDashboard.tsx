@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 import './RoadmapDashboard.css';
 import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
+import Navbar from '../../components/Navbar/Navbar';
 
 // Set up query to get all topics for the Roadmap
 const GET_TOPICS = gql`
@@ -69,6 +70,7 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   if (loading) return <p>Loading...</p>;
   return (
     <div>
+      <Navbar />
       <RoadmapTree
         topics={data.topics}
         handleCreateTopic={handleCreateTopic}

@@ -54,14 +54,13 @@ const CREATE_ROADMAP = gql`
   }
 `;
 
-
 // delete roadmap (mutation)
 const DELETE_ROADMAP = gql`
   mutation deleteroadmap($id: ID!) {
     deleteRoadmap(id: $id)
   }
-`
-        
+`;
+
 const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('IT');
@@ -98,39 +97,48 @@ const MainDashboard: React.FC = () => {
     refetch();
   };
 
-  // const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: any) => {
+  // eslint-disable-next-line no-shadow
+  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.preventDefault();
     await deleteRoadmap({
-      variables: { id }
-    }) && refetch();
-  }
+      variables: { id },
+    });
+    refetch();
+  };
 
   // if the data is still loading
   if (loading) return null;
   // else if user has no roadmaps yet show two buttons: 'Discover' and 'Add New Roadmap'
   if (data.roadmaps.length < 1 && !flag) {
     return (
-      <div className="button-container">
-        <Link to="'/discover"><Button handleClick={() => {}} value="Discover" /></Link>
-        <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
+      <div>
+        <Navbar />
+        <div className="button-container">
+          <Link to="'/discover"><Button handleClick={() => {}} value="Discover" /></Link>
+          <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
+        </div>
       </div>
     );
   }
   // else render roadmaps on dashboard
-  const roadmaps = data.roadmaps.map((item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-    <button onClick={e => handleDelete(e, item.id)}>❌</button>
-    {item.title}
-  </Link>);
+  const roadmaps = data.roadmaps.map((item: IRoadmap) => (
+    <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+      <button type="button" onClick={(e) => handleDelete(e, item.id)}><span role="img" aria-label="delete">❌</span></button>
+      {item.title}
+    </Link>
+  ));
   return (
-    <div className="container">
-      {roadmaps}
-      <RoadmapItemForm
-        handleChange={handleChange}
-        handleSelection={handleSelection}
-        handleSubmit={handleSubmit}
-        titleInput={titleInput}
-      />
+    <div>
+      <Navbar />
+      <div className="container">
+        {roadmaps}
+        <RoadmapItemForm
+          handleChange={handleChange}
+          handleSelection={handleSelection}
+          handleSubmit={handleSubmit}
+          titleInput={titleInput}
+        />
+      </div>
     </div>
   );
 };
