@@ -89,7 +89,6 @@ const Discover: React.FC = () => {
   }, [query]);
 
   if (loading) return null;
-  console.log(data);
   return (
     <>
       <Navbar />
