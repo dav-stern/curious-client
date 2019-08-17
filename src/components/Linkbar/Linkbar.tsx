@@ -10,10 +10,13 @@ interface ICategory {
 
 interface LinkBarProps {
   categories: ICategory[]
+  handleClick: (clicked: string) => void,
 }
 
-const Linkbar: React.FC<LinkBarProps> = ({ categories }) => {
-  const categoryJSX = categories.map((category: ICategory) => <a href="/" key={category.id}><div id="linkbar-category">{category.name}</div></a>);
+const Linkbar: React.FC<LinkBarProps> = ({ categories, handleClick }) => {
+  const categoryJSX = categories.map(
+    (category: ICategory) => <button type="button" onClick={() => handleClick(category.name)} key={category.id} id="linkbar-category">{category.name}</button>,
+  );
   return (
     <div id="linkbar-container">
       {categoryJSX}
@@ -23,6 +26,7 @@ const Linkbar: React.FC<LinkBarProps> = ({ categories }) => {
 
 Linkbar.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.any).isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 

@@ -11,10 +11,17 @@
   font-family: open sans,helvetica neue,Helvetica,Arial,sans-serif;
 }
 
-#linkbar-container a {
+#linkbar-container button {
   color: #007791;
   background-color: transparent;
   font-weight: 400;
+  text-decoration: none;
+}
+
+#linkbar-container button:hover {
+  color: #007791;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
   text-decoration: none;
 }
 

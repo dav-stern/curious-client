@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Discover.css';
 import gql from 'graphql-tag';
-// import jwtDecode from 'jwt-decode';
 import { useQuery } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +11,8 @@ import categories from '../../categories';
 
 
 const ALL_ROADMAPS = gql`
-query allRoadmaps {
-  allRoadmaps {
+query roadmaps {
+  roadmaps {
     id
     title
     category
@@ -31,24 +30,60 @@ interface IRoadmap {
 
 const Discover: React.FC = () => {
   const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('');
   const [results, setResults] = useState([]);
 
   // fetching roadmaps from database
-  const { data, loading } = useQuery(ALL_ROADMAPS);
+  const { data, loading, refetch } = useQuery(ALL_ROADMAPS);
+  // DELETE ONCE MAINDASHBOARD WORKS
+  refetch();
+  // store search results temporarily
+  let searchResults: any;
 
-  let renderSearchResults;
-  const handleChange = () => {
-    const match = data.allRoadmaps && data.allRoadmaps.filter(
-      (roadmap: IRoadmap) => roadmap.title === query,
+  const renderSearchResults = () => {
+    // regex for search functionality
+    function escapeRegexCharacters(str: string) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    // escape whitespace characters
+    const escapedValue = escapeRegexCharacters(query.trim());
+    const regex = new RegExp(`^${escapedValue}`, 'i');
+    // return search results if match is found
+    const match = data.roadmaps && data.roadmaps.filter(
+      (roadmap: IRoadmap) => roadmap.category === category && regex.test(roadmap.title),
     );
     if (match) {
-      renderSearchResults = match.map(
+      searchResults = match.map(
         (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
       );
-      setResults(renderSearchResults);
     }
   };
 
+  // filter for clicked category only
+  const renderCategories = (clickedCat: string) => {
+    const match = data.roadmaps && data.roadmaps.filter(
+      (roadmap: IRoadmap) => roadmap.category === clickedCat,
+    );
+    searchResults = match.map(
+      (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
+    );
+    setResults(searchResults);
+  };
+
+  // store clicked category in local state
+  const handleClick = (clicked: string) => {
+    setCategory(clicked);
+    renderCategories(clicked);
+    setQuery('');
+  };
+
+  // change render componented depending on user input
+  const handleChange = () => {
+    renderSearchResults();
+    setResults(searchResults);
+  };
+
+  // render when query is updated only
   useEffect(() => {
     handleChange();
   }, [query]);
@@ -57,7 +92,7 @@ const Discover: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Linkbar categories={categories} />
+      <Linkbar categories={categories} handleClick={handleClick} />
       <div className="search-container">
         <label className="search-label" htmlFor="search-input">
           <input
@@ -66,8 +101,11 @@ const Discover: React.FC = () => {
             placeholder="Search for..."
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
             value={query}
+            autoComplete="off"
           />
-          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+          <div id="icon-container">
+            <FontAwesomeIcon icon={faSearch} className="search-icon" />
+          </div>
         </label>
         {results}
       </div>
