@@ -7,7 +7,6 @@ import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
-import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import categories from '../../categories';
 
 interface IRoadmap {
@@ -126,8 +125,8 @@ const MainDashboard: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <RoadmapList results={results} />
       <div className="container">
+        {results}
         <RoadmapItemForm
           handleChange={handleChange}
           handleSelection={handleSelection}
