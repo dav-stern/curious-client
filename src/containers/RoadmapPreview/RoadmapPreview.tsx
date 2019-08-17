@@ -1,10 +1,7 @@
 import React from 'react';
+import './RoadmapPreview.css';
 
-const Discover: React.FC = () => {
-  return (
-    <h1>Hello from the Preview</h1>
-  );
-};
+const Discover: React.FC = () => <h1>Hello from the Preview</h1>;
 
 
 export default Discover;

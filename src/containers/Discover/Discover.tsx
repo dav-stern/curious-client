@@ -30,7 +30,7 @@ interface IRoadmap {
 
 const Discover: React.FC = () => {
   const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Popular');
   const [results, setResults] = useState([]);
 
   // fetching roadmaps from database
@@ -59,9 +59,14 @@ const Discover: React.FC = () => {
 
   // filter for clicked category only
   const renderCategories = (clickedCat: string) => {
-    const match = data.roadmaps && data.roadmaps.filter(
-      (roadmap: IRoadmap) => roadmap.category === clickedCat,
-    );
+    let match;
+    if (clickedCat === 'Popular') {
+      match = data.roadmaps;
+    } else {
+      match = data.roadmaps && data.roadmaps.filter(
+        (roadmap: IRoadmap) => roadmap.category === clickedCat,
+      );
+    }
     searchResults = match.map(
       (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
     );
