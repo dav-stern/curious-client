@@ -29,7 +29,7 @@ interface IRoadmap {
 
 
 const Discover: React.FC = () => {
-  const [query, setQuery] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [results, setResults] = useState([]);
   const [currCategory, setCurrCategory] = useState('');
 
@@ -51,6 +51,7 @@ const Discover: React.FC = () => {
     setResults(match);
   };
 
+  // when user types change roadmaps to matching regex
   const renderSearchResults = () => {
     let match;
     // regex for search functionality
@@ -58,7 +59,7 @@ const Discover: React.FC = () => {
       return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     // escape whitespace characters
-    const escapedValue = escapeRegexCharacters(query.trim());
+    const escapedValue = escapeRegexCharacters(searchInput.trim());
     const regex = new RegExp(`^${escapedValue}`, 'i');
 
     // return search results if match is found
@@ -71,20 +72,21 @@ const Discover: React.FC = () => {
         (roadmap: IRoadmap) => regex.test(roadmap.title) && roadmap.category === currCategory,
       );
     }
+    // if no match show all roadmaps of this category
     if (data.roadmaps && !match.length) {
       renderCategories(currCategory);
     } else {
+      // if match show matched roadmaps
       setResults(match);
     }
   };
 
-  // store clicked category in local state
+  // on click render roadmaps of this category
   const handleClick = (clicked: string) => {
     renderCategories(clicked);
-    setQuery('');
+    setSearchInput('');
   };
 
-  // change render componented depending on user input
   const handleChange = () => {
     renderSearchResults();
   };
@@ -92,7 +94,7 @@ const Discover: React.FC = () => {
   // render when user types in searchbar only
   useEffect(() => {
     handleChange();
-  }, [query]);
+  }, [searchInput]);
 
   if (loading) return null;
   return (
@@ -105,8 +107,8 @@ const Discover: React.FC = () => {
             type="text"
             id="search-input"
             placeholder="Search for..."
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
-            value={query}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+            value={searchInput}
             autoComplete="off"
           />
           <div id="icon-container">
