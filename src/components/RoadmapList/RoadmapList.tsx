@@ -11,18 +11,17 @@ interface IRoadmap {
 
 interface RoadmapListProps {
   results: IRoadmap[] | any;
-  data?: IRoadmap[];
+  data: IRoadmap[];
 }
 
 const RoadmapList: React.FC<RoadmapListProps> = ({ results, data }) => {
-  let roadmaps;
+  let roadmaps = results;
   if (!results.length) {
-    /* roadmaps = data && data.map((item: IRoadmap) => (
+    roadmaps = data && data.map((item: IRoadmap) => (
       <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
         {item.title}
       </Link>
-    )); */
-    roadmaps = [];
+    ));
   } else {
     roadmaps = results && results.map((item: IRoadmap) => (
       <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
