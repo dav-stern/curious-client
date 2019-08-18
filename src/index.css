@@ -32,11 +32,6 @@ img {
   height: auto;
 }
 
-button {
-  outline: none;
-  border: none;
-}
-
 ol, ul {
   list-style: none;
 }

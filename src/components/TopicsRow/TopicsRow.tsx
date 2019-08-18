@@ -17,12 +17,11 @@ interface ITopic {
 interface TopicsProps {
   topics: ITopic[]
   handleCreateTopic: () => void
-  handleSelectTopic: (e: React.MouseEvent<HTMLElement>) => void
 }
 
-const TopicsRow: React.SFC<TopicsProps> = ({ topics, handleCreateTopic, handleSelectTopic }) => {
+const TopicsRow: React.SFC<TopicsProps> = ({ topics, handleCreateTopic }) => {
   const arrTopics = topics.map((topic) => (
-    <Topic id={topic.id} title={topic.title} key={topic.id} handleSelectTopic={handleSelectTopic} />
+    <Topic id={topic.id} title={topic.title} key={topic.id} />
   ));
   return (
     <div className="topics-row-container">
@@ -41,7 +40,6 @@ TopicsRow.propTypes = {
     rowNumber: PropTypes.number.isRequired,
   }).isRequired).isRequired,
   handleCreateTopic: PropTypes.func.isRequired,
-  handleSelectTopic: PropTypes.func.isRequired,
 };
 
 export default TopicsRow;

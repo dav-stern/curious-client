@@ -12,16 +12,13 @@ interface ITopic {
 interface RoadmapTreeProps {
   topics: ITopic[]
   handleCreateTopic: () => void
-  handleSelectTopic: (e: React.MouseEvent<HTMLElement>) => void
 }
 
 interface IRowsData {
   [keys: string]: ITopic[]
 }
 
-const RoadmapTree: React.SFC<RoadmapTreeProps> = (
-  { topics, handleCreateTopic, handleSelectTopic },
-) => {
+const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ topics, handleCreateTopic }) => {
   const rowsData: IRowsData = topics.reduce((obj: IRowsData, topic: ITopic) => {
     const { rowNumber } = topic;
     if (obj[rowNumber]) obj[rowNumber].push(topic);
@@ -33,18 +30,13 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = (
       topics={rowsData[rowNumber]}
       key={rowNumber}
       handleCreateTopic={handleCreateTopic}
-      handleSelectTopic={handleSelectTopic}
     />
   ));
 
   return (
     <div>
       {topicsRows}
-      <TopicsRow
-        topics={[]}
-        handleCreateTopic={handleCreateTopic}
-        handleSelectTopic={handleSelectTopic}
-      />
+      <TopicsRow topics={[]} handleCreateTopic={handleCreateTopic} />
     </div>
   );
 };
@@ -56,7 +48,6 @@ RoadmapTree.propTypes = {
     rowNumber: PropTypes.number.isRequired,
   }).isRequired).isRequired,
   handleCreateTopic: PropTypes.func.isRequired,
-  handleSelectTopic: PropTypes.func.isRequired,
 };
 
 export default RoadmapTree;
