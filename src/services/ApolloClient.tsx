@@ -27,13 +27,4 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
 });
 
-cache.writeData({
-  data: {
-    id: 0,
-    name: '',
-    email: '',
-    roadmaps: [],
-  },
-});
-
 export default client;

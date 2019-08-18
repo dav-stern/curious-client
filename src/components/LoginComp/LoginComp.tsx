@@ -1,0 +1,65 @@
+import gql from 'graphql-tag';
+import jwtDecode from 'jwt-decode';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
+
+import { AuthForm } from '../AuthForm/AuthForm';
+
+const LOGIN = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password)
+  }
+`;
+
+interface LoginCompProps {
+  errorMsg: string,
+  setErrorMsg: (msg: string) => void,
+}
+
+const LoginComp: React.SFC<LoginCompProps> = ({ errorMsg, setErrorMsg }) => {
+  const client = useApolloClient();
+
+  const [loginInputs, setLoginInputs] = useState({ email: '', password: '' });
+  const [login] = useMutation(LOGIN, {
+    variables: { email: loginInputs.email, password: loginInputs.password },
+  });
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    // TODO: abstract the signup logic to a service
+    e.preventDefault();
+    // TODO: any??
+    const res: any = await login();
+    if (res.data.login) {
+      localStorage.setItem('token', res.data.login);
+      const { id, name, email } = res.data.login && jwtDecode(res.data.login);
+      client.writeData({ data: { id, name, email } });
+      setLoginInputs({ email: '', password: '' });
+    } else {
+      setErrorMsg('Email or password are wrong!');
+    }
+  };
+
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setLoginInputs({ ...loginInputs, [name]: value });
+  };
+
+  if (localStorage.getItem('token')) return <Redirect to="/dashboard" />;
+  return (
+    <AuthForm
+      inputs={loginInputs}
+      handleSubmit={handleLogin}
+      handleChange={handleLoginChange}
+      errorMsg={errorMsg}
+    />
+  );
+};
+
+LoginComp.propTypes = {
+  errorMsg: PropTypes.string.isRequired,
+  setErrorMsg: PropTypes.func.isRequired,
+};
+
+export default LoginComp;

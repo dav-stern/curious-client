@@ -44,3 +44,8 @@ button, input {
 ol, ul {
   list-style: none;
 }
+
+::placeholder {
+  font-family: 'Comfortaa';
+  font-size: 1rem;
+}
