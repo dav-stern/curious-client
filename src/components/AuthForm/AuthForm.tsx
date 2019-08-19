@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './AuthForm.css';
+
 interface inputsType {
   name?: string,
   email: string,
@@ -8,21 +10,21 @@ interface inputsType {
   [key: string]: string | undefined,
 }
 
-interface AuthFormProps {
+export interface AuthFormProps {
   inputs: inputsType,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   errorMsg: string,
 }
 
-const AuthForm: React.SFC<AuthFormProps> = ({
+export const AuthForm: React.SFC<AuthFormProps> = ({
   inputs,
   handleSubmit,
   handleChange,
   errorMsg,
 }) => {
   const inputsJSX = Object.keys(inputs).map((key: string) => (
-    <input type="text" name={key} key={key} onChange={handleChange} value={inputs[key]} required />
+    <input type="text" name={key} key={key} onChange={handleChange} value={inputs[key]} placeholder={key.charAt(0).toUpperCase() + key.slice(1)} required />
   ));
 
   return (
@@ -31,7 +33,7 @@ const AuthForm: React.SFC<AuthFormProps> = ({
         onSubmit={handleSubmit}
       >
         {inputsJSX}
-        <button type="submit">{inputsJSX.length > 2 ? 'SIGN UP' : 'LOGIN'}</button>
+        <button className="submit" type="submit">{inputsJSX.length > 2 ? 'Sign Up' : 'Login'}</button>
       </form>
       <div><p>{errorMsg}</p></div>
     </div>
