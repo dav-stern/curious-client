@@ -11,8 +11,8 @@ import categories from '../../categories';
 
 
 const ALL_ROADMAPS = gql`
-query roadmaps($category: String) {
-  roadmaps(category: $category) {
+query roadmaps {
+  roadmaps {
     id
     title
     category
