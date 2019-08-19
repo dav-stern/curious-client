@@ -3,8 +3,7 @@ import {
   BrowserRouter as Router, Route, Redirect, Switch, RouteProps // eslint-disable-line
 } from 'react-router-dom';
 import './App.css';
-import Login from './containers/Login/Login';
-import Signup from './containers/Signup/Signup';
+import Authentication from './containers/Authentication/Authentication';
 import MainDashboard from './containers/MainDashboard/MainDashboard';
 import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
 import Discover from './containers/Discover/Discover';
@@ -12,11 +11,9 @@ import Discover from './containers/Discover/Discover';
 const App: React.FC = () => (
   <Router>
     <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
+      <Route path="/login" component={Authentication} />
       <ProtectedRoute
         authenticationPath="/login"
-        exact
         path="/dashboard"
         component={MainDashboard}
       />
@@ -31,6 +28,7 @@ export interface ProtectedRouteProps extends RouteProps {
   authenticationPath: string;
 }
 
+// TODO: abstract into another module
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
   public render() {
     let redirectPath: string = '';

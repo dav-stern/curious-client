@@ -62,9 +62,9 @@ const MainDashboard: React.FC = () => {
   const [selectionInput, setSelectionInput] = useState('Music');
   const [flag, setFlag] = useState(false);
   // get userID from token
+  // TODO: abstract this into an authentication service
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
-
 
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
@@ -115,6 +115,7 @@ const MainDashboard: React.FC = () => {
       </div>
     );
   }
+
   // else render roadmaps on dashboard
   const results = data.roadmaps.map((item: IRoadmap) => (
     <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>

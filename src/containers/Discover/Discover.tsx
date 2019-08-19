@@ -7,19 +7,10 @@ import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import Linkbar from '../../components/Linkbar/Linkbar';
 import categories from '../../categories';
 
-
-interface IRoadmap {
-  title: string;
-  id: string;
-  category: string;
-  __typename: string;
-}
-
-
 const Discover: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const [currCategory, setCurrCategory] = useState('');
-
+  
   // on click set state of selected category
   const handleClick = (clicked: string) => {
     setCurrCategory(clicked);

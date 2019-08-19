@@ -1,14 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-interface ITopicDetailsProps {
-  topicId: number
-}
-
-const TopicDetails : React.FC<ITopicDetailsProps> = ({ topicId }) => (<div>{topicId}</div>);
-
-TopicDetails.propTypes = {
-  topicId: PropTypes.number.isRequired,
-};
+const TopicDetails : React.FC = () => (<div>TopicDetails</div>);
 
 export default TopicDetails;

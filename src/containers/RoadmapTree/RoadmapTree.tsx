@@ -1,7 +1,32 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './RoadmapTree.css';
+
+// Setup query to get all topics for the Roadmap
+const GET_TOPICS = gql`
+  query gettopics($id: ID!) {
+    topics(RoadmapId: $id) {
+      id
+      title
+      rowNumber
+    }
+}`;
+
+const CREATE_TOPIC = gql`
+  mutation createtopic($RoadmapId: ID!, $title: String!, $rowNumber: Int!) {
+    createTopic(RoadmapId: $RoadmapId, title: $title, rowNumber: $rowNumber) {
+      title
+      id
+    }
+}`;
+
+const DELETE_TOPIC = gql`
+  mutation deleteTopic($topicId: ID!) {
+    deleteTopic(id: $topicId)
+}`;
 
 interface ITopic {
   id: string
@@ -10,53 +35,94 @@ interface ITopic {
 }
 
 interface RoadmapTreeProps {
-  topics: ITopic[]
-  handleCreateTopic: () => void
-  handleSelectTopic: (e: React.MouseEvent<HTMLElement>) => void
+  matchId: string,
 }
 
 interface IRowsData {
   [keys: string]: ITopic[]
 }
 
-const RoadmapTree: React.SFC<RoadmapTreeProps> = (
-  { topics, handleCreateTopic, handleSelectTopic },
-) => {
-  const rowsData: IRowsData = topics.reduce((obj: IRowsData, topic: ITopic) => {
-    const { rowNumber } = topic;
-    if (obj[rowNumber]) obj[rowNumber].push(topic);
-    else obj[rowNumber] = [topic]; // eslint-disable-line no-param-reassign
-    return obj;
-  }, {});
+const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
+  const client = useApolloClient();
+  const { data, loading, refetch } = useQuery(GET_TOPICS, {
+    variables: { id: matchId },
+  });
+  const [createTopic] = useMutation(CREATE_TOPIC);
+  const [deleteTopic] = useMutation(DELETE_TOPIC);
+  if (loading) return <p>Loading...</p>;
+
+  const rowsData = data.topics.reduce(
+    (obj: IRowsData, topic: ITopic) => {
+      const { rowNumber } = topic;
+      if (obj[rowNumber]) obj[rowNumber].push(topic);
+      else obj[rowNumber] = [topic]; // eslint-disable-line no-param-reassign
+      return obj;
+    }, {},
+  );
+
+  const keys = Object.keys(rowsData);
+  const dataLen = keys.length;
+  if (dataLen === 0) {
+    const arrNum = keys.map((key) => Number(key));
+    if (arrNum.length) rowsData[Math.max(...arrNum) + 1] = [];
+    else rowsData[0] = [];
+  }
+
+  async function handleAddTopic(rowNum: string) {
+    try {
+      const { data }: any = await createTopic({ // eslint-disable-line no-shadow
+        variables: { RoadmapId: matchId, title: 'New Topic', rowNumber: Number(rowNum) },
+      });
+      // Get the id of the new topic and save it on cache: property "selectedTopic"
+      client.writeData({ data: { selectedTopicId: data.createTopic.id } });
+      // TODO: synchronize the title field on topics details with title <p> on Topic component
+      await refetch();
+    } catch (err) {
+      console.log('not possible to create new topic on this row!!'); // eslint-disable-line no-console
+    }
+  }
+
+  async function handleDeleteTopic(topicId: string) {
+    try {
+      await deleteTopic({ variables: { topicId } });
+      refetch();
+    } catch (err) {
+      console.log('This topic doesn\'t exist anymore!!'); // eslint-disable-line no-console
+    }
+  }
+
+  function handleAddRow() {
+    const arrNum = keys.map((key) => Number(key));
+    const newRowNum = Math.max(...arrNum) + 1;
+    const rowNum = newRowNum.toString();
+    handleAddTopic(rowNum);
+  }
+
   const topicsRows = Object.keys(rowsData).map((rowNumber) => (
     <TopicsRow
       topics={rowsData[rowNumber]}
       key={rowNumber}
-      handleCreateTopic={handleCreateTopic}
-      handleSelectTopic={handleSelectTopic}
+      rowNum={rowNumber}
+      handleAddTopic={handleAddTopic}
+      handleDeleteTopic={handleDeleteTopic}
     />
   ));
+  const buttonAddRow = dataLen > 0 && (<button type="button" onClick={handleAddRow}>Add Row</button>);
 
   return (
     <div>
-      {topicsRows}
-      <TopicsRow
-        topics={[]}
-        handleCreateTopic={handleCreateTopic}
-        handleSelectTopic={handleSelectTopic}
-      />
+      <div>
+        {topicsRows}
+      </div>
+      <div>
+        {buttonAddRow}
+      </div>
     </div>
   );
 };
 
 RoadmapTree.propTypes = {
-  topics: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    rowNumber: PropTypes.number.isRequired,
-  }).isRequired).isRequired,
-  handleCreateTopic: PropTypes.func.isRequired,
-  handleSelectTopic: PropTypes.func.isRequired,
+  matchId: PropTypes.string.isRequired,
 };
 
 export default RoadmapTree;
