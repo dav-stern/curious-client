@@ -16,10 +16,6 @@ interface IRoadmap {
   __typename: string;
 }
 
-interface IUserID {
-  id: number;
-}
-
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getRoadmap($id: ID!) {
@@ -114,13 +110,13 @@ const MainDashboard: React.FC = () => {
       <div>
         <Navbar />
         <div className="button-container">
-          <Link to="'/discover"><Button handleClick={() => {}} value="Discover" /></Link>
+          <Link to="/discover"><Button handleClick={() => {}} value="Discover" /></Link>
           <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
         </div>
       </div>
     );
   }
-    
+
   // else render roadmaps on dashboard
   const roadmaps = data.roadmaps.map((item: IRoadmap) => (
     <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>

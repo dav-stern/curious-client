@@ -11,13 +11,13 @@ import categories from '../../categories';
 
 
 const ALL_ROADMAPS = gql`
-query roadmaps {
-  roadmaps {
-    id
-    title
-    category
+  {
+    roadmaps {
+      id
+      title
+      category
+    }
   }
-}
 `;
 
 interface IRoadmap {
@@ -34,9 +34,7 @@ const Discover: React.FC = () => {
   const [results, setResults] = useState([]);
 
   // fetching roadmaps from database
-  const { data, loading, refetch } = useQuery(ALL_ROADMAPS);
-  // DELETE ONCE MAINDASHBOARD WORKS
-  refetch();
+  const { data, loading } = useQuery(ALL_ROADMAPS);
   // store search results temporarily
   let searchResults: any;
 
