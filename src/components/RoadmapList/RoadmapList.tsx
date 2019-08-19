@@ -10,25 +10,15 @@ interface IRoadmap {
 }
 
 interface RoadmapListProps {
-  results: IRoadmap[] | any;
   data: IRoadmap[];
 }
 
-const RoadmapList: React.FC<RoadmapListProps> = ({ results, data }) => {
-  let roadmaps = results;
-  if (!results.length) {
-    roadmaps = data && data.map((item: IRoadmap) => (
-      <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-        {item.title}
-      </Link>
-    ));
-  } else {
-    roadmaps = results && results.map((item: IRoadmap) => (
-      <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-        {item.title}
-      </Link>
-    ));
-  }
+const RoadmapList: React.FC<RoadmapListProps> = ({ data }) => {
+  const roadmaps = data && data.map((item: IRoadmap) => (
+    <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+      {item.title}
+    </Link>
+  ));
   return (
     <div className="container">
       {roadmaps}
@@ -37,12 +27,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ results, data }) => {
 };
 
 RoadmapList.propTypes = {
-  results: PropTypes.arrayOf(PropTypes.any),
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
-};
-
-RoadmapList.defaultProps = {
-  results: [],
 };
 
 

@@ -10,9 +10,9 @@ import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import categories from '../../categories';
 
 
-const ALL_ROADMAPS = gql`
-query roadmaps {
-  roadmaps {
+const GET_ROADMAPS_CATEGORY = gql`
+query roadmaps($category: String, $title: String) {
+  roadmaps(category: $category, title: $title) {
     id
     title
     category
@@ -30,54 +30,26 @@ interface IRoadmap {
 
 const Discover: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
-  const [results, setResults] = useState([]);
   const [currCategory, setCurrCategory] = useState('');
 
   // fetching roadmaps from database
-  const { data, loading } = useQuery(ALL_ROADMAPS);
-
+  const { data, loading, refetch } = useQuery(GET_ROADMAPS_CATEGORY);
 
   // filter for clicked category only
   const renderCategories = (clickedCat: string) => {
     setCurrCategory(clickedCat);
-    let match;
     if (clickedCat === 'Popular') {
-      match = data.roadmaps;
+      refetch({ category: '' });
     } else {
-      match = data.roadmaps && data.roadmaps.filter(
-        (roadmap: IRoadmap) => roadmap.category === clickedCat,
-      );
+      refetch({ category: clickedCat });
     }
-    setResults(match);
   };
 
-  // when user types change roadmaps to matching regex
   const renderSearchResults = () => {
-    let match;
-    // regex for search functionality
-    function escapeRegexCharacters(str: string) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-    // escape whitespace characters
-    const escapedValue = escapeRegexCharacters(searchInput.trim());
-    const regex = new RegExp(`^${escapedValue}`, 'i');
-
-    // return search results if match is found
     if (currCategory === 'Popular' || currCategory === '') {
-      match = data.roadmaps && data.roadmaps.filter(
-        (roadmap: IRoadmap) => regex.test(roadmap.title),
-      );
+      refetch({ title: searchInput });
     } else {
-      match = data.roadmaps && data.roadmaps.filter(
-        (roadmap: IRoadmap) => regex.test(roadmap.title) && roadmap.category === currCategory,
-      );
-    }
-    // if no match show all roadmaps of this category
-    if (data.roadmaps && !match.length) {
-      renderCategories(currCategory);
-    } else {
-      // if match show matched roadmaps
-      setResults(match);
+      refetch({ title: searchInput, category: currCategory });
     }
   };
 
@@ -87,13 +59,9 @@ const Discover: React.FC = () => {
     setSearchInput('');
   };
 
-  const handleChange = () => {
-    renderSearchResults();
-  };
-
   // render when user types in searchbar only
   useEffect(() => {
-    handleChange();
+    renderSearchResults();
   }, [searchInput]);
 
   if (loading) return null;
@@ -116,7 +84,7 @@ const Discover: React.FC = () => {
           </div>
         </label>
       </div>
-      <RoadmapList results={results} data={data.roadmaps} />
+      <RoadmapList data={data.roadmaps} />
     </>
   );
 };
