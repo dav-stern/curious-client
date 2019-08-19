@@ -31,6 +31,7 @@ export interface ProtectedRouteProps extends RouteProps {
   authenticationPath: string;
 }
 
+// TODO: abstract into another module
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
   public render() {
     let redirectPath: string = '';

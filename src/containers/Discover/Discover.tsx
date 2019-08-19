@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './Discover.css';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -7,17 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../components/Navbar/Navbar';
 import Linkbar from '../../components/Linkbar/Linkbar';
+import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import categories from '../../categories';
 
-
 const ALL_ROADMAPS = gql`
-query roadmaps {
-  roadmaps {
-    id
-    title
-    category
+  {
+    roadmaps {
+      id
+      title
+      category
+    }
   }
-}
 `;
 
 interface IRoadmap {
@@ -27,66 +26,72 @@ interface IRoadmap {
   __typename: string;
 }
 
-
 const Discover: React.FC = () => {
-  const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [results, setResults] = useState([]);
+  const [currCategory, setCurrCategory] = useState('');
 
   // fetching roadmaps from database
-  const { data, loading, refetch } = useQuery(ALL_ROADMAPS);
-  // DELETE ONCE MAINDASHBOARD WORKS
-  refetch();
-  // store search results temporarily
-  let searchResults: any;
+  const { data, loading } = useQuery(ALL_ROADMAPS);
 
+  // filter for clicked category only
+  const renderCategories = (clickedCat: string) => {
+    setCurrCategory(clickedCat);
+    let match;
+    if (clickedCat === 'Popular') {
+      match = data.roadmaps;
+    } else {
+      match = data.roadmaps && data.roadmaps.filter(
+        (roadmap: IRoadmap) => roadmap.category === clickedCat,
+      );
+    }
+    setResults(match);
+  };
+
+  // when user types change roadmaps to matching regex
   const renderSearchResults = () => {
+    let match;
     // regex for search functionality
     function escapeRegexCharacters(str: string) {
       return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
     // escape whitespace characters
-    const escapedValue = escapeRegexCharacters(query.trim());
+    const escapedValue = escapeRegexCharacters(searchInput.trim());
     const regex = new RegExp(`^${escapedValue}`, 'i');
+
     // return search results if match is found
-    const match = data.roadmaps && data.roadmaps.filter(
-      (roadmap: IRoadmap) => roadmap.category === category && regex.test(roadmap.title),
-    );
-    if (match) {
-      searchResults = match.map(
-        (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
+    if (currCategory === 'Popular' || currCategory === '') {
+      match = data.roadmaps && data.roadmaps.filter(
+        (roadmap: IRoadmap) => regex.test(roadmap.title),
       );
+    } else {
+      match = data.roadmaps && data.roadmaps.filter(
+        (roadmap: IRoadmap) => regex.test(roadmap.title) && roadmap.category === currCategory,
+      );
+    }
+    // if no match show all roadmaps of this category
+    if (data.roadmaps && !match.length) {
+      renderCategories(currCategory);
+    } else {
+      // if match show matched roadmaps
+      setResults(match);
     }
   };
 
-  // filter for clicked category only
-  const renderCategories = (clickedCat: string) => {
-    const match = data.roadmaps && data.roadmaps.filter(
-      (roadmap: IRoadmap) => roadmap.category === clickedCat,
-    );
-    searchResults = match.map(
-      (item: IRoadmap) => <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>{item.title}</Link>,
-    );
-    setResults(searchResults);
-  };
-
-  // store clicked category in local state
+  // on click render roadmaps of this category
   const handleClick = (clicked: string) => {
-    setCategory(clicked);
     renderCategories(clicked);
-    setQuery('');
+    setSearchInput('');
   };
 
-  // change render componented depending on user input
   const handleChange = () => {
     renderSearchResults();
-    setResults(searchResults);
   };
 
-  // render when query is updated only
+  // render when user types in searchbar only
   useEffect(() => {
     handleChange();
-  }, [query]);
+  }, [searchInput]);
 
   if (loading) return null;
   return (
@@ -99,8 +104,8 @@ const Discover: React.FC = () => {
             type="text"
             id="search-input"
             placeholder="Search for..."
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
-            value={query}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+            value={searchInput}
             autoComplete="off"
           />
           <div id="icon-container">
@@ -108,9 +113,7 @@ const Discover: React.FC = () => {
           </div>
         </label>
       </div>
-      <div className="results-container">
-        {results}
-      </div>
+      <RoadmapList results={results} data={data.roadmaps} />
     </>
   );
 };
