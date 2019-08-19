@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
@@ -23,6 +23,11 @@ const CREATE_TOPIC = gql`
     }
 }`;
 
+const DELETE_TOPIC = gql`
+  mutation deleteTopic($topicId: ID!) {
+    deleteTopic(id: $topicId)
+}`;
+
 interface ITopic {
   id: string
   title: string
@@ -38,11 +43,11 @@ interface IRowsData {
 }
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
-  const [newRow, setNewRow] = useState(false);
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
     variables: { id: matchId },
   });
   const [createTopic] = useMutation(CREATE_TOPIC);
+  const [deleteTopic] = useMutation(DELETE_TOPIC);
   if (loading) return <p>Loading...</p>;
 
   const rowsData = data.topics.reduce(
@@ -54,54 +59,62 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
     }, {},
   );
 
-  async function handleAddTopic(e: React.MouseEvent<HTMLButtonElement>) {
+  const keys = Object.keys(rowsData);
+  const dataLen = keys.length;
+  if (dataLen === 0) {
+    const arrNum = keys.map((key) => Number(key));
+    if (arrNum.length) rowsData[Math.max(...arrNum) + 1] = [];
+    else rowsData[0] = [];
+  }
+
+  async function handleAddTopic(rowNum: string) {
     try {
-      const rowNum = e.currentTarget.id;
       await createTopic({
-        variables: { RoadmapId: matchId, title: 'urso', rowNumber: Number(rowNum) },
+        variables: { RoadmapId: matchId, title: 'New Topic', rowNumber: Number(rowNum) },
       });
+      // TODO: Get the id of the new topic and save it on cache, property "selectedTopic"
+      // TODO: synchronize the title field on topics details with title <p> on Topic component
       await refetch();
-      setNewRow(false);
     } catch (err) {
-      console.log('not possible to create new topic on this row!!');
+      console.log('not possible to create new topic on this row!!'); // eslint-disable-line no-console
+    }
+  }
+
+  async function handleDeleteTopic(topicId: string) {
+    try {
+      await deleteTopic({ variables: { topicId } });
+      refetch();
+    } catch (err) {
+      console.log('This topic doesn\'t exist anymore!!'); // eslint-disable-line no-console
     }
   }
 
   function handleAddRow() {
-    setNewRow(true);
+    const arrNum = keys.map((key) => Number(key));
+    const newRowNum = Math.max(...arrNum) + 1;
+    const rowNum = newRowNum.toString();
+    handleAddTopic(rowNum);
   }
 
-  let dataLen = Object.keys(rowsData).length;
-  if (newRow || dataLen === 0) {
-    rowsData[dataLen + 1] = [];
-    dataLen += 1;
-  }
-
-  const topicsRows = Object.keys(rowsData).map((rowNumber, idx) => {
-    if (idx === dataLen - 1) {
-      return (
-        <TopicsRow
-          topics={rowsData[rowNumber]}
-          key={rowNumber}
-          rowNum={rowNumber}
-          handleAddTopic={handleAddTopic}
-          handleAddRow={handleAddRow}
-        />
-      );
-    }
-    return (
-      <TopicsRow
-        topics={rowsData[rowNumber]}
-        key={rowNumber}
-        rowNum={rowNumber}
-        handleAddTopic={handleAddTopic}
-      />
-    );
-  });
+  const topicsRows = Object.keys(rowsData).map((rowNumber) => (
+    <TopicsRow
+      topics={rowsData[rowNumber]}
+      key={rowNumber}
+      rowNum={rowNumber}
+      handleAddTopic={handleAddTopic}
+      handleDeleteTopic={handleDeleteTopic}
+    />
+  ));
+  const buttonAddRow = dataLen > 0 && (<button type="button" onClick={handleAddRow}>Add Row</button>);
 
   return (
     <div>
-      {topicsRows}
+      <div>
+        {topicsRows}
+      </div>
+      <div>
+        {buttonAddRow}
+      </div>
     </div>
   );
 };

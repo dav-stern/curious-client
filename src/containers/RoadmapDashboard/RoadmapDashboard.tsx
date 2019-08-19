@@ -1,6 +1,4 @@
 import React from 'react';
-// import gql from 'graphql-tag';
-// import { useQuery, useMutation } from '@apollo/react-hooks';
 import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 import './RoadmapDashboard.css';
 import RoadmapTree from '../RoadmapTree/RoadmapTree';

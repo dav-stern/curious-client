@@ -17,40 +17,33 @@ interface ITopic {
 interface TopicsProps {
   topics: ITopic[]
   rowNum: string
-  handleAddTopic: (e: React.MouseEvent<HTMLButtonElement>) => void
-  handleAddRow?: () => void
+  handleAddTopic: (rowNum: string) => void
+  handleDeleteTopic: (topicId: string) => void
 }
 
 const TopicsRow: React.SFC<TopicsProps> = ({
   topics,
   handleAddTopic,
   rowNum,
-  handleAddRow,
+  handleDeleteTopic,
 }) => {
   const arrTopics = topics.map((topic) => (
-    <Topic id={topic.id} title={topic.title} key={topic.id} />
+    <Topic id={topic.id} title={topic.title} key={topic.id} handleDeleteTopic={handleDeleteTopic} />
   ));
-  const addRowButton = arrTopics.length > 0 && handleAddRow
-    && (<button onClick={handleAddRow} id={rowNum} type="button">Add Row</button>);
+
   return (
     <div className="topics-row-container">
       <div>
         <button
           type="button"
-          onClick={handleAddTopic}
-          id={rowNum}
+          onClick={() => { handleAddTopic(rowNum); }}
         >
           Add Topic
         </button>
       </div>
       <div className="topics-container">{arrTopics}</div>
-      {addRowButton}
     </div>
   );
-};
-
-TopicsRow.defaultProps = {
-  handleAddRow: undefined,
 };
 
 TopicsRow.propTypes = {
@@ -61,7 +54,7 @@ TopicsRow.propTypes = {
   }).isRequired).isRequired,
   handleAddTopic: PropTypes.func.isRequired,
   rowNum: PropTypes.string.isRequired,
-  handleAddRow: PropTypes.func,
+  handleDeleteTopic: PropTypes.func.isRequired,
 };
 
 export default TopicsRow;

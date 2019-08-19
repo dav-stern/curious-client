@@ -6,18 +6,20 @@ import PropTypes from 'prop-types';
 interface TopicNodeProps {
   id: string,
   title: string
+  handleDeleteTopic: (topicId: string) => void
 }
 
-const Topic: React.FC<TopicNodeProps> = ({ id, title }) => {
+const Topic: React.FC<TopicNodeProps> = ({ id, title, handleDeleteTopic }) => {
   const client = useApolloClient();
-  function handleSelectTopic(e: React.MouseEvent<HTMLElement>) {
-    client.writeData({ data: { selectedTopicId: e.currentTarget.id } });
+  function handleSelectTopic(topicId: string) {
+    client.writeData({ data: { selectedTopicId: topicId } });
   }
   return (
     // TODO: "Coding for the keyboard is important for users with physical disabilities
     // who cannot use a mouse, AT compatibility, and screenreader users."
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div className="topic-container" onClick={handleSelectTopic} role="button" tabIndex={-1} id={id}>
+    <div className="topic-container" onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
+      <button type="button" onClick={() => { handleDeleteTopic(id); }}><span>𝗑</span></button>
       <div>{id}</div>
       <div>{title}</div>
     </div>
@@ -27,6 +29,7 @@ const Topic: React.FC<TopicNodeProps> = ({ id, title }) => {
 Topic.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  handleDeleteTopic: PropTypes.func.isRequired,
 };
 
 export default Topic;
