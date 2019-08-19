@@ -18,7 +18,7 @@ interface LoginProps {
   setErrorMsg: (msg: string) => void,
 }
 
-const Login: React.SFC<LoginProps> = ({ errorMsg, setErrorMsg }) => {
+const Login: React.FC<LoginProps> = ({ errorMsg, setErrorMsg }) => {
   const client = useApolloClient();
 
   const [loginInputs, setLoginInputs] = useState({ email: '', password: '' });

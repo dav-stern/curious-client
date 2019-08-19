@@ -62,12 +62,10 @@ const Discover: React.FC = () => {
     // return search results if match is found
     if (currCategory === 'Popular' || currCategory === '') {
       match = data.roadmaps && data.roadmaps.filter(
-        (roadmap: IRoadmap) => regex.test(roadmap.title),
-      );
+        (roadmap: IRoadmap) => regex.test(roadmap.title));
     } else {
       match = data.roadmaps && data.roadmaps.filter(
-        (roadmap: IRoadmap) => regex.test(roadmap.title) && roadmap.category === currCategory,
-      );
+        (roadmap: IRoadmap) => regex.test(roadmap.title) && roadmap.category === currCategory);
     }
     // if no match show all roadmaps of this category
     if (data.roadmaps && !match.length) {
