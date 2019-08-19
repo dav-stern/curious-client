@@ -35,7 +35,7 @@ const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
         value={titleInput}
         required
       />
-      <select name="categories" form="roadmap-form" onChange={handleSelection} defaultValue="IT">
+      <select name="categories" form="roadmap-form" onChange={handleSelection} defaultValue="Music">
         {categoryJSX}
       </select>
       <button type="submit">ADD</button>
