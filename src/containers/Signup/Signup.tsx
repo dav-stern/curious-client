@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 
-import { AuthForm } from '../AuthForm/AuthForm';
+import { AuthForm } from '../../components/AuthForm/AuthForm';
 
 const SIGN_UP = gql`
   mutation signup($name: String!, $email: String!, $password: String!) {
@@ -13,12 +13,12 @@ const SIGN_UP = gql`
   }
 `;
 
-interface SignUpCompProps {
+interface SignupProps {
   errorMsg: string,
   setErrorMsg: (msg: string) => void,
 }
 
-const SignUpComp: React.SFC<SignUpCompProps> = ({ errorMsg, setErrorMsg }) => {
+const Signup: React.SFC<SignupProps> = ({ errorMsg, setErrorMsg }) => {
   const client = useApolloClient();
 
   const [signUpInputs, setSignUpInputs] = useState({ name: '', email: '', password: '' });
@@ -61,9 +61,9 @@ const SignUpComp: React.SFC<SignUpCompProps> = ({ errorMsg, setErrorMsg }) => {
   );
 };
 
-SignUpComp.propTypes = {
+Signup.propTypes = {
   errorMsg: PropTypes.string.isRequired,
   setErrorMsg: PropTypes.func.isRequired,
 };
 
-export default SignUpComp;
+export default Signup;

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 
-import { AuthForm } from '../AuthForm/AuthForm';
+import { AuthForm } from '../../components/AuthForm/AuthForm';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -13,12 +13,12 @@ const LOGIN = gql`
   }
 `;
 
-interface LoginCompProps {
+interface LoginProps {
   errorMsg: string,
   setErrorMsg: (msg: string) => void,
 }
 
-const LoginComp: React.SFC<LoginCompProps> = ({ errorMsg, setErrorMsg }) => {
+const Login: React.SFC<LoginProps> = ({ errorMsg, setErrorMsg }) => {
   const client = useApolloClient();
 
   const [loginInputs, setLoginInputs] = useState({ email: '', password: '' });
@@ -57,9 +57,9 @@ const LoginComp: React.SFC<LoginCompProps> = ({ errorMsg, setErrorMsg }) => {
   );
 };
 
-LoginComp.propTypes = {
+Login.propTypes = {
   errorMsg: PropTypes.string.isRequired,
   setErrorMsg: PropTypes.func.isRequired,
 };
 
-export default LoginComp;
+export default Login;

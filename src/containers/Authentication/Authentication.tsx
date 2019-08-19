@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import LoginComp from '../../components/LoginComp/LoginComp';
-import SignUpComp from '../../components/SignUpComp/SignUpComp';
+import Login from '../../containers/Login/Login';
+import Signup from '../../containers/Signup/Signup';
 
 import Navbar from '../../components/Navbar/Navbar';
 
@@ -49,8 +49,8 @@ const Authentication: React.FC = () => {
         </div>
         {
           (tab === 'login')
-            ? <LoginComp errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
-            : <SignUpComp errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
+            ? <Login errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
+            : <Signup errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
         }
       </div>
     </div>
