@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import LoginComp from '../../components/LoginComp/LoginComp';
 import SignUpComp from '../../components/SignUpComp/SignUpComp';
 
+import Navbar from '../../components/Navbar/Navbar';
+
 import './Authentication.css';
 
 const Authentication: React.FC = () => {
@@ -24,26 +26,32 @@ const Authentication: React.FC = () => {
   };
 
   return (
-    <div className="external__container">
-      <div className="banner">
-        <h1 className="us">CURIO.US</h1>
-      </div>
-      <div className="LISU__container">
-        <div className="LISU__wrapper">
-          <div className="form__header">
-            <button type="button" ref={loginRef} onClick={handleTabToggle} className={`login__selector ${loginSelected === 'selected' ? 'selected' : ''}`}>
-              <p>Login</p>
-            </button>
-            <button type="button" ref={signUpRef} onClick={handleTabToggle} className={`login__selector ${loginSelected === '' ? 'selected' : ''}`}>
-              <p>Sign-Up</p>
-            </button>
-          </div>
-          {
-            (tab === 'login')
-              ? <LoginComp errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
-              : <SignUpComp errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
-          }
+    <div className="LISU__container">
+      <Navbar />
+      <div className="LISU__wrapper">
+        <div className="form__header">
+          <button
+            type="button"
+            ref={loginRef}
+            onClick={handleTabToggle}
+            className={`login__selector ${loginSelected === 'selected' ? 'selected' : ''}`}
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            ref={signUpRef}
+            onClick={handleTabToggle}
+            className={`login__selector ${loginSelected === '' ? 'selected' : ''}`}
+          >
+            Sign-Up
+          </button>
         </div>
+        {
+          (tab === 'login')
+            ? <LoginComp errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
+            : <SignUpComp errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
+        }
       </div>
     </div>
   );
