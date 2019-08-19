@@ -9,15 +9,14 @@ import Linkbar from '../../components/Linkbar/Linkbar';
 import RoadmapList from '../../components/RoadmapList/RoadmapList';
 import categories from '../../categories';
 
-
 const ALL_ROADMAPS = gql`
-query roadmaps {
-  roadmaps {
-    id
-    title
-    category
+  {
+    roadmaps {
+      id
+      title
+      category
+    }
   }
-}
 `;
 
 interface IRoadmap {
@@ -27,7 +26,6 @@ interface IRoadmap {
   __typename: string;
 }
 
-
 const Discover: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const [results, setResults] = useState([]);
@@ -35,7 +33,6 @@ const Discover: React.FC = () => {
 
   // fetching roadmaps from database
   const { data, loading } = useQuery(ALL_ROADMAPS);
-
 
   // filter for clicked category only
   const renderCategories = (clickedCat: string) => {
