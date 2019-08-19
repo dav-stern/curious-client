@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -7,7 +6,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import './TopicDetails.css';
 
 interface ITopicDetailsProps {
-  topicId: number
+  selectedTopicId: string
 }
 
 const GET_TOPIC_DETAILS = gql`
@@ -39,31 +38,37 @@ const UPDATE_TOPIC = gql`
   }
 `;
 
-// create onClick function that toggles CSS displays for all fields
-// create function to use mutation for the save button
+const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
+  // Get details of selected topic
+  const { data, loading, refetch } = useQuery(GET_TOPIC_DETAILS, {
+    variables: { id: selectedTopicId },
+  });
 
-const TopicDetails : React.FC<ITopicDetailsProps> = ({ topicId }) => {
+  // Set the initial values foe the local state
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [resourcesInput, setResourcesInput] = useState('');
 
+  // Sets the local state to the previous Topic details
+  useEffect(() => {
+    if (data && data.topics) {
+      setTitleInput(data.topics[0].title);
+      setDescriptionInput(data.topics[0].description);
+      setResourcesInput(data.topics[0].resources);
+    }
+  }, [data]);
+
   const [updateTopic] = useMutation(UPDATE_TOPIC, {
     variables: {
-      id: topicId,
+      id: selectedTopicId,
       title: titleInput,
       description: descriptionInput,
       resources: resourcesInput,
     },
   });
 
-  const { data, loading, refetch } = useQuery(GET_TOPIC_DETAILS, {
-    variables: { id: topicId },
-  });
   if (loading) return <p>Loading...</p>;
-  if (!data.topics[0]) return null;
-
-  // add below -> , completed, Checklist
-  const { title, description, resources } = data.topics[0];
+  if (!data) return null;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputClass = e.target.className;
@@ -100,7 +105,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ topicId }) => {
 };
 
 TopicDetails.propTypes = {
-  topicId: PropTypes.number.isRequired,
+  selectedTopicId: PropTypes.string.isRequired,
 };
 
 export default TopicDetails;
