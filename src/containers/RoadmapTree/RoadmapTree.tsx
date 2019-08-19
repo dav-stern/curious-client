@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './RoadmapTree.css';
@@ -43,6 +43,7 @@ interface IRowsData {
 }
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
+  const client = useApolloClient();
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
     variables: { id: matchId },
   });
@@ -69,10 +70,11 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
 
   async function handleAddTopic(rowNum: string) {
     try {
-      await createTopic({
+      const { data }: any = await createTopic({ // eslint-disable-line no-shadow
         variables: { RoadmapId: matchId, title: 'New Topic', rowNumber: Number(rowNum) },
       });
-      // TODO: Get the id of the new topic and save it on cache, property "selectedTopic"
+      // Get the id of the new topic and save it on cache: property "selectedTopic"
+      client.writeData({ data: { selectedTopicId: data.createTopic.id } });
       // TODO: synchronize the title field on topics details with title <p> on Topic component
       await refetch();
     } catch (err) {
