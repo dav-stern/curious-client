@@ -62,6 +62,7 @@ const MainDashboard: React.FC = () => {
   const [selectionInput, setSelectionInput] = useState('Music');
   const [flag, setFlag] = useState(false);
   // get userID from token
+  // TODO: abstract this into an authentication service
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
 
