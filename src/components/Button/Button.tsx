@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './Button.css';
 
 interface ButtonProps {
-  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => any,
+  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
   value: string,
 }
 

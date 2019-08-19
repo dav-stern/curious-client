@@ -6,7 +6,7 @@ import './App.css';
 import Authentication from './containers/Authentication/Authentication';
 import MainDashboard from './containers/MainDashboard/MainDashboard';
 import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
-// import Discover from './containers/Discover/Discover';
+import Discover from './containers/Discover/Discover';
 
 const App: React.FC = () => (
   <Router>
@@ -18,7 +18,7 @@ const App: React.FC = () => (
         component={MainDashboard}
       />
       <ProtectedRoute authenticationPath="/login" path="/roadmap/:id" component={RoadmapDashboard} />
-      {/* <ProtectedRoute path="/discover" component={Discover} /> */}
+      <ProtectedRoute authenticationPath="/login" path="/discover" component={Discover} />
       <Redirect exact from="/" to="/dashboard" />
     </Switch>
   </Router>
@@ -28,6 +28,7 @@ export interface ProtectedRouteProps extends RouteProps {
   authenticationPath: string;
 }
 
+// TODO: abstract into another module
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
   public render() {
     let redirectPath: string = '';

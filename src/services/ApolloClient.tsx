@@ -27,4 +27,10 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
 });
 
+cache.writeData({
+  data: {
+    selectedTopicId: '',
+  },
+});
+
 export default client;

@@ -29,7 +29,6 @@ const Login: React.SFC<LoginProps> = ({ errorMsg, setErrorMsg }) => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     // TODO: abstract the signup logic to a service
     e.preventDefault();
-    // TODO: any??
     const res: any = await login();
     if (res.data.login) {
       localStorage.setItem('token', res.data.login);
