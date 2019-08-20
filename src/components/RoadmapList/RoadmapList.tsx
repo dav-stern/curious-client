@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,7 @@ interface RoadmapListProps {
 }
 
 const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) => {
+  const [showButton, setShowButton] = useState(true);
   // fetching roadmaps from database
   const {
     data,
@@ -58,6 +59,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       variables: { offset: data.roadmaps.length },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
+        if (fetchMoreResult.length < 20) setShowButton(false);
         return { ...prev, roadmaps: [...prev.roadmaps, ...fetchMoreResult.roadmaps] };
       },
     });
@@ -74,6 +76,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   }, [searchInput]);
 
   if (loading) return null;
+  if (data.roadmaps.length < 20 && showButton) setShowButton(false);
 
   const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
     <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
@@ -85,7 +88,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       <div className="container">
         {roadmaps}
       </div>
-      <button type="button" onClick={handleNext}>Load More</button>
+      {data.roadmaps.length === 20 && <button type="button" onClick={handleNext}>Load More</button>}
     </div>
   );
 };
