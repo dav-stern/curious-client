@@ -19,7 +19,7 @@ interface IRoadmap {
 // roadmaps (query)
 const GET_ROADMAPS = gql`
 query getRoadmap($id: ID!) {
-  roadmaps(id: $id) {
+  roadmaps(UserId: $id) {
     id
     title
     category

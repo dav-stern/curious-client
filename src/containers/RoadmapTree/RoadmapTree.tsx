@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './RoadmapTree.css';
@@ -28,6 +28,19 @@ const DELETE_TOPIC = gql`
     deleteTopic(id: $topicId)
 }`;
 
+const GET_ROADMAPS = gql`
+query getRoadmap($id: ID!) {
+  roadmaps(id: $id) {
+    title
+    category
+    topics {
+      title
+      rowNumber
+    }
+  }
+}
+`;
+
 interface ITopic {
   id: string
   title: string
@@ -44,9 +57,19 @@ interface IRowsData {
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   const client = useApolloClient();
+  let RmID: string | number | undefined = (window.location.pathname
+    .split('/')
+    .find((el, i, coll) => coll[i - 1] === 'roadmap' || coll[i - 1] === 'preview'));
+
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
     variables: { id: matchId },
   });
+
+  const [getRoadmapInfo, { loading: l, data: d, called }] = useLazyQuery(GET_ROADMAPS, {
+    variables: { id: '2' },
+    fetchPolicy: 'network-only',
+  });
+
   const isPreview = window.location.pathname.includes('preview');
 
   const [createTopic] = useMutation(CREATE_TOPIC);
@@ -111,14 +134,17 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
     />
   ));
   const buttonAddRow = dataLen > 0 && (<button type="button" onClick={handleAddRow}>Add Row</button>);
-
   return (
-    <div>
+    <>
       <div>
-        {topicsRows}
+        <div>
+          {topicsRows}
+        </div>
+        {(!isPreview) ? <div>{buttonAddRow}</div> : null}
       </div>
-      {(!isPreview) ? <div>{buttonAddRow}</div> : null}
-    </div>
+      <button
+        onClick={() => { getRoadmapInfo() }}>Fork</button>
+    </>
   );
 };
 
