@@ -1,7 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
-import jwtDecode from 'jwt-decode';
 import PropTypes from 'prop-types';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './RoadmapTree.css';
@@ -49,7 +48,6 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
     variables: { id: matchId },
   });
   const isPreview = window.location.pathname.includes('preview');
-  console.log(isPreview);
 
   const [createTopic] = useMutation(CREATE_TOPIC);
   const [deleteTopic] = useMutation(DELETE_TOPIC);

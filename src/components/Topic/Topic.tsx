@@ -10,7 +10,12 @@ interface TopicNodeProps {
   handleDeleteTopic: (topicId: string) => void
 }
 
-const Topic: React.FC<TopicNodeProps> = ({ id, title, handleDeleteTopic, isPreview }) => {
+const Topic: React.FC<TopicNodeProps> = ({
+  id,
+  title,
+  handleDeleteTopic,
+  isPreview,
+}) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
     client.writeData({ data: { selectedTopicId: topicId } });
@@ -20,9 +25,10 @@ const Topic: React.FC<TopicNodeProps> = ({ id, title, handleDeleteTopic, isPrevi
     // who cannot use a mouse, AT compatibility, and screenreader users."
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div className="topic-container" onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
-      {(!isPreview)
-        ? <button type="button" onClick={() => { handleDeleteTopic(id); }}><span>𝗑</span></button>
-        : null
+      {
+        (!isPreview)
+          ? <button type="button" onClick={() => { handleDeleteTopic(id); }}><span>𝗑</span></button>
+          : null
       }
       <div>{id}</div>
       <div>{title}</div>
@@ -34,6 +40,7 @@ Topic.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   handleDeleteTopic: PropTypes.func.isRequired,
+  isPreview: PropTypes.bool.isRequired,
 };
 
 export default Topic;

@@ -4,15 +4,10 @@ import RoadmapTree from '../RoadmapTree/RoadmapTree';
 
 type TParams = { id: string };
 
-const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
-
-  return (
-    <div className="roadmap-tree-container">
-      <RoadmapTree
-        matchId={match.params.id}
-      />
-    </div>
-  );
-};
+const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => (
+  <div className="roadmap-tree-container">
+    <RoadmapTree matchId={match.params.id} />
+  </div>
+);
 
 export default RoadmapPreview;

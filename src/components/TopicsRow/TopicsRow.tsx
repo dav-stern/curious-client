@@ -35,7 +35,8 @@ const TopicsRow: React.SFC<TopicsProps> = ({
       id={topic.id}
       title={topic.title}
       key={topic.id}
-      handleDeleteTopic={handleDeleteTopic} />
+      handleDeleteTopic={handleDeleteTopic}
+    />
   ));
 
   return (
@@ -48,7 +49,7 @@ const TopicsRow: React.SFC<TopicsProps> = ({
               onClick={() => { handleAddTopic(rowNum); }}
             >
               Add Topic
-           </button>
+            </button>
           </div>
         )
         : null}
@@ -58,6 +59,7 @@ const TopicsRow: React.SFC<TopicsProps> = ({
 };
 
 TopicsRow.propTypes = {
+  isPreview: PropTypes.bool.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
