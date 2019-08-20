@@ -1,10 +1,21 @@
 import gql from 'graphql-tag';
 import React, { useState, useEffect } from 'react';
+import ReactMde from 'react-mde';
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Checklist from '../Checklist/Checklist';
 
 import './TopicDetails.css';
+
+const converter = new Showdown.Converter({
+  tables: true,
+  simplifiedAutoLink: true,
+  strikethrough: true,
+  tasklists: true,
+});
+
 
 interface ITopicDetailsProps {
   selectedTopicId: string
@@ -65,6 +76,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [resourcesInput, setResourcesInput] = useState('');
+  const [selectedTab, setSelectedTab] = useState<'preview' | undefined | 'write' >('write');
   // const [checklistInput, setChecklistInput] = useState([]);
 
   // Set the local state to the previous Topic details
@@ -93,7 +105,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   if (loading) return <p>Loading...</p>;
   if (!data) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement> | any) => {
     const inputClass = e.target.className;
     if (inputClass === 'topic-title') setTitleInput(e.target.value);
     if (inputClass === 'topic-description') setDescriptionInput(e.target.value);
@@ -129,7 +141,6 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
       console.log(error); // eslint-disable-line no-console
     }
   };
-
   return (
     <div className="topic-details-card">
       <form onSubmit={handleSubmit}>
@@ -142,7 +153,14 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
         </div>
         <div className="resources-block">
           <h4>Resources:</h4>
-          <textarea className="topic-resources" value={resourcesInput} onChange={handleChange} />
+          <ReactMde
+            className="topic-resources"
+            value={resourcesInput}
+            selectedTab={selectedTab}
+            onChange={setResourcesInput}
+            onTabChange={setSelectedTab}
+            generateMarkdownPreview={(markdown) => Promise.resolve(converter.makeHtml(markdown))}
+          />
         </div>
         <button type="submit">Save</button>
       </form>
