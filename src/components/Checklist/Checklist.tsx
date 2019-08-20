@@ -50,7 +50,6 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
   const { data, loading, refetch } = useQuery(GET_CHECKLIST, {
     variables: { id: selectedTopicId },
   });
-  const [checklistTitleInput, setChecklistTitleInput] = useState('');
   const [newChecklistItemInput, setNewChecklistItemInput] = useState('');
 
   const [createChecklistItem] = useMutation(CREATE_CHECKLIST_ITEM);
@@ -72,12 +71,11 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
     }
   };
 
-  const handleUpdateChecklistItem = async (checklistItemId: string) => {
+  const handleUpdateChecklistItem = async (checklistItemId: string, checklistItemTitle: string) => {
     try {
       await updateChecklistItem({
-        variables: { id: checklistItemId, title: checklistTitleInput },
+        variables: { id: checklistItemId, title: checklistItemTitle },
       });
-      setChecklistTitleInput('');
     } catch (error) {
       console.log(error); // eslint-disable-line no-console
     }
@@ -93,8 +91,7 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'newChecklistItem') setNewChecklistItemInput(e.target.value);
-    else setChecklistTitleInput(e.target.value);
+    setNewChecklistItemInput(e.target.value);
   };
 
   const handleChecked = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,11 +110,9 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
     <ChecklistItem
       key={checklistItem.id}
       checklistItem={checklistItem}
-      handleChange={handleChange}
       handleChecked={handleChecked}
       handleDeleteChecklistItem={handleDeleteChecklistItem}
       handleUpdateChecklistItem={handleUpdateChecklistItem}
-      checklistTitleInput={checklistTitleInput}
     />
   ));
 

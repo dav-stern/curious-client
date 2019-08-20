@@ -9,21 +9,18 @@ interface IchecklistItem {
 
 interface ChecklistItemProps {
   checklistItem: IchecklistItem
-  checklistTitleInput: string
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleDeleteChecklistItem: (checklistItemId: string) => void
-  handleUpdateChecklistItem: (checklistItemId: string) => void
+  handleUpdateChecklistItem: (checklistItemId: string, checklistItemTitle: string) => void
 }
 
 const ChecklistItem: React.FC<ChecklistItemProps> = ({
   checklistItem,
-  checklistTitleInput,
-  handleChange,
   handleChecked,
   handleDeleteChecklistItem,
   handleUpdateChecklistItem,
 }) => {
+  const [checklistTitleInput, setChecklistTitleInput] = useState('');
   const [editing, setEditing] = useState(false);
 
   const handleEditing = () => {
@@ -31,8 +28,9 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
   };
 
   const handleUpdateButton = () => {
-    handleUpdateChecklistItem(checklistItem.id);
+    handleUpdateChecklistItem(checklistItem.id, checklistTitleInput);
     handleEditing();
+    setChecklistTitleInput('');
   };
 
   const handleDeleteButton = () => {
@@ -40,13 +38,18 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
     handleEditing();
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecklistTitleInput(e.target.value);
+  };
+
   return (
     <div>
       {editing
         ? (
           <div>
-            <input type="text" value={checklistTitleInput} onChange={handleChange} />
+            <input type="text" value={checklistTitleInput} onChange={handleChange} placeholder={checklistItem.title} />
             <button type="button" onClick={() => handleUpdateButton()}>Save Changes</button>
+            <button type="button" onClick={() => handleEditing()}>Cancel</button>
             <button type="button" onClick={() => handleDeleteButton()}><span>x</span></button>
           </div>
         )
@@ -66,8 +69,6 @@ ChecklistItem.propTypes = {
     title: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
   }).isRequired,
-  checklistTitleInput: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
   handleChecked: PropTypes.func.isRequired,
   handleDeleteChecklistItem: PropTypes.func.isRequired,
   handleUpdateChecklistItem: PropTypes.func.isRequired,
