@@ -1,7 +1,8 @@
+import gql from 'graphql-tag';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import Checklist from '../Checklist/Checklist';
 
 import './TopicDetails.css';
 
@@ -19,6 +20,7 @@ const GET_TOPIC_DETAILS = gql`
       completed
       rowNumber
       checklist {
+        id
         title
         completed
       }
@@ -38,7 +40,22 @@ const UPDATE_TOPIC = gql`
   }
 `;
 
+const CREATE_CHECKLIST_ITEM = gql`
+mutation createChecklistItem($TopicId: ID! $title: String!) {
+  createChecklistItem(TopicId: $TopicId, title: $title) {
+    id
+    title
+    completed
+  }
+}`;
+
+const DELETE_CHECKLIST_ITEM = gql`
+  mutation deleteChecklistItem($id: ID!) {
+    deleteChecklistItem(id: $id)
+}`;
+
 const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
+  const client = useApolloClient();
   // Get details of selected topic
   const { data, loading, refetch } = useQuery(GET_TOPIC_DETAILS, {
     variables: { id: selectedTopicId },
@@ -48,8 +65,9 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [resourcesInput, setResourcesInput] = useState('');
+  // const [checklistInput, setChecklistInput] = useState([]);
 
-  // Sets the local state to the previous Topic details
+  // Set the local state to the previous Topic details
   useEffect(() => {
     if (data && data.topics) {
       setTitleInput(data.topics[0].title);
@@ -67,6 +85,11 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     },
   });
 
+  const [createChecklistItem] = useMutation(CREATE_CHECKLIST_ITEM);
+  const [deleteChecklistItem] = useMutation(DELETE_CHECKLIST_ITEM);
+
+  // If there is no selected Topic remove the details component
+  if (!selectedTopicId) return null;
   if (loading) return <p>Loading...</p>;
   if (!data) return null;
 
@@ -75,12 +98,36 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     if (inputClass === 'topic-title') setTitleInput(e.target.value);
     if (inputClass === 'topic-description') setDescriptionInput(e.target.value);
     if (inputClass === 'topic-resources') setResourcesInput(e.target.value);
+    client.writeData({ data: { selectedTopicTitle: titleInput } });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await updateTopic();
-    refetch();
+    client.writeData({ data: { selectedTopicId: '', selectedTopicTitle: '' } });
+  };
+
+  const { checklist } = data.topics[0];
+
+  // Checklist functions
+  const handleCreateChecklistItem = async () => {
+    try {
+      await createChecklistItem({
+        variables: { TopicId: selectedTopicId, title: 'New item' },
+      });
+      refetch();
+    } catch (error) {
+      console.log(error); // eslint-disable-line no-console
+    }
+  };
+
+  const handleDeleteChecklistItem = async (checklistItemId: string) => {
+    try {
+      await deleteChecklistItem({ variables: { id: checklistItemId } });
+      refetch();
+    } catch (error) {
+      console.log(error); // eslint-disable-line no-console
+    }
   };
 
   return (
@@ -99,7 +146,11 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
         </div>
         <button type="submit">Save</button>
       </form>
-      {/* <Checklist /> */}
+      <Checklist
+        checklist={checklist}
+        handleCreateChecklistItem={handleCreateChecklistItem}
+        handleDeleteChecklistItem={handleDeleteChecklistItem}
+      />
     </div>
   );
 };
