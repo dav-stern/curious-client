@@ -84,6 +84,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
 
   async function handleDeleteTopic(topicId: string) {
     try {
+      client.writeData({ data: { selectedTopicId: '' } });
       await deleteTopic({ variables: { topicId } });
       refetch();
     } catch (err) {

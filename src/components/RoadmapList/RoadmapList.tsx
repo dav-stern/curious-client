@@ -4,10 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-
-const GET_ROADMAPS_CATEGORY = gql`
-query roadmaps($category: String, $title: String) {
-  roadmaps(category: $category, title: $title) {
+const GET_ROADMAPS = gql`
+query roadmaps($category: String, $title: String, $offset: Int, $limit: Int) {
+  roadmaps (category: $category, title: $title, offset: $offset, limit: $limit) {
     id
     title
     category
@@ -29,7 +28,12 @@ interface RoadmapListProps {
 
 const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) => {
   // fetching roadmaps from database
-  const { data, loading, refetch } = useQuery(GET_ROADMAPS_CATEGORY);
+  const {
+    data,
+    loading,
+    refetch,
+    fetchMore,
+  } = useQuery(GET_ROADMAPS);
 
   // filter for clicked category only
   const renderCategories = (clickedCat: string) => {
@@ -47,6 +51,16 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
     } else {
       refetch({ title: searchInput, category: currCategory });
     }
+  };
+
+  const handleNext = () => {
+    fetchMore({
+      variables: { offset: data.roadmaps.length },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return { ...prev, roadmaps: [...prev.roadmaps, ...fetchMoreResult.roadmaps] };
+      },
+    });
   };
 
   // on click render roadmaps of this category
@@ -67,11 +81,12 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
     </Link>
   ));
   return (
-    <>
+    <div>
       <div className="container">
         {roadmaps}
       </div>
-    </>
+      <button type="button" onClick={handleNext}>Load More</button>
+    </div>
   );
 };
 
