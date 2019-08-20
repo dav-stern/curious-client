@@ -1,7 +1,18 @@
 import React from 'react';
-import './RoadmapPreview.css';
+import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
+import RoadmapTree from '../RoadmapTree/RoadmapTree';
 
-const Discover: React.FC = () => <h1>Hello from the Preview</h1>;
+type TParams = { id: string };
 
+const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
 
-export default Discover;
+  return (
+    <div className="roadmap-tree-container">
+      <RoadmapTree
+        matchId={match.params.id}
+      />
+    </div>
+  );
+};
+
+export default RoadmapPreview;
