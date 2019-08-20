@@ -10,7 +10,6 @@ import categories from '../../categories';
 const Discover: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const [currCategory, setCurrCategory] = useState('');
-  
   // on click set state of selected category
   const handleClick = (clicked: string) => {
     setCurrCategory(clicked);

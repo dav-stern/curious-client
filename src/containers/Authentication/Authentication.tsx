@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import Login from '../../containers/Login/Login';
-import Signup from '../../containers/Signup/Signup';
+import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 
 import Navbar from '../../components/Navbar/Navbar';
 
