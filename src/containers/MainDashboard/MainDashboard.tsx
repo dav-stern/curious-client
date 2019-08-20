@@ -18,8 +18,8 @@ interface IRoadmap {
 
 // roadmaps (query)
 const GET_ROADMAPS = gql`
-query getRoadmap($id: ID!) {
-  roadmaps(id: $id) {
+query getRoadmap($UserId: ID!) {
+  roadmaps(UserId: $UserId) {
     id
     title
     category
@@ -68,7 +68,7 @@ const MainDashboard: React.FC = () => {
 
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
-    variables: { id },
+    variables: { UserId: id },
   });
   // creating 'ADD_ROADMAP' mutation
   const [createRoadmap] = useMutation(CREATE_ROADMAP, {
