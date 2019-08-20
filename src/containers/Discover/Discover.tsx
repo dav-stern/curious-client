@@ -10,7 +10,7 @@ import categories from '../../categories';
 const Discover: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const [currCategory, setCurrCategory] = useState('');
-  
+
   // on click set state of selected category
   const handleClick = (clicked: string) => {
     setCurrCategory(clicked);
@@ -18,7 +18,7 @@ const Discover: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
       <Navbar />
       <Linkbar categories={categories} handleClick={handleClick} />
       <div className="search-container">
@@ -36,10 +36,12 @@ const Discover: React.FC = () => {
           </div>
         </label>
       </div>
-      <RoadmapList searchInput={searchInput} currCategory={currCategory} />
-    </>
+      <RoadmapList
+        searchInput={searchInput}
+        currCategory={currCategory}
+      />
+    </div>
   );
 };
-
 
 export default Discover;
