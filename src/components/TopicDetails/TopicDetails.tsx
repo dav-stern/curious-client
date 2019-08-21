@@ -51,24 +51,10 @@ const UPDATE_TOPIC = gql`
   }
 `;
 
-const CREATE_CHECKLIST_ITEM = gql`
-mutation createChecklistItem($TopicId: ID! $title: String!) {
-  createChecklistItem(TopicId: $TopicId, title: $title) {
-    id
-    title
-    completed
-  }
-}`;
-
-const DELETE_CHECKLIST_ITEM = gql`
-  mutation deleteChecklistItem($id: ID!) {
-    deleteChecklistItem(id: $id)
-}`;
-
 const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const client = useApolloClient();
   // Get details of selected topic
-  const { data, loading, refetch } = useQuery(GET_TOPIC_DETAILS, {
+  const { data, loading } = useQuery(GET_TOPIC_DETAILS, {
     variables: { id: selectedTopicId },
   });
 
@@ -77,7 +63,6 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const [descriptionInput, setDescriptionInput] = useState('');
   const [resourcesInput, setResourcesInput] = useState('');
   const [selectedTab, setSelectedTab] = useState<'preview' | undefined | 'write' >('write');
-  // const [checklistInput, setChecklistInput] = useState([]);
 
   // Set the local state to the previous Topic details
   useEffect(() => {
@@ -96,9 +81,6 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
       resources: resourcesInput,
     },
   });
-
-  const [createChecklistItem] = useMutation(CREATE_CHECKLIST_ITEM);
-  const [deleteChecklistItem] = useMutation(DELETE_CHECKLIST_ITEM);
 
   // If there is no selected Topic remove the details component
   if (!selectedTopicId) return null;
@@ -119,28 +101,6 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     client.writeData({ data: { selectedTopicId: '', selectedTopicTitle: '' } });
   };
 
-  const { checklist } = data.topics[0];
-
-  // Checklist functions
-  const handleCreateChecklistItem = async () => {
-    try {
-      await createChecklistItem({
-        variables: { TopicId: selectedTopicId, title: 'New item' },
-      });
-      refetch();
-    } catch (error) {
-      console.log(error); // eslint-disable-line no-console
-    }
-  };
-
-  const handleDeleteChecklistItem = async (checklistItemId: string) => {
-    try {
-      await deleteChecklistItem({ variables: { id: checklistItemId } });
-      refetch();
-    } catch (error) {
-      console.log(error); // eslint-disable-line no-console
-    }
-  };
   return (
     <div className="topic-details-card">
       <form onSubmit={handleSubmit}>
@@ -164,11 +124,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
         </div>
         <button type="submit">Save</button>
       </form>
-      <Checklist
-        checklist={checklist}
-        handleCreateChecklistItem={handleCreateChecklistItem}
-        handleDeleteChecklistItem={handleDeleteChecklistItem}
-      />
+      <Checklist selectedTopicId={selectedTopicId} />
     </div>
   );
 };
