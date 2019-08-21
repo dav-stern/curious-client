@@ -1,31 +1,53 @@
-.button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-}
-
 .container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  padding-top: 12em;
+  padding-left: 2em;
+  padding-right: 2em;
+  justify-content: space-evenly;
   width: 100%;
 }
 
+#delete-button {
+  align-self: flex-end;
+}
 
-#roadmaps {
+#middle {
+  padding-top: 40%;
+  align-self: center;
+  flex-grow: 1;
+}
+
+#delete-x {
+  display:none;
+  cursor: pointer;
+}
+
+
+.roadmap-container {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
-  margin-top: 20px;
+  margin-bottom: 30px;
   text-align: center;
-  border: 1px solid black;
-  height: 120px;
-  width: 120px;
-  color: black;
+  background-color: #fff;
+  box-shadow: -2px 4px 5px rgba(0, 0, 0, .2);
+  height: 450px;
+  font-size: 25px;
+  font-family: comfortaa;
+  color: #201E45;
+  width: 450px;
   text-decoration: none;
 }
 
+.roadmap-container:hover {
+  transition: 1s;
+  -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
+  color: #F07B7B;
+}
+
+.roadmap-container:hover #delete-x {
+  display: block;
+}
