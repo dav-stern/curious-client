@@ -83,6 +83,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   if (data.roadmaps.length < 20 && showButton) setShowButton(false);
   const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
     <Link
+      className="roadmap-container"
       id="roadmaps"
       key={item.id}
       to={`/preview/${item.id}`}

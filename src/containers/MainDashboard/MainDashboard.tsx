@@ -118,9 +118,13 @@ const MainDashboard: React.FC = () => {
 
   // else render roadmaps on dashboard
   const results = data.roadmaps.map((item: IRoadmap) => (
-    <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
-      <button type="button" onClick={(e) => handleDelete(e, item.id)}><span role="img" aria-label="delete">❌</span></button>
-      {item.title}
+    <Link className="roadmap-container" key={item.id} to={`/roadmap/${item.id}`}>
+      <div id="delete-button">
+        <button type="button" onClick={(e) => handleDelete(e, item.id)}><span id="delete-x" role="img" aria-label="delete">❌</span></button>
+      </div>
+      <div id="middle">
+        {item.title}
+      </div>
     </Link>
   ));
   return (
