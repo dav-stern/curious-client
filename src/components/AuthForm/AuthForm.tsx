@@ -23,8 +23,13 @@ export const AuthForm: React.SFC<AuthFormProps> = ({
   handleChange,
   errorMsg,
 }) => {
+  function getType(key: string) {
+    if (key === 'password') return 'password';
+    if (key === 'email') return 'email';
+    return 'text';
+  }
   const inputsJSX = Object.keys(inputs).map((key: string) => (
-    <input type="text" name={key} key={key} onChange={handleChange} value={inputs[key]} placeholder={key.charAt(0).toUpperCase() + key.slice(1)} required />
+    <input type={getType(key)} name={key} key={key} onChange={handleChange} value={inputs[key]} placeholder={key.charAt(0).toUpperCase() + key.slice(1)} required />
   ));
 
   return (
