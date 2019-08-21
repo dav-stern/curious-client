@@ -20,26 +20,28 @@ const Discover: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <Linkbar categories={categories} handleClick={handleClick} />
-      <div className="search-container">
-        <label className="search-label" htmlFor="search-input">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search for..."
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
-            value={searchInput}
-            autoComplete="off"
-          />
-          <div id="icon-container">
-            <FontAwesomeIcon icon={faSearch} className="search-icon" />
-          </div>
-        </label>
+      <div className="discover-container">
+        <div className="search-container">
+          <label className="search-label" htmlFor="search-input">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search for..."
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+              value={searchInput}
+              autoComplete="off"
+            />
+            <div id="icon-container">
+              <FontAwesomeIcon icon={faSearch} className="search-icon" />
+            </div>
+          </label>
+        </div>
+        <Linkbar categories={categories} handleClick={handleClick} />
+        <RoadmapList
+          searchInput={searchInput}
+          currCategory={currCategory}
+        />
       </div>
-      <RoadmapList
-        searchInput={searchInput}
-        currCategory={currCategory}
-      />
     </div>
   );
 };

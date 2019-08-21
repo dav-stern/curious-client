@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './RoadmapList.css';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -98,7 +99,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   ));
   return (
     <div>
-      <div className="container">
+      <div className="discover-list-container">
         {roadmaps}
       </div>
       {data.roadmaps.length === 20 && <button type="button" onClick={handleNext}>Load More</button>}

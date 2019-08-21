@@ -1,27 +1,29 @@
 #linkbar-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   overflow: hidden;
   align-items: flex-start;
-  background: #f7f8fa;
-  border-bottom: 1px solid #dedfe0;
-  height: 44px;
-  padding: 0;
-  font-family: open sans,helvetica neue,Helvetica,Arial,sans-serif;
+  width: 100%;
+  padding-top: 80px;
 }
 
 #linkbar-container button {
-  color: #007791;
-  background-color: transparent;
+  color: #fff;
+  border: 1px solid #201E45;
+  border-radius: 5px;
+  background-color: #201E45;
   font-weight: 400;
+  font-family: comfortaa;
   text-decoration: none;
+  height: 100%;
+  width: 8%;
+  padding: 20px;
 }
 
 #linkbar-container button:hover {
-  color: #007791;
-  background-color: rgba(255, 255, 255, 0.5);
-  font-weight: 500;
+  color: #fff;
+  font-weight: 800;
   text-decoration: none;
 }
 
