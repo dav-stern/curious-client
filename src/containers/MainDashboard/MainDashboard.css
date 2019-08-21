@@ -2,14 +2,6 @@
   display: flex;
   padding-top: 10rem;
   flex-wrap: wrap;
-<<<<<<< HEAD
-  justify-content: space-between;
-  width: 50%;
-  margin: 0 auto;
-}
-
-.roadmaps {
-=======
   padding-top: 12em;
   padding-left: 2em;
   padding-right: 2em;
@@ -28,31 +20,14 @@
 }
 
 #delete-x {
-  display:none;
+  display: none;
   cursor: pointer;
 }
 
-
 .roadmap-container {
->>>>>>> 3e79dfc915eea3b2ebe62ca31897abc7c91c0592
   display: flex;
   justify-content: center;
   flex-direction: column;
-<<<<<<< HEAD
-  text-align: center;
-  border: 1px solid black;
-  height: 40vh;
-  width: 30%;
-  color: black;
-  text-decoration: none;
-  margin-bottom: 2rem;
-  border-radius: 8px;
-  font-family: 'Comfortaa';
-  font-size: 1.5rem;
-  text-transform: capitalize;
-  word-spacing: 10rem;
-}
-=======
   margin-bottom: 30px;
   text-align: center;
   background-color: #fff;
@@ -68,12 +43,11 @@
 .roadmap-container:hover {
   transition: 1s;
   -webkit-transform: scale(1.1);
-        -ms-transform: scale(1.1);
-        transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
   color: #F07B7B;
 }
 
 .roadmap-container:hover #delete-x {
   display: block;
 }
->>>>>>> 3e79dfc915eea3b2ebe62ca31897abc7c91c0592

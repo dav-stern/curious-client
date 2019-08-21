@@ -5,7 +5,7 @@ img {
 .navbar-container {
   height: 10vh;
   width: 100%;
-  background-color: #FFF;
+  background-color: #E4E4EF;
   position: fixed;
   z-index: 100;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, .25), 0px -25px 60px rgba(0, 0, 0, .15) inset;
@@ -59,16 +59,24 @@ img {
 }
 
 .navbar__nav__item a {
-  color: #404040;
-  border-radius: 2px;
-  transition: border .2s;
-  padding: .7rem;
+  position: relative;
 }
 
-.navbar__nav__item:hover a {
+.navbar__nav__item a:after {
+  content: '';
+  display: block;
   border-bottom: 2px solid #F07B7B;
-  /* background-color: #404040a8;
-  color: #FFF; */
+  width: 0;
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  -webkit-transition: .55s ease;
+  transition: .5s ease;
+  z-index: 10;
+}
+
+.navbar__nav__item a:hover::after {
+  width: 100%;
 }
 
 .navbar__nav__item:not(:last-of-type)>a {
