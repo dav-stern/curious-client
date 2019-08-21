@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Button from '../../components/Button/Button';
@@ -105,11 +107,25 @@ const MainDashboard: React.FC = () => {
   // else if user has no roadmaps yet show two buttons: 'Discover' and 'Add New Roadmap'
   if (data.roadmaps.length < 1 && !flag) {
     return (
-      <div>
+      <div className="background">
         <Navbar />
-        <div className="button-container">
-          <Link to="/discover"><Button handleClick={() => { }} value="Discover" /></Link>
-          <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
+        <div className="discover-more-container">
+          <h1>
+            <span>CURIOUS </span>
+              how other people are learning?
+          </h1>
+          <Link to="/discover">
+            <FontAwesomeIcon icon={faArrowRight} className="arrow-icon" />
+          </Link>
+        </div>
+        <div className="add-roadmap-container">
+          <h1>
+            Add your first
+            <span> roadmap!</span>
+          </h1>
+        </div>
+        <div id="add-roadmap-button">
+          <Button handleClick={() => setFlag(true)} value="+" />
         </div>
       </div>
     );

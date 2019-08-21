@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPalette, faLaptop, faUserTie, faLaptopCode,
   faClipboardList, faBook, faBullseye, faHeartbeat,
-  faMusic,
+  faMusic, faDumbbell, faSitemap,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -118,8 +118,11 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       case 'Music':
         icon = faMusic;
         break;
+      case 'Sports':
+        icon = faDumbbell;
+        break;
       default:
-        icon = faLaptop;
+        icon = faSitemap;
     }
     return (
       <Link
@@ -133,8 +136,12 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
           },
         })}
       >
-        <FontAwesomeIcon icon={icon} />
-        {item.title}
+        <div id="middle">
+          <FontAwesomeIcon icon={icon} className="category-icon" />
+          <div id="discover-title">
+            {item.title}
+          </div>
+        </div>
       </Link>
     );
   });

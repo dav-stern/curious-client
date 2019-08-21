@@ -9,3 +9,12 @@
   justify-content: space-evenly;
   width: 100%;
 }
+
+.category-icon {
+  align-self: center;
+  font-size: 40px;
+}
+
+#discover-title {
+  padding-top: 2em;
+}
