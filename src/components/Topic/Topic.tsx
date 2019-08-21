@@ -21,6 +21,7 @@ const Topic: React.FC<TopicNodeProps> = ({
 }) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
+    client.writeData({ data: { selectedTopicTitle: '' } });
     client.writeData({ data: { selectedTopicId: topicId } });
     if (setDetailsOpen) {
       setDetailsOpen(true);

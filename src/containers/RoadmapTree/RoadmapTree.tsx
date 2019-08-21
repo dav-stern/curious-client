@@ -2,7 +2,6 @@ import React from 'react';
 import gql from 'graphql-tag';
 import {
   useQuery,
-  useLazyQuery,
   useMutation,
   useApolloClient,
 } from '@apollo/react-hooks';
@@ -36,16 +35,9 @@ const DELETE_TOPIC = gql`
     deleteTopic(id: $topicId)
 }`;
 
-const GET_ROADMAPS = gql`
-query getRoadmap($id: ID!) {
-  roadmaps(id: $id) {
-    title
-    category
-    topics {
-      title
-      rowNumber
-    }
-  }
+const COPY_ROADMAP = gql`
+mutation copyRoadmap($id: ID!) {
+  copyRoadmap(id: $id)
 }
 `;
 
@@ -66,17 +58,13 @@ interface IRowsData {
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) => {
   const client = useApolloClient();
-  // let RmID: string | number | undefined = (window.location.pathname
-  //   .split('/')
-  //   .find((el, i, coll) => coll[i - 1] === 'roadmap' || coll[i - 1] === 'preview'));
 
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
     variables: { id: matchId },
   });
 
-  const [getRoadmapInfo] = useLazyQuery(GET_ROADMAPS, {
-    variables: { id: '2' },
-    fetchPolicy: 'network-only',
+  const [copyRoadmap] = useMutation(COPY_ROADMAP, {
+    variables: { id: matchId },
   });
 
   const isPreview = window.location.pathname.includes('preview');
@@ -167,6 +155,15 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) =
         onClick={() => { getRoadmapInfo(); }}
       />
     </>
+        { !isPreview
+          ? <div>{buttonAddRow}</div>
+          : (
+            <button type="button" onClick={() => { copyRoadmap(); }}>
+              Fork
+            </button>
+          )}
+      </div>
+    </div>
   );
 };
 

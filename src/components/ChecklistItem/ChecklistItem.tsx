@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,6 +25,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
   const [editing, setEditing] = useState(false);
 
   const handleEditing = () => {
+    setChecklistTitleInput(checklistItem.title);
     setEditing(!editing);
   };
 
@@ -47,7 +49,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
       {editing
         ? (
           <div>
-            <input type="text" value={checklistTitleInput} onChange={handleChange} placeholder={checklistItem.title} />
+            <input type="text" value={checklistTitleInput} onChange={handleChange} placeholder={checklistItem.title} autoFocus />
             <button type="button" onClick={() => handleUpdateButton()}>Save Changes</button>
             <button type="button" onClick={() => handleEditing()}>Cancel</button>
             <button type="button" onClick={() => handleDeleteButton()}><span>x</span></button>

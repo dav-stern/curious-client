@@ -96,10 +96,12 @@ const MainDashboard: React.FC = () => {
   // eslint-disable-next-line no-shadow
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.preventDefault();
-    await deleteRoadmap({
-      variables: { id },
-    });
-    refetch();
+    if (window.confirm('Are you sure you wish to delete this Roadmap?')) { // eslint-disable-line no-alert
+      await deleteRoadmap({
+        variables: { id },
+      });
+      refetch();
+    }
   };
 
   // if the data is still loading
@@ -145,7 +147,6 @@ const MainDashboard: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <h1 id="roadmap-list-heading">My Roadmaps</h1>
       <div className="container">
         {results}
         <RoadmapItemForm

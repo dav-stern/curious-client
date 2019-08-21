@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import gql from 'graphql-tag';
 import React, { useState, useEffect } from 'react';
 import ReactMde from 'react-mde';
@@ -89,10 +90,11 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputClass = e.target.className;
-    if (inputClass === 'topic-title') setTitleInput(e.target.value);
+    if (inputClass === 'topic-title') {
+      setTitleInput(e.target.value);
+      client.writeData({ data: { selectedTopicTitle: e.target.value } });
+    }
     if (inputClass === 'topic-description') setDescriptionInput(e.target.value);
-    if (inputClass === 'topic-resources') setResourcesInput(e.target.value);
-    client.writeData({ data: { selectedTopicTitle: e.target.value } });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
