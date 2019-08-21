@@ -1,3 +1,8 @@
+#roadmap-list-heading {
+  padding-top: 14rem;
+  padding-left: 8rem;
+}
+
 h1 span {
   font-weight: 900;
   color: #F07B7B;
@@ -5,9 +10,8 @@ h1 span {
 
 .container {
   display: flex;
-  padding-top: 10rem;
   flex-wrap: wrap;
-  padding-top: 12em;
+  padding-top: 6em;
   padding-left: 2em;
   padding-right: 2em;
   margin-left: 15px;
@@ -39,14 +43,14 @@ h1 span {
   justify-content: flex-start;
   align-items: center;
   padding-left: 2rem;
-  padding-top: 14rem;
+  padding-top: 16rem;
 }
 
 .add-roadmap-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-top: 8rem;
+  padding-top: 10rem;
   padding-right: 2em;
 }
 
