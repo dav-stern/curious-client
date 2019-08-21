@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './RoadmapList.css';
 import gql from 'graphql-tag';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPalette, faLaptop, faUserTie, faLaptopCode,
+  faClipboardList, faBook, faBullseye, faHeartbeat,
+  faMusic,
+} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
@@ -82,21 +88,57 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
 
   if (loading) return null;
   if (data.roadmaps.length < 20 && showButton) setShowButton(false);
-  const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
-    <Link
-      className="roadmap-container"
-      id="roadmaps"
-      key={item.id}
-      to={`/preview/${item.id}`}
-      onClick={() => client.writeData({
-        data: {
-          selectedRoadmapUID: item.UserId,
-        },
-      })}
-    >
-      {item.title}
-    </Link>
-  ));
+  const roadmaps = data && data.roadmaps.map((item: IRoadmap) => {
+    let icon;
+    switch (item.category) {
+      case 'Development':
+        icon = faLaptopCode;
+        break;
+      case 'Business':
+        icon = faUserTie;
+        break;
+      case 'IT&Software':
+        icon = faLaptop;
+        break;
+      case 'Office Productivity':
+        icon = faClipboardList;
+        break;
+      case 'Personal Development':
+        icon = faBook;
+        break;
+      case 'Design':
+        icon = faPalette;
+        break;
+      case 'Marketing':
+        icon = faBullseye;
+        break;
+      case 'Health&Fitness':
+        icon = faHeartbeat;
+        break;
+      case 'Music':
+        icon = faMusic;
+        break;
+      default:
+        icon = faLaptop;
+    }
+    return (
+      <Link
+        className="roadmap-container"
+        id="roadmaps"
+        key={item.id}
+        to={`/preview/${item.id}`}
+        onClick={() => client.writeData({
+          data: {
+            selectedRoadmapUID: item.UserId,
+          },
+        })}
+      >
+        <FontAwesomeIcon icon={icon} />
+        {item.title}
+      </Link>
+    );
+  });
+
   return (
     <div>
       <div className="discover-list-container">

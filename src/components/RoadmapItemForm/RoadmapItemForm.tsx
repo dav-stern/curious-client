@@ -13,7 +13,6 @@ interface RoadmapItemFormProps {
 interface ICategory {
   id: number;
   name: string;
-  iconPath: string;
 }
 
 

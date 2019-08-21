@@ -13,7 +13,6 @@ interface IRoadmap {
   id: string;
   title: string;
   category: string;
-  __typename: string;
 }
 
 // roadmaps (query)

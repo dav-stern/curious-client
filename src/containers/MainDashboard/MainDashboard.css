@@ -40,10 +40,10 @@
   color: #201E45;
   width: 450px;
   text-decoration: none;
+  transition: transform 1s;
 }
 
 .roadmap-container:hover {
-  transition: 1s;
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
