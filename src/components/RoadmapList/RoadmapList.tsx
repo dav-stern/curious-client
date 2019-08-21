@@ -18,15 +18,23 @@ query roadmaps($category: String, $title: String, $offset: Int, $limit: Int) {
     title
     category
     UserId
+    user {
+      name
+    }
   }
 }
 `;
+
+interface Iuser {
+  name: string,
+}
 
 interface IRoadmap {
   title: string;
   id: string;
   category: string;
   UserId: string;
+  user: Iuser;
   __typename: string;
 }
 
@@ -139,7 +147,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
         <div id="middle">
           <FontAwesomeIcon icon={icon} className="category-icon" />
           <div id="discover-title">{item.title}</div>
-          {/* <div>{item.UserId}</div> */}
+          <div>{item.user.name}</div>
         </div>
       </Link>
     );
