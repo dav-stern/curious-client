@@ -105,7 +105,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   if (loading) return <p>Loading...</p>;
   if (!data) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement> | any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputClass = e.target.className;
     if (inputClass === 'topic-title') setTitleInput(e.target.value);
     if (inputClass === 'topic-description') setDescriptionInput(e.target.value);
