@@ -145,7 +145,6 @@ const MainDashboard: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <h1 id="roadmap-list-heading">My Roadmaps</h1>
       <div className="container">
         {results}
         <RoadmapItemForm

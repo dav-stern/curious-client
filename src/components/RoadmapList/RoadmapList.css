@@ -1,6 +1,7 @@
 .discover-list-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   padding-top: 6em;
   padding-left: 3em;
   padding-right: 3em;

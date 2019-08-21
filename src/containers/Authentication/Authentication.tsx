@@ -26,8 +26,11 @@ const Authentication: React.FC = () => {
   return (
     <div className="LISU__container">
       <div id="auth-heading">
-        <h1>CURIOUS</h1>
-        <span><h2>Because fuck school</h2></span>
+        <h1>
+          CURiOUS
+          <span>!</span>
+        </h1>
+        <span><h2>Because f**k school</h2></span>
       </div>
       <div className="LISU__wrapper">
         <div className="form__header">
