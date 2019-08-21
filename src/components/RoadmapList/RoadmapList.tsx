@@ -19,6 +19,7 @@ interface IRoadmap {
   title: string;
   id: string;
   category: string;
+  UserId: string;
   __typename: string;
 }
 
@@ -28,6 +29,7 @@ interface RoadmapListProps {
 }
 
 const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) => {
+  const client = useApolloClient();
   const [showButton, setShowButton] = useState(true);
   // fetching roadmaps from database
 
@@ -79,7 +81,6 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
 
   if (loading) return null;
   if (data.roadmaps.length < 20 && showButton) setShowButton(false);
-
   const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
     <Link
       id="roadmaps"
@@ -87,7 +88,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       to={`/preview/${item.id}`}
       onClick={() => client.writeData({
         data: {
-          selectedRoadmapUID: data.roadmaps[+(item.id) - 1].UserId,
+          selectedRoadmapUID: item.UserId,
         },
       })}
     >

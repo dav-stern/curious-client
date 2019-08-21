@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
-import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import RoadmapTree from '../RoadmapTree/RoadmapTree';
 
 type TParams = { id: string };
 
@@ -37,17 +37,16 @@ const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
   });
 
   const [createRoadmap] = useMutation(FORK_ROADMAP);
-  console.log(data);
 
   if (loading) return null;
   if (data.roadmaps && flag) {
     const { title, category, UserId } = data.roadmaps[0];
-    console.log(title, category, UserId);
     flag = false;
     createRoadmap({ variables: { title, category, UserId } })
       .then((dataRoadmap: any) => {
+        // eslint-disable-next-line no-console
         console.log(dataRoadmap.data.createRoadmap.id);
-      })
+      });
   }
 
 
@@ -55,7 +54,7 @@ const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
     <div className="roadmap-tree-container">
       <RoadmapTree matchId={match.params.id} />
     </div>
-  )
+  );
 };
 
 export default RoadmapPreview;

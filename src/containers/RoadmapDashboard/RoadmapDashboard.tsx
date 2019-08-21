@@ -15,21 +15,20 @@ query roadmapUser($id: ID!) {
   roadmaps(id: $id) {
     UserId
   }
+}`;
 
 const GET_TOPIC_ID = gql`{
   selectedTopicId
-}
-`;
+}`;
 
 // TODO: Review this component's type
 const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
   const { data, loading } = useQuery(CHECK_ROADMAP_USER, { variables: { id: match.params.id } });
+  const cacheId = useQuery(GET_TOPIC_ID);
   if (loading) return null;
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
-  const { data } = useQuery(GET_TOPIC_ID);
-
   return (
     <div>
       <div className="roadmap-tree-container">
@@ -37,7 +36,7 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
           matchId={match.params.id}
         />
       </div>
-      <TopicDetails selectedTopicId={data.selectedTopicId} />
+      <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
     </div>
   );
 };

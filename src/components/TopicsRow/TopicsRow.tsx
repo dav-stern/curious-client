@@ -38,7 +38,7 @@ const TopicsRow: React.SFC<TopicsProps> = ({
       handleDeleteTopic={handleDeleteTopic}
     />
   ));
-  if (topics.length < 5) {
+  if (topics.length < 5 && !isPreview) {
     return (
       <div className="topics-row-container">
         <div>
@@ -55,18 +55,6 @@ const TopicsRow: React.SFC<TopicsProps> = ({
   }
   return (
     <div className="topics-row-container">
-      {(!isPreview)
-        ? (
-          <div>
-            <button
-              type="button"
-              onClick={() => { handleAddTopic(rowNum); }}
-            >
-              Add Topic
-            </button>
-          </div>
-        )
-        : null}
       <div className="topics-container">{arrTopics}</div>
     </div>
   );
