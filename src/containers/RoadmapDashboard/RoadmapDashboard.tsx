@@ -33,19 +33,20 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
 
   return (
-
-    <div className="roadmap-detail__container">
-      <div className={`roadmap-tree-container ${detailsOpen ? 'split' : ''}`}>
-    <div>
-      <h2>{data.roadmaps[0].title}</h2>
-      <div className="roadmap-tree-container">
-        <RoadmapTree
-          matchId={match.params.id}
-          setDetailsOpen={setDetailsOpen}
-        />
+    <>
+      <div className="roadmap-detail__container" />
+      <div className={`roadmap-tree-container ${detailsOpen ? 'split' : ''}`} />
+      <div>
+        <h2>{data.roadmaps[0].title}</h2>
+        <div className="roadmap-tree-container">
+          <RoadmapTree
+            matchId={match.params.id}
+            setDetailsOpen={setDetailsOpen}
+          />
+        </div>
+        <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
       </div>
-      <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
-    </div>
+    </>
   );
 };
 
