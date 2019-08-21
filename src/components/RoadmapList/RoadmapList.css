@@ -17,4 +17,12 @@
 
 #discover-title {
   padding-top: 2em;
+  font-weight: 600;
+}
+
+#discover-user {
+  padding-top: 15px;
+  font-weight: 100;
+  color: #F07B7B;
+  font-size: 20px;
 }
