@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 interface ICategory {
   id: number;
   name: string;
-  iconPath: string;
 }
 
 interface LinkBarProps {

@@ -1,11 +1,22 @@
+#roadmap-list-heading {
+  padding-top: 14rem;
+  padding-left: 8rem;
+}
+
+h1 span {
+  font-weight: 900;
+  color: #F07B7B;
+}
+
 .container {
   display: flex;
-  padding-top: 10rem;
   flex-wrap: wrap;
-  padding-top: 12em;
+  padding-top: 6em;
   padding-left: 2em;
   padding-right: 2em;
-  justify-content: space-evenly;
+  margin-left: 15px;
+  margin-right: 15px;
+  justify-content: space-around;
   width: 100%;
 }
 
@@ -14,6 +25,9 @@
 }
 
 #middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding-top: 40%;
   align-self: center;
   flex-grow: 1;
@@ -22,6 +36,22 @@
 #delete-x {
   display: none;
   cursor: pointer;
+}
+
+.discover-more-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 2rem;
+  padding-top: 16rem;
+}
+
+.add-roadmap-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 10rem;
+  padding-right: 2em;
 }
 
 .roadmap-container {
@@ -38,10 +68,10 @@
   color: #201E45;
   width: 450px;
   text-decoration: none;
+  transition: transform 1s;
 }
 
 .roadmap-container:hover {
-  transition: 1s;
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
@@ -50,4 +80,31 @@
 
 .roadmap-container:hover #delete-x {
   display: block;
+}
+
+.background {
+  height: 100vh;
+  background-image: url('./../../assets/background-discover-2.jpg');
+  background-position: bottom center;
+  background-size: cover;
+}
+
+#add-roadmap-button {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2rem;
+  padding-right: 14rem;
+}
+
+.arrow-icon {
+  font-size: 30px;
+  margin-left: 1em;
+  transition: transform 0.5s;
+  color: #F07B7B;
+}
+
+.arrow-icon:hover {
+  -webkit-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  transform: scale(1.5);
 }
