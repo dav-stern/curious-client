@@ -1,14 +1,18 @@
 html, body, #root {
   height: 100%;
+  background-color: #E4E4EF;
+  font-family: comfortaa;
 }
 
 html {
   box-sizing: border-box;
   font-size: 16px;
+  color: #201E45;
 }
 
 body {
   margin: 0;
+  background-color: #E4E4EF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,6 +33,7 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
 
 a {
   text-decoration: none;
+  color: #000;
 }
 
 img {

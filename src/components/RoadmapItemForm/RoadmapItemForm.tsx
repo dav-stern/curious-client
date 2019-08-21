@@ -13,7 +13,6 @@ interface RoadmapItemFormProps {
 interface ICategory {
   id: number;
   name: string;
-  iconPath: string;
 }
 
 
@@ -33,12 +32,13 @@ const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
         name="name"
         onChange={handleChange}
         value={titleInput}
+        placeholder="Add title here"
         required
       />
       <select name="categories" form="roadmap-form" onChange={handleSelection} defaultValue="Music">
         {categoryJSX}
       </select>
-      <button type="submit">ADD</button>
+      <button type="submit">Add</button>
     </form>
   );
 };

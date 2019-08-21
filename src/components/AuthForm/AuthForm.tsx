@@ -35,6 +35,7 @@ export const AuthForm: React.SFC<AuthFormProps> = ({
   return (
     <div>
       <form
+        id="login-form"
         onSubmit={handleSubmit}
       >
         {inputsJSX}

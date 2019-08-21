@@ -1,7 +1,8 @@
 .LISU__container {
   height: 100%;
-  background-image: url('./../../assets/sharon-mccutcheon-eMP4sYPJ9x0-unsplash.jpg');
+  background-image: url('../../assets/4.jpg');
   background-size: cover;
+  background-position: 50% 50%;
 }
 
 .LISU__wrapper {
@@ -10,9 +11,12 @@
   flex-direction: column;
   width: 27rem;
   position: absolute;
-  left: 15vw;
-  top: 28vh;
-  background-color: #adb7c3;
+  right: 40%;
+  top: 25%;
+  background-color: rgba(228, 228, 239, 0.575);
+  border-left: 1px solid #E4E4EF;
+  border-right: 1px solid #E4E4EF;
+  border-bottom: 1px solid #E4E4EF;
   border-radius: 10px;
   box-shadow: -2px 4px 5px rgba(0, 0, 0, .2);
 }
@@ -53,15 +57,15 @@
 }
 
 .form__header>button.selected {
-  background-color: rgba(72, 142, 248, 0.822);
+  background-color: #E4E4EF;
   box-shadow: 0px -20px 50px rgba(0, 0, 0, .25) inset;
-  border-bottom: 4px solid rgba(0, 0, 0, 0.315);
-  border-top: 1px solid #cecccc9c;
   color: #FFF;
 }
 
 .form__header>button:not(.selected) {
   background-color: #FFF;
-  border-top: 4px solid rgba(139, 139, 139, 0.123);
-  border-bottom: 1px solid #cecccc9c;
+}
+
+form input:hover {
+  outline: 2px solid #7177e7;
 }
