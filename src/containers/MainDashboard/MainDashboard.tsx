@@ -96,7 +96,7 @@ const MainDashboard: React.FC = () => {
   // eslint-disable-next-line no-shadow
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.preventDefault();
-    if (window.confirm('Are you sure you wish to delete this Roadmap?')) {
+    if (window.confirm('Are you sure you wish to delete this Roadmap?')) { // eslint-disable-line no-alert
       await deleteRoadmap({
         variables: { id },
       });
