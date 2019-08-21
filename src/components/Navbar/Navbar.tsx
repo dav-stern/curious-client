@@ -14,15 +14,18 @@ const Navbar: React.FC = () => {
     <div className="navbar-container">
       <div className="navbar-content">
         <div className="user-info__container">
-          <div className="user-info__avatar">
-            <NavLink to="/dashboard">
-              <img
-                src="https://www.chaarat.com/wp-content/uploads/2017/08/placeholder-user.png"
-                alt="Avatar"
-              />
-            </NavLink>
-          </div>
+          <NavLink to="/dashboard">
+            <div id="logo">
+              <h1>
+                CURiOUS
+                <span>!</span>
+              </h1>
+            </div>
+          </NavLink>
           <div className="user-info__user-name">
+            <p>
+            Welcome
+            </p>
             <p>
               {name}
             </p>

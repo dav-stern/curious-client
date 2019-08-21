@@ -1,6 +1,6 @@
 html, body, #root {
   height: 100%;
-  background-color: #E4E4EF;
+  background-color: #FFFFFF;
   font-family: comfortaa;
 }
 
@@ -12,7 +12,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #E4E4EF;
+  background-color: #FFFFFF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,14 +1,9 @@
-img {
-  width: 5rem
-}
-
 .navbar-container {
   height: 10vh;
   width: 100%;
   background-color: #E4E4EF;
   position: fixed;
   z-index: 100;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, .25), 0px -25px 60px rgba(0, 0, 0, .15) inset;
 }
 
 .navbar-content {
@@ -17,40 +12,33 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 65%;
+  width: 85%;
   margin: 0 auto;
   font-size: 1.25rem;
   font-family: 'Comfortaa'
 }
 
-.user-info__avatar, .navbar__nav, .navbar__nav__item {
-  display: inline-block;
+.navbar__nav, .navbar__nav__item {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .user-info__container {
-  display: inline-flex;
+  display: flex;
   align-content: center;
-  width: 15%;
+  width: 30%;
 }
 
-.user-info__avatar a {
-  height: 100%;
-  display: block;
-}
-
-.user-info__avatar>a>img {
-  height: 100%;
-  border-radius: 100px;
-  border: 2px solid orange;
-}
 
 .user-info__user-name {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 40px;
 }
 
-.user-info__user-name>p {
-  margin-left: 1rem;
+.user-info__user-name p {
+  padding-bottom: 3px;
 }
 
 .navbar__nav__container {
@@ -81,4 +69,8 @@ img {
 
 .navbar__nav__item:not(:last-of-type)>a {
   margin-right: 2.3rem;
+}
+
+#logo {
+  padding-right: 10px;
 }
