@@ -2,8 +2,6 @@ import React, { useState, useRef } from 'react';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 
-import Navbar from '../../components/Navbar/Navbar';
-
 import './Authentication.css';
 
 const Authentication: React.FC = () => {
@@ -27,7 +25,6 @@ const Authentication: React.FC = () => {
 
   return (
     <div className="LISU__container">
-      <Navbar />
       <div className="LISU__wrapper">
         <div className="form__header">
           <button

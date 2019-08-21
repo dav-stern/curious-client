@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  padding-top: 10rem;
   flex-wrap: wrap;
   padding-top: 12em;
   padding-left: 2em;
@@ -21,10 +22,9 @@
 }
 
 #delete-x {
-  display:none;
+  display: none;
   cursor: pointer;
 }
-
 
 .roadmap-container {
   display: flex;
@@ -45,8 +45,8 @@
 .roadmap-container:hover {
   transition: 1s;
   -webkit-transform: scale(1.1);
-        -ms-transform: scale(1.1);
-        transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
   color: #F07B7B;
 }
 
