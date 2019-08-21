@@ -5,6 +5,7 @@ import './Topic.css';
 import PropTypes from 'prop-types';
 
 interface TopicNodeProps {
+  setDetailsOpen?: undefined | ((detailsOpen: boolean) => void);
   isPreview: boolean,
   id: string,
   title: string
@@ -14,12 +15,16 @@ interface TopicNodeProps {
 const Topic: React.FC<TopicNodeProps> = ({
   id,
   title,
-  handleDeleteTopic,
   isPreview,
+  setDetailsOpen,
+  handleDeleteTopic,
 }) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
     client.writeData({ data: { selectedTopicId: topicId } });
+    if (setDetailsOpen) {
+      setDetailsOpen(true);
+    }
   }
   const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
   return (
@@ -29,11 +34,19 @@ const Topic: React.FC<TopicNodeProps> = ({
     <div className="topic-container" onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
       {
         (!isPreview)
-          ? <button type="button" onClick={() => { handleDeleteTopic(id); }}><span>𝗑</span></button>
+          ? (
+            <button
+              className="delete-button"
+              type="button"
+              onClick={() => { handleDeleteTopic(id); }}
+            >
+              <span role="img" aria-label="delete button">❌</span>
+            </button>
+          )
           : null
       }
-      <div>{id}</div>
-      <div>
+      {/* <div>{id}</div> */}
+      <div className="topic-content">
         {data.selectedTopicTitle && id === data.selectedTopicId ? data.selectedTopicTitle : title}
       </div>
     </div>
@@ -45,6 +58,7 @@ Topic.propTypes = {
   title: PropTypes.string.isRequired,
   handleDeleteTopic: PropTypes.func.isRequired,
   isPreview: PropTypes.bool.isRequired,
+  setDetailsOpen: PropTypes.func.isRequired,
 };
 
 export default Topic;
