@@ -29,7 +29,15 @@ export const AuthForm: React.SFC<AuthFormProps> = ({
     return 'text';
   }
   const inputsJSX = Object.keys(inputs).map((key: string) => (
-    <input type={getType(key)} name={key} key={key} onChange={handleChange} value={inputs[key]} placeholder={key.charAt(0).toUpperCase() + key.slice(1)} required />
+    <input
+      type={getType(key)}
+      name={key}
+      key={key}
+      onChange={handleChange}
+      value={inputs[key]}
+      placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+      required
+    />
   ));
 
   return (

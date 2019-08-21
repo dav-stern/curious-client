@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import gql from 'graphql-tag';
 import React, { useState, useEffect } from 'react';
 import ReactMde from 'react-mde';
@@ -106,7 +107,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     <div className="topic-details-card">
       <form onSubmit={handleSubmit}>
         <div className="title-block">
-          <textarea className="topic-title" value={titleInput} onChange={handleChange} />
+          <textarea className="topic-title" value={titleInput} onChange={handleChange} autoFocus />
         </div>
         <div className="description-block">
           <h4>Description:</h4>

@@ -138,9 +138,8 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       >
         <div id="middle">
           <FontAwesomeIcon icon={icon} className="category-icon" />
-          <div id="discover-title">
-            {item.title}
-          </div>
+          <div id="discover-title">{item.title}</div>
+          {/* <div>{item.UserId}</div> */}
         </div>
       </Link>
     );
