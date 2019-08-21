@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 import Topic from '../Topic/Topic';
 import './TopicsRow.css';
 
@@ -15,6 +18,7 @@ interface ITopic {
 }
 
 interface TopicsProps {
+  setDetailsOpen?: undefined | ((detailsOpen: boolean) => void);
   isPreview: boolean,
   topics: ITopic[],
   rowNum: string,
@@ -23,6 +27,7 @@ interface TopicsProps {
 }
 
 const TopicsRow: React.SFC<TopicsProps> = ({
+  setDetailsOpen,
   isPreview,
   topics,
   handleAddTopic,
@@ -36,19 +41,20 @@ const TopicsRow: React.SFC<TopicsProps> = ({
       title={topic.title}
       key={topic.id}
       handleDeleteTopic={handleDeleteTopic}
+      setDetailsOpen={setDetailsOpen}
     />
   ));
   if (topics.length < 5 && !isPreview) {
     return (
       <div className="topics-row-container">
-        <div>
-          <button
-            type="button"
-            onClick={() => { handleAddTopic(rowNum); }}
-          >
-            Add Topic
-          </button>
-        </div>
+        <button
+          className="add-topic__btn"
+          type="button"
+          onClick={() => { handleAddTopic(rowNum); }}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+        <p className="AT-label">Add New Topic</p>
         <div className="topics-container">{arrTopics}</div>
       </div>
     );
@@ -61,6 +67,7 @@ const TopicsRow: React.SFC<TopicsProps> = ({
 };
 
 TopicsRow.propTypes = {
+  setDetailsOpen: PropTypes.func.isRequired,
   isPreview: PropTypes.bool.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
