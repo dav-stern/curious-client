@@ -33,6 +33,7 @@ const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
         onChange={handleChange}
         value={titleInput}
         placeholder="Add title here"
+        autoComplete="off"
         required
       />
       <select name="categories" form="roadmap-form" onChange={handleSelection} defaultValue="Music">
