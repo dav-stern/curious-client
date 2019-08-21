@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -28,7 +28,7 @@ interface RoadmapListProps {
 }
 
 const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) => {
-  const client = useApolloClient();
+  const [showButton, setShowButton] = useState(true);
   // fetching roadmaps from database
 
   const {
@@ -61,6 +61,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       variables: { offset: data.roadmaps.length },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
+        if (fetchMoreResult.length < 20) setShowButton(false);
         return { ...prev, roadmaps: [...prev.roadmaps, ...fetchMoreResult.roadmaps] };
       },
     });
@@ -77,6 +78,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   }, [searchInput]);
 
   if (loading) return null;
+  if (data.roadmaps.length < 20 && showButton) setShowButton(false);
 
   const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
     <Link
@@ -97,7 +99,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       <div className="container">
         {roadmaps}
       </div>
-      <button type="button" onClick={handleNext}>Load More</button>
+      {data.roadmaps.length === 20 && <button type="button" onClick={handleNext}>Load More</button>}
     </div>
   );
 };
