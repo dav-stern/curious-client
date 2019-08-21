@@ -152,18 +152,9 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) =
       {(!isPreview) ? <div className="AR__container">{buttonAddRow}</div> : null}
       <input
         type="button"
-        onClick={() => { getRoadmapInfo(); }}
+        onClick={() => { copyRoadmap(); }}
       />
     </>
-        { !isPreview
-          ? <div>{buttonAddRow}</div>
-          : (
-            <button type="button" onClick={() => { copyRoadmap(); }}>
-              Fork
-            </button>
-          )}
-      </div>
-    </div>
   );
 };
 
