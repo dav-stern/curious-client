@@ -1,27 +1,41 @@
 import React from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import './Topic.css';
 import PropTypes from 'prop-types';
 
 interface TopicNodeProps {
+  isPreview: boolean,
   id: string,
   title: string
   handleDeleteTopic: (topicId: string) => void
 }
 
-const Topic: React.FC<TopicNodeProps> = ({ id, title, handleDeleteTopic }) => {
+const Topic: React.FC<TopicNodeProps> = ({
+  id,
+  title,
+  handleDeleteTopic,
+  isPreview,
+}) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
     client.writeData({ data: { selectedTopicId: topicId } });
   }
+  const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
   return (
     // TODO: "Coding for the keyboard is important for users with physical disabilities
     // who cannot use a mouse, AT compatibility, and screenreader users."
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div className="topic-container" onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
-      <button type="button" onClick={() => { handleDeleteTopic(id); }}><span>𝗑</span></button>
+      {
+        (!isPreview)
+          ? <button type="button" onClick={() => { handleDeleteTopic(id); }}><span>𝗑</span></button>
+          : null
+      }
       <div>{id}</div>
-      <div>{title}</div>
+      <div>
+        {data.selectedTopicTitle && id === data.selectedTopicId ? data.selectedTopicTitle : title}
+      </div>
     </div>
   );
 };
@@ -30,6 +44,7 @@ Topic.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   handleDeleteTopic: PropTypes.func.isRequired,
+  isPreview: PropTypes.bool.isRequired,
 };
 
 export default Topic;

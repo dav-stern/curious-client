@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import './RoadmapDashboard.css';
 import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
-import Navbar from '../../components/Navbar/Navbar';
+// import Navbar from '../../components/Navbar/Navbar';
 
 type TParams = { id: string };
 
@@ -15,6 +15,9 @@ query roadmapUser($id: ID!) {
   roadmaps(id: $id) {
     UserId
   }
+
+const GET_TOPIC_ID = gql`{
+  selectedTopicId
 }
 `;
 
@@ -25,15 +28,16 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   const { data, loading } = useQuery(CHECK_ROADMAP_USER, { variables: { id: match.params.id } });
   if (loading) return null;
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
+  const { data } = useQuery(GET_TOPIC_ID);
+
   return (
     <div>
-      <Navbar />
       <div className="roadmap-tree-container">
         <RoadmapTree
           matchId={match.params.id}
         />
       </div>
-      <TopicDetails />
+      <TopicDetails selectedTopicId={data.selectedTopicId} />
     </div>
   );
 };

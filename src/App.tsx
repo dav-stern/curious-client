@@ -7,11 +7,13 @@ import Authentication from './containers/Authentication/Authentication';
 import MainDashboard from './containers/MainDashboard/MainDashboard';
 import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
 import Discover from './containers/Discover/Discover';
+import RoadmapPreview from './containers/RoadmapPreview/RoadmapPreview';
 
 const App: React.FC = () => (
   <Router>
     <Switch>
       <Route path="/login" component={Authentication} />
+      <Route path="/preview/:id" component={RoadmapPreview} />
       <ProtectedRoute
         authenticationPath="/login"
         path="/dashboard"

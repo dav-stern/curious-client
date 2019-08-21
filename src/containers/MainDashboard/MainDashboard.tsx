@@ -109,7 +109,7 @@ const MainDashboard: React.FC = () => {
       <div>
         <Navbar />
         <div className="button-container">
-          <Link to="/discover"><Button handleClick={() => {}} value="Discover" /></Link>
+          <Link to="/discover"><Button handleClick={() => { }} value="Discover" /></Link>
           <Button handleClick={() => setFlag(true)} value="Add New Roadmap" />
         </div>
       </div>

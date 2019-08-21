@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
 
 const GET_ROADMAPS = gql`
 query roadmaps($category: String, $title: String, $offset: Int, $limit: Int) {
@@ -10,6 +10,7 @@ query roadmaps($category: String, $title: String, $offset: Int, $limit: Int) {
     id
     title
     category
+    UserId
   }
 }
 `;
@@ -29,6 +30,7 @@ interface RoadmapListProps {
 const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) => {
   const [showButton, setShowButton] = useState(true);
   // fetching roadmaps from database
+
   const {
     data,
     loading,
@@ -79,7 +81,16 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   if (data.roadmaps.length < 20 && showButton) setShowButton(false);
 
   const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
-    <Link id="roadmaps" key={item.id} to={`/roadmap/${item.id}`}>
+    <Link
+      id="roadmaps"
+      key={item.id}
+      to={`/preview/${item.id}`}
+      onClick={() => client.writeData({
+        data: {
+          selectedRoadmapUID: data.roadmaps[+(item.id) - 1].UserId,
+        },
+      })}
+    >
       {item.title}
     </Link>
   ));
