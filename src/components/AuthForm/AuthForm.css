@@ -19,10 +19,11 @@ input:not(last-of-type) {
 .submit {
   width: 60%;
   padding: 1rem 1.5rem;
-  background-color: rgb(32, 226, 129);
+  background-color: #FFF;
   border-radius: 5px;
   font-family: 'Comfortaa';
   font-size: 1.15rem;
-  color: #FFF;
+  color: #F07b7b;
+  font-weight: 700;
   box-shadow: -5px 6px 6px rgba(0, 0, 0, .15);
 }

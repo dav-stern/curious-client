@@ -3,7 +3,7 @@ img {
 }
 
 .navbar-container {
-  height: 12vh;
+  height: 10vh;
   width: 100%;
   background-color: #FFF;
   position: fixed;
@@ -20,7 +20,7 @@ img {
   width: 65%;
   margin: 0 auto;
   font-size: 1.25rem;
-  font-family: 'Josefin Sans'
+  font-family: 'Comfortaa'
 }
 
 .user-info__avatar, .navbar__nav, .navbar__nav__item {
@@ -58,6 +58,19 @@ img {
   align-items: center;
 }
 
+.navbar__nav__item a {
+  color: #404040;
+  border-radius: 2px;
+  transition: border .2s;
+  padding: .7rem;
+}
+
+.navbar__nav__item:hover a {
+  border-bottom: 2px solid #F07B7B;
+  /* background-color: #404040a8;
+  color: #FFF; */
+}
+
 .navbar__nav__item:not(:last-of-type)>a {
-  padding-right: 3rem;
+  margin-right: 2.3rem;
 }

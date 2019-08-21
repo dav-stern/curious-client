@@ -9,23 +9,28 @@
 
 .container {
   display: flex;
+  padding-top: 10rem;
   flex-wrap: wrap;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0 auto;
 }
 
-
-#roadmaps {
+.roadmaps {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 20px;
   text-align: center;
   border: 1px solid black;
-  height: 120px;
-  width: 120px;
+  height: 40vh;
+  width: 30%;
   color: black;
   text-decoration: none;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  font-family: 'Comfortaa';
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  word-spacing: 10rem;
 }
-
