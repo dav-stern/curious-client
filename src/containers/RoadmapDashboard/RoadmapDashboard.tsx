@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import './RoadmapDashboard.css';
 import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
-import Navbar from '../../components/Navbar/Navbar';
+// import Navbar from '../../components/Navbar/Navbar';
 
 type TParams = { id: string };
 
@@ -19,7 +19,6 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   const { data } = useQuery(GET_TOPIC_ID);
   return (
     <div>
-      <Navbar />
       <div className="roadmap-tree-container">
         <RoadmapTree
           matchId={match.params.id}

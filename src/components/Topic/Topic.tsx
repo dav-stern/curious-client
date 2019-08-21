@@ -1,5 +1,6 @@
 import React from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import './Topic.css';
 import PropTypes from 'prop-types';
 
@@ -20,6 +21,7 @@ const Topic: React.FC<TopicNodeProps> = ({
   function handleSelectTopic(topicId: string) {
     client.writeData({ data: { selectedTopicId: topicId } });
   }
+  const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
   return (
     // TODO: "Coding for the keyboard is important for users with physical disabilities
     // who cannot use a mouse, AT compatibility, and screenreader users."
@@ -31,7 +33,9 @@ const Topic: React.FC<TopicNodeProps> = ({
           : null
       }
       <div>{id}</div>
-      <div>{title}</div>
+      <div>
+        {data.selectedTopicTitle && id === data.selectedTopicId ? data.selectedTopicTitle : title}
+      </div>
     </div>
   );
 };

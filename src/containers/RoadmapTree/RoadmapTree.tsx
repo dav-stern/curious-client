@@ -96,7 +96,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   async function handleAddTopic(rowNum: string) {
     try {
       const { data }: any = await createTopic({ // eslint-disable-line no-shadow
-        variables: { RoadmapId: matchId, title: 'New Topic', rowNumber: Number(rowNum) },
+        variables: { RoadmapId: matchId, title: '', rowNumber: Number(rowNum) },
       });
       // Get the id of the new topic and save it on cache: property "selectedTopic"
       client.writeData({ data: { selectedTopicId: data.createTopic.id } });
@@ -109,6 +109,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
 
   async function handleDeleteTopic(topicId: string) {
     try {
+      client.writeData({ data: { selectedTopicId: '' } });
       await deleteTopic({ variables: { topicId } });
       refetch();
     } catch (err) {

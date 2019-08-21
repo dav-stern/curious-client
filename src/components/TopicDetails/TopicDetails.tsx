@@ -1,9 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
+import ReactMde from 'react-mde';
+import * as Showdown from 'showdown';
+import 'react-mde/lib/styles/css/react-mde-all.css';
+import PropTypes from 'prop-types';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import Checklist from '../Checklist/Checklist';
 
 import './TopicDetails.css';
+
+const converter = new Showdown.Converter({
+  tables: true,
+  simplifiedAutoLink: true,
+  strikethrough: true,
+  tasklists: true,
+});
+
 
 interface ITopicDetailsProps {
   selectedTopicId: string
@@ -19,6 +31,7 @@ const GET_TOPIC_DETAILS = gql`
       completed
       rowNumber
       checklist {
+        id
         title
         completed
       }
@@ -38,7 +51,22 @@ const UPDATE_TOPIC = gql`
   }
 `;
 
+const CREATE_CHECKLIST_ITEM = gql`
+mutation createChecklistItem($TopicId: ID! $title: String!) {
+  createChecklistItem(TopicId: $TopicId, title: $title) {
+    id
+    title
+    completed
+  }
+}`;
+
+const DELETE_CHECKLIST_ITEM = gql`
+  mutation deleteChecklistItem($id: ID!) {
+    deleteChecklistItem(id: $id)
+}`;
+
 const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
+  const client = useApolloClient();
   // Get details of selected topic
   const { data, loading, refetch } = useQuery(GET_TOPIC_DETAILS, {
     variables: { id: selectedTopicId },
@@ -48,8 +76,10 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [resourcesInput, setResourcesInput] = useState('');
+  const [selectedTab, setSelectedTab] = useState<'preview' | undefined | 'write' >('write');
+  // const [checklistInput, setChecklistInput] = useState([]);
 
-  // Sets the local state to the previous Topic details
+  // Set the local state to the previous Topic details
   useEffect(() => {
     if (data && data.topics) {
       setTitleInput(data.topics[0].title);
@@ -67,6 +97,11 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     },
   });
 
+  const [createChecklistItem] = useMutation(CREATE_CHECKLIST_ITEM);
+  const [deleteChecklistItem] = useMutation(DELETE_CHECKLIST_ITEM);
+
+  // If there is no selected Topic remove the details component
+  if (!selectedTopicId) return null;
   if (loading) return <p>Loading...</p>;
   if (!data) return null;
 
@@ -75,14 +110,37 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     if (inputClass === 'topic-title') setTitleInput(e.target.value);
     if (inputClass === 'topic-description') setDescriptionInput(e.target.value);
     if (inputClass === 'topic-resources') setResourcesInput(e.target.value);
+    client.writeData({ data: { selectedTopicTitle: e.target.value } });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await updateTopic();
-    refetch();
+    client.writeData({ data: { selectedTopicId: '', selectedTopicTitle: '' } });
   };
 
+  const { checklist } = data.topics[0];
+
+  // Checklist functions
+  const handleCreateChecklistItem = async () => {
+    try {
+      await createChecklistItem({
+        variables: { TopicId: selectedTopicId, title: 'New item' },
+      });
+      refetch();
+    } catch (error) {
+      console.log(error); // eslint-disable-line no-console
+    }
+  };
+
+  const handleDeleteChecklistItem = async (checklistItemId: string) => {
+    try {
+      await deleteChecklistItem({ variables: { id: checklistItemId } });
+      refetch();
+    } catch (error) {
+      console.log(error); // eslint-disable-line no-console
+    }
+  };
   return (
     <div className="topic-details-card">
       <form onSubmit={handleSubmit}>
@@ -95,11 +153,22 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
         </div>
         <div className="resources-block">
           <h4>Resources:</h4>
-          <textarea className="topic-resources" value={resourcesInput} onChange={handleChange} />
+          <ReactMde
+            className="topic-resources"
+            value={resourcesInput}
+            selectedTab={selectedTab}
+            onChange={setResourcesInput}
+            onTabChange={setSelectedTab}
+            generateMarkdownPreview={(markdown) => Promise.resolve(converter.makeHtml(markdown))}
+          />
         </div>
         <button type="submit">Save</button>
       </form>
-      {/* <Checklist /> */}
+      <Checklist
+        checklist={checklist}
+        handleCreateChecklistItem={handleCreateChecklistItem}
+        handleDeleteChecklistItem={handleDeleteChecklistItem}
+      />
     </div>
   );
 };

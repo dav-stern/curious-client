@@ -30,6 +30,7 @@ const client = new ApolloClient({
 cache.writeData({
   data: {
     selectedTopicId: '',
+    selectedTopicTitle: '',
   },
 });
 
