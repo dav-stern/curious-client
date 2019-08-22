@@ -60,6 +60,8 @@
   display: block;
 }
 
+/* MEDIA QUERIES */
+
 @media screen and (min-width: 615px) and (max-width: 768px) {
   #welcome {
     display: none;

@@ -30,7 +30,7 @@ const Authentication: React.FC = () => {
           CURiOUS
           <span>!</span>
         </h1>
-        <span><h2>Because f**k school</h2></span>
+        <span><h2>Never stop learning</h2></span>
       </div>
       <div className="LISU__wrapper">
         <div className="form__header">
