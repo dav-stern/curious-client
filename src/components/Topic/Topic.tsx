@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import gql from 'graphql-tag';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
@@ -19,6 +20,7 @@ const Topic: React.FC<TopicNodeProps> = ({
 }) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
+    console.log(`selected Topic is ${topicId}`);
     client.writeData({ data: { selectedTopicTitle: '' } });
     client.writeData({ data: { selectedTopicId: topicId } });
   }
@@ -27,21 +29,26 @@ const Topic: React.FC<TopicNodeProps> = ({
     // TODO: "Coding for the keyboard is important for users with physical disabilities
     // who cannot use a mouse, AT compatibility, and screenreader users."
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div className={isPreview ? 'topic-container no-anim' : 'topic-container'} onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
+    <div
+      className={isPreview ? 'no-anim topic-container' : 'topic-container'}
+      onClick={() => { handleSelectTopic(id); }}
+      role="button"
+      tabIndex={-1}
+      id={id}
+    >
       {
         (!isPreview)
           ? (
             <button
               className="delete-button"
               type="button"
-              onClick={() => { handleDeleteTopic(id); }}
+              onClick={(e) => { e.stopPropagation(); handleDeleteTopic(id); }}
             >
               <span role="img" aria-label="delete button">❌</span>
             </button>
           )
           : null
       }
-      {/* <div>{id}</div> */}
       <div className="topic-content">
         {data.selectedTopicTitle && id === data.selectedTopicId ? data.selectedTopicTitle : title}
       </div>

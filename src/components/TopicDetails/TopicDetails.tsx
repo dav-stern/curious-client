@@ -109,7 +109,7 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
         <div className="title-block block">
           <div className="title-block__wrapper">
             <h4>Title</h4>
-            <textarea className="topic-title" value={titleInput} onChange={handleChange} />
+            <textarea className="topic-title" value={titleInput} onChange={handleChange} autoFocus />
           </div>
         </div>
         <div className="description-block block">

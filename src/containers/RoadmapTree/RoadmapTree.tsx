@@ -105,8 +105,10 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
 
   async function handleDeleteTopic(topicId: string) {
     try {
+      console.log('I am going to delete!');
       client.writeData({ data: { selectedTopicId: '' } });
       await deleteTopic({ variables: { topicId } });
+      console.log('Just delete it!!');
       refetch();
     } catch (err) {
       console.log('This topic doesn\'t exist anymore!!'); // eslint-disable-line no-console
