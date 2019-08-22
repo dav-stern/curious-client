@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 30%;
   justify-content: center;
+  background-color: #fff;
 }
 
 .block {

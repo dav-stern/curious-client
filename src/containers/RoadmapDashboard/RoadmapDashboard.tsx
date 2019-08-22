@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import './RoadmapDashboard.css';
 import RoadmapTree from '../RoadmapTree/RoadmapTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
-// import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 
 type TParams = { id: string };
 
@@ -33,14 +33,17 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
 
   return (
-    <div className={isPreview ? 'roadmap-detail__container' : 'roadmap-detail__container no-prev'}>
-      <div className="roadmap-tree-container">
-        <h2>{data.roadmaps[0].title}</h2>
-        <RoadmapTree
-          matchId={match.params.id}
-        />
+    <div className="background-tree">
+      <Navbar />
+      <div className={isPreview ? 'roadmap-detail__container' : 'roadmap-detail__container no-prev'}>
+        <div className="roadmap-tree-container">
+          <h2>{data.roadmaps[0].title}</h2>
+          <RoadmapTree
+            matchId={match.params.id}
+          />
+        </div>
+        <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
       </div>
-      <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
     </div>
   );
 };
