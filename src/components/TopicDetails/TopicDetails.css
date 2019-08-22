@@ -6,6 +6,8 @@
   width: 30%;
   justify-content: center;
   background-color: #fff;
+  overflow: auto;
+  box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.15);
 }
 
 .block {
@@ -51,13 +53,13 @@
   text-align: center;
   position: relative;
   border-radius: 5px;
-  bottom: 10%;
+  bottom: 6%;
   border: 1px solid #201E45;
   transition: border-color .35s, border-radius .35s;
 }
 
 .save__container:hover {
-  border: 1px solid #E4E4EF;
+  border: 1px solid rgb(185, 185, 185);
 }
 
 .save__container>button {

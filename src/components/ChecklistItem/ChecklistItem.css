@@ -1,11 +1,10 @@
-.checklist__item {
-  height: 10%;
-  margin-bottom: .5rem;
-}
-
 .checklist__item>div {
   display: flex;
   width: 50%;
   align-items: center;
   justify-content: flex-start;
+}
+
+.checklist__item>div>* {
+  font-family: 'Comfortaa';
 }
