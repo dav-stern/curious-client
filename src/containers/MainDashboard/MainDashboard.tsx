@@ -70,6 +70,7 @@ const MainDashboard: React.FC = () => {
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
     variables: { UserId: id },
+    fetchPolicy: 'network-only',
   });
   // creating 'ADD_ROADMAP' mutation
   const [createRoadmap] = useMutation(CREATE_ROADMAP, {

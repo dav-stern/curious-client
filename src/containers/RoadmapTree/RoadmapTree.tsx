@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import {
   useQuery,
@@ -6,6 +6,7 @@ import {
   useApolloClient,
 } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -57,6 +58,7 @@ interface IRowsData {
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   const client = useApolloClient();
+  const [flag, setFlag] = useState(false);
 
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
     variables: { id: matchId },
@@ -120,6 +122,9 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
     handleAddTopic(rowNum);
   }
 
+  (console.log(flag));
+  if (flag) return <Redirect to="/dashboard" />;
+
   const topicsRows = Object.keys(rowsData).map((rowNumber) => (
     <TopicsRow
       isPreview={isPreview}
@@ -146,7 +151,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
             <div className="copy__container">
               <button
                 type="button"
-                onClick={() => { copyRoadmap(); }}
+                onClick={() => { copyRoadmap().then(() => setFlag(true)); }}
                 className="copy__btn"
               >
                 <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
