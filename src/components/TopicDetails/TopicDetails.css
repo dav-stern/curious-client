@@ -28,11 +28,54 @@
   height: 4vh;
   overflow-y: scroll;
   overflow: hidden;
-  border: none;
+  border: 1px solid #4042616c;
+  border-radius: 3px;
   padding: .75rem;
-  border-radius: 5px;
+}
+
+.resources-block__wrapper.block textarea {
+  border: none;
+  border-radius: 0
 }
 
 .block textarea:nth-of-type(3) {
   border-radius: none;
+}
+
+.save__container {
+  width: 20%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  border-radius: 5px;
+  bottom: 10%;
+  border: 1px solid #201E45;
+  transition: border-color .35s, border-radius .35s;
+}
+
+.save__container:hover {
+  border: 1px solid rgb(87, 214, 3);
+}
+
+.save__container>button {
+  width: 100%;
+  height: 100%;
+  padding: .75rem .25rem;
+  font-size: 18px;
+  color: #201E45;
+  transition: color .25s;
+}
+
+.save__container>button:hover {
+  cursor: pointer;
+  color: rgb(87, 214, 3);
+}
+
+.checklist__container {
+  display: flex;
+  justify-content: center;
+}
+
+.checklist__container h3 {
+  display: inline;
 }

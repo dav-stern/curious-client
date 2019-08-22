@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import './ChecklistItem.css';
+
 interface IchecklistItem {
   id: string
   title: string
@@ -45,7 +47,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
   };
 
   return (
-    <div>
+    <div className="checklist__item">
       {editing
         ? (
           <div>

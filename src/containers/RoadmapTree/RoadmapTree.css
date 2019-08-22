@@ -56,7 +56,9 @@
 }
 
 .add-row__btn:hover+.ARlabel {
-  display: inline-block;
+  display: block;
+  position: absolute;
+  bottom: -25px;
 }
 
 .AR__container {
@@ -66,7 +68,10 @@
 .flex-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   margin-top: 1rem;
+  position: relative;
 }
 
 .preview-pos {

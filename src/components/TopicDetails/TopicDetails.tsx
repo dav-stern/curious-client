@@ -131,9 +131,13 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
             />
           </div>
         </div>
-        <button type="submit">Save</button>
+        <div className="save__container">
+          <button type="submit">Save</button>
+        </div>
       </form>
-      <Checklist selectedTopicId={selectedTopicId} />
+      <div className="checklist__container">
+        <Checklist selectedTopicId={selectedTopicId} />
+      </div>
     </div>
   );
 };
