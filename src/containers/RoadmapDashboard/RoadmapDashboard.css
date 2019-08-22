@@ -1,3 +1,7 @@
+body {
+  background-color: #fbfbfb !important
+}
+
 .roadmap-tree-container {
   display: inline-flex;
   flex-direction: column;
@@ -15,4 +19,10 @@
 
 .roadmap-detail__container.no-prev {
   height: 100%;
+}
+
+.background-tree {
+  height: 100vh;
+  background-image: url('./../../assets/roadmaptree.png');
+  background-size: cover;
 }
