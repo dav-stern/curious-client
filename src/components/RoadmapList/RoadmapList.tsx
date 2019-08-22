@@ -135,7 +135,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
     }
     return (
       <Link
-        className="roadmap-container"
+        className="roadmap-container fade-in"
         id="roadmaps"
         key={item.id}
         to={`/preview/${item.id}`}
