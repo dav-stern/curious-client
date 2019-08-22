@@ -62,7 +62,7 @@
 
 /* MEDIA QUERIES */
 
-@media screen and (min-width: 615px) and (max-width: 768px) {
+@media screen and (min-width: 0px) and (max-width: 768px) {
   #welcome {
     display: none;
   }
@@ -73,7 +73,7 @@
     display: flex;
     justify-content: space-around;
     padding-bottom: 0;
-    height: 70px;
+    height: 80px;
     align-items: center;
   }
 
