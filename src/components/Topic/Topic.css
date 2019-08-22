@@ -35,7 +35,7 @@
 }
 
 .topic-container:hover::before {
-  animation: animateBefore .75s ease-in forwards;
+  animation: animateBefore .35s ease-in forwards;
 }
 
 .topic-container::after {
@@ -51,7 +51,7 @@
 }
 
 .topic-container:hover::after {
-  animation: animateAfter .75s ease-out forwards;
+  animation: animateAfter .35s ease-out forwards;
 }
 
 .topic-container.no-anim:hover {

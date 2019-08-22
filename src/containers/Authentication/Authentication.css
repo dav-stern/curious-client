@@ -23,12 +23,14 @@
   box-shadow: -2px 4px 5px rgba(0, 0, 0, .2);
 }
 
+.LISU__wrapper button {
+  cursor: pointer;
+}
+
 .form__header {
-  height: 12.5%;
   width: 100%;
   display: flex;
   align-self: center;
-  background-color: #FFF;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
@@ -40,7 +42,6 @@
   justify-content: center;
   align-items: center;
   font-size: 1.25rem;
-  background-color: #e0e0e073;
   font-family: 'Comfortaa';
 }
 
@@ -86,7 +87,12 @@ form input:hover {
 }
 
 #auth-heading span {
-  color:  #F07B7B;
+  color: #F07B7B;
+}
+
+.login__selector {
+  height: 4rem;
+  background-color: #FFF;
 }
 
 @media screen and (max-width: 1500px) {
@@ -95,9 +101,9 @@ form input:hover {
     margin: 0 auto;
   }
   #auth-heading {
-  font-size: 30px;
-  padding-bottom: 20px;
-  align-self: flex-start;
-  padding-left: 120px;
+    font-size: 30px;
+    padding-bottom: 20px;
+    align-self: flex-start;
+    padding-left: 120px;
   }
 }

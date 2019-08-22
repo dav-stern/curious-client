@@ -6,6 +6,8 @@
   width: 30%;
   justify-content: center;
   background-color: #fff;
+  overflow: auto;
+  box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.15);
 }
 
 .block {
