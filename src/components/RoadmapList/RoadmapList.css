@@ -30,21 +30,21 @@
 /* FADE IN ANYMATION */
 
 /* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:3; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:3; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity: 3; } }
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:10; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:10; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity: 10; } }
 
 .fade-in {
   opacity:0;
-  -webkit-animation:fadeIn ease-in 0.7;
-  -moz-animation:fadeIn ease-in 0.7;
-  animation:fadeIn ease-in 0.7;
+  -webkit-animation:fadeIn ease-in 0.3;
+  -moz-animation:fadeIn ease-in 0.3;
+  animation:fadeIn ease-in 0.3;
 
   -webkit-animation-fill-mode:forwards;
   -moz-animation-fill-mode:forwards;
   animation-fill-mode:forwards;
 
-  -webkit-animation-duration:0.7s;
-  -moz-animation-duration:0.7s;
-  animation-duration:0.7s;
+  -webkit-animation-duration:0.3s;
+  -moz-animation-duration:0.3s;
+  animation-duration:0.3s;
 }
