@@ -57,14 +57,13 @@ interface ITopic {
 
 interface RoadmapTreeProps {
   matchId: string,
-  setDetailsOpen?: undefined | ((detailsOpen: boolean) => void);
 }
 
 interface IRowsData {
   [keys: string]: ITopic[]
 }
 
-const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) => {
+const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   const client = useApolloClient();
   // let RmID: string | number | undefined = (window.location.pathname
   //   .split('/')
@@ -141,7 +140,6 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) =
       rowNum={rowNumber}
       handleAddTopic={handleAddTopic}
       handleDeleteTopic={handleDeleteTopic}
-      setDetailsOpen={setDetailsOpen}
     />
   ));
   const buttonAddRow = dataLen > 0 && (
@@ -154,24 +152,27 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) =
   );
   return (
     <>
-      <div>
-        <div className="copy__container">
-          <p className="copy__label">Copy Roadmap</p>
-          <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
+      <div className={isPreview ? `preview-pos` : `preview-pos not-preview`}>
+        {(isPreview) ? <div className="copy__container">
+          <button
+            type="button"
+            onClick={() => { getRoadmapInfo() }}
+            className='copy__btn'
+          >
+            <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
+            <p className="copy__label">Copy Roadmap</p>
+          </button>
+        </div> : null}
+        <div>
+          {topicsRows}
         </div>
-        {topicsRows}
       </div>
       {(!isPreview) ? <div className="AR__container">{buttonAddRow}</div> : null}
-      <input
-        type="button"
-        onClick={() => { getRoadmapInfo(); }}
-      />
     </>
   );
 };
 
 RoadmapTree.propTypes = {
-  setDetailsOpen: PropTypes.func.isRequired,
   matchId: PropTypes.string.isRequired,
 };
 

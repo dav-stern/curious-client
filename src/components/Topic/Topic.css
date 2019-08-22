@@ -6,6 +6,9 @@
   border-radius: 3px;
   transition: box-shadow .2s ease-out;
   position: relative;
+  display: flex;
+  align-items: center;
+  outline: none;
 }
 
 .topic-container:hover {
@@ -47,6 +50,15 @@
 
 .topic-container:hover::after {
   animation: animateAfter .75s ease-out forwards;
+}
+
+.topic-container.no-anim:hover {
+  box-shadow: none;
+  cursor: default;
+}
+
+.topic-container.no-anim:hover::before, .topic-container.no-anim:hover::after {
+  animation: none;
 }
 
 .topic-content {

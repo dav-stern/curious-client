@@ -5,7 +5,6 @@ import './Topic.css';
 import PropTypes from 'prop-types';
 
 interface TopicNodeProps {
-  setDetailsOpen?: undefined | ((detailsOpen: boolean) => void);
   isPreview: boolean,
   id: string,
   title: string
@@ -16,22 +15,18 @@ const Topic: React.FC<TopicNodeProps> = ({
   id,
   title,
   isPreview,
-  setDetailsOpen,
   handleDeleteTopic,
 }) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
     client.writeData({ data: { selectedTopicId: topicId } });
-    if (setDetailsOpen) {
-      setDetailsOpen(true);
-    }
   }
   const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
   return (
     // TODO: "Coding for the keyboard is important for users with physical disabilities
     // who cannot use a mouse, AT compatibility, and screenreader users."
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div className="topic-container" onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
+    <div className={isPreview ? "topic-container no-anim" : "topic-container"} onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
       {
         (!isPreview)
           ? (
@@ -58,7 +53,6 @@ Topic.propTypes = {
   title: PropTypes.string.isRequired,
   handleDeleteTopic: PropTypes.func.isRequired,
   isPreview: PropTypes.bool.isRequired,
-  setDetailsOpen: PropTypes.func.isRequired,
-};
+}
 
 export default Topic;

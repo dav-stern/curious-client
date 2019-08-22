@@ -117,7 +117,7 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
           </div>
         </div>
         <div className="resources-block block">
-          <div className="resources-block__wrapper">
+          <div className="resources-block__wrapper block">
             <h4>Resources</h4>
             <ReactMde
               className="topic-resources"

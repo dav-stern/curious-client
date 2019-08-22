@@ -4,6 +4,8 @@ import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import RoadmapTree from '../RoadmapTree/RoadmapTree';
 
+import './RoadmapPreview.css';
+
 type TParams = { id: string };
 
 const GET_ROADMAP_INFO = gql`
@@ -30,6 +32,7 @@ const FORK_ROADMAP = gql`
 let flag = true;
 // TODO: Make id dynamic
 const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
+  const isPreview = window.location.pathname.includes('preview');
   const { data, loading } = useQuery(GET_ROADMAP_INFO, {
     variables: {
       id: '1',
@@ -51,7 +54,7 @@ const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
 
 
   return (
-    <div className="roadmap-tree-container">
+    <div className={isPreview ? "roadmap-tree-container parent-preview" : "roadmap-tree-container"}>
       <RoadmapTree matchId={match.params.id} />
     </div>
   );
