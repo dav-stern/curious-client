@@ -21,6 +21,9 @@
   border-bottom: 1px solid #E4E4EF;
   border-radius: 10px;
   box-shadow: -2px 4px 5px rgba(0, 0, 0, .2);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .form__header {
@@ -77,6 +80,8 @@ form input:hover {
   padding-bottom: 20px;
   align-self: flex-start;
   padding-left: 120px;
+  position: absolute;
+  top: 17.5%;
 }
 
 #auth-heading h2 {
@@ -86,7 +91,7 @@ form input:hover {
 }
 
 #auth-heading span {
-  color:  #F07B7B;
+  color: #F07B7B;
 }
 
 @media screen and (max-width: 1500px) {
@@ -95,9 +100,9 @@ form input:hover {
     margin: 0 auto;
   }
   #auth-heading {
-  font-size: 30px;
-  padding-bottom: 20px;
-  align-self: flex-start;
-  padding-left: 120px;
-}
+    font-size: 30px;
+    padding-bottom: 20px;
+    align-self: flex-start;
+    padding-left: 120px;
+  }
 }

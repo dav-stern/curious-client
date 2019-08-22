@@ -2,6 +2,11 @@ import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+import './Checklist.css';
+
 import ChecklistItem from '../ChecklistItem/ChecklistItem';
 
 const GET_CHECKLIST = gql`
@@ -119,10 +124,14 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
   ));
 
   return (
-    <div>
+    <div className="checklist__wrapper">
       <h3>Checklist</h3>
-      <input type="text" name="newChecklistItem" value={newChecklistItemInput} onChange={handleChange} />
-      <button type="button" onClick={handleCreateChecklistItem}>Add Item</button>
+      <div className="add-checklist__item">
+        <input className="big-input" type="text" name="newChecklistItem" value={newChecklistItemInput} onChange={handleChange} />
+        <button type="button" onClick={handleCreateChecklistItem}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      </div>
       {checklistItems}
     </div>
   );

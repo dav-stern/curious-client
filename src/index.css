@@ -59,6 +59,7 @@ button, input, textarea {
 
 textarea {
   resize: none;
+  background: rgba(240, 240, 240, 0.719);
 }
 
 ::placeholder {
