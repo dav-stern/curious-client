@@ -27,7 +27,7 @@ const Topic: React.FC<TopicNodeProps> = ({
     // TODO: "Coding for the keyboard is important for users with physical disabilities
     // who cannot use a mouse, AT compatibility, and screenreader users."
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div className={isPreview ? "topic-container no-anim" : "topic-container"} onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
+    <div className={isPreview ? 'topic-container no-anim' : 'topic-container'} onClick={() => { handleSelectTopic(id); }} role="button" tabIndex={-1} id={id}>
       {
         (!isPreview)
           ? (
@@ -54,6 +54,6 @@ Topic.propTypes = {
   title: PropTypes.string.isRequired,
   handleDeleteTopic: PropTypes.func.isRequired,
   isPreview: PropTypes.bool.isRequired,
-}
+};
 
 export default Topic;

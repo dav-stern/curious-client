@@ -140,17 +140,20 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   );
   return (
     <>
-      <div className={isPreview ? `preview-pos` : `preview-pos not-preview`}>
-        {(isPreview) ? <div className="copy__container">
-          <button
-            type="button"
-            onClick={() => { getRoadmapInfo() }}
-            className='copy__btn'
-          >
-            <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
-            <p className="copy__label">Copy Roadmap</p>
-          </button>
-        </div> : null}
+      <div className={isPreview ? 'preview-pos' : 'preview-pos not-preview'}>
+        {(isPreview)
+          ? (
+            <div className="copy__container">
+              <button
+                type="button"
+                onClick={() => { copyRoadmap(); }}
+                className="copy__btn"
+              >
+                <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
+                <p className="copy__label">Copy Roadmap</p>
+              </button>
+            </div>
+          ) : null}
         <div>
           {topicsRows}
         </div>

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 import { useQuery } from '@apollo/react-hooks';
 import './RoadmapDashboard.css';
@@ -33,8 +33,8 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
 
   return (
-    <div className={isPreview ? "roadmap-detail__container" : "roadmap-detail__container no-prev"}>
-      <div className='roadmap-tree-container'>
+    <div className={isPreview ? 'roadmap-detail__container' : 'roadmap-detail__container no-prev'}>
+      <div className="roadmap-tree-container">
         <h2>{data.roadmaps[0].title}</h2>
         <RoadmapTree
           matchId={match.params.id}
