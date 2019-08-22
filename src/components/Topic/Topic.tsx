@@ -20,7 +20,6 @@ const Topic: React.FC<TopicNodeProps> = ({
 }) => {
   const client = useApolloClient();
   function handleSelectTopic(topicId: string) {
-    console.log(`selected Topic is ${topicId}`);
     client.writeData({ data: { selectedTopicTitle: '' } });
     client.writeData({ data: { selectedTopicId: topicId } });
   }
