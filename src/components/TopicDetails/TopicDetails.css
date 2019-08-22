@@ -1,4 +1,6 @@
 .topic-details-card {
+  border-left: 2px solid #E4E4EF;
+  border-bottom: 2px solid #E4E4EF;
   display: inline-flex;
   flex-direction: column;
   width: 30%;
@@ -16,6 +18,7 @@
   display: inline-flex;
   flex-direction: column;
   width: 80%;
+  padding-top: 20px;
 }
 
 .block h4 {
@@ -54,7 +57,7 @@
 }
 
 .save__container:hover {
-  border: 1px solid rgb(87, 214, 3);
+  border: 1px solid #E4E4EF;
 }
 
 .save__container>button {
@@ -68,7 +71,7 @@
 
 .save__container>button:hover {
   cursor: pointer;
-  color: rgb(87, 214, 3);
+  color: #E4E4EF;
 }
 
 .checklist__container {

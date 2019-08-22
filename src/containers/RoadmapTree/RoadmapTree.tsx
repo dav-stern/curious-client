@@ -135,7 +135,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
       <button className="add-row__btn" type="button" onClick={handleAddRow}>
         <FontAwesomeIcon icon={faPlus} />
       </button>
-      <p className="ARlabel">Add New Row</p>
+      <p className="ARlabel">Add Row</p>
     </div>
   );
   return (

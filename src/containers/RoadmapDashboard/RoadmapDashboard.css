@@ -1,5 +1,7 @@
-body {
-  background-color: #fbfbfb !important
+.background-tree {
+  background-image: url('./../../assets/roadmaptree.png');
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .roadmap-tree-container {
@@ -8,6 +10,10 @@ body {
   position: relative;
   width: 65%;
   align-items: center;
+}
+
+.roadmap-tree-container h2 {
+  padding-bottom: 20px;
 }
 
 .roadmap-detail__container {
@@ -19,10 +25,4 @@ body {
 
 .roadmap-detail__container.no-prev {
   height: 100%;
-}
-
-.background-tree {
-  height: 100vh;
-  background-image: url('./../../assets/roadmaptree.png');
-  background-size: cover;
 }
