@@ -122,7 +122,6 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
     handleAddTopic(rowNum);
   }
 
-  (console.log(flag));
   if (flag) return <Redirect to="/dashboard" />;
 
   const topicsRows = Object.keys(rowsData).map((rowNumber) => (
