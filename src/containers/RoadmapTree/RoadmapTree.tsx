@@ -6,9 +6,12 @@ import {
   useApolloClient,
 } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './RoadmapTree.css';
-
 // Setup query to get all topics for the Roadmap
 const GET_TOPICS = gql`
   query gettopics($id: ID!) {
@@ -46,13 +49,14 @@ interface ITopic {
 
 interface RoadmapTreeProps {
   matchId: string,
+  setDetailsOpen?: undefined | ((detailsOpen: boolean) => void);
 }
 
 interface IRowsData {
   [keys: string]: ITopic[]
 }
 
-const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
+const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId, setDetailsOpen }) => {
   const client = useApolloClient();
 
   const { data, loading, refetch } = useQuery(GET_TOPICS, {
@@ -125,28 +129,37 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
       rowNum={rowNumber}
       handleAddTopic={handleAddTopic}
       handleDeleteTopic={handleDeleteTopic}
+      setDetailsOpen={setDetailsOpen}
     />
   ));
-  const buttonAddRow = dataLen > 0 && (<button type="button" onClick={handleAddRow}>Add Row</button>);
-  return (
-    <div>
-      <div>
-        <div>
-          {topicsRows}
-        </div>
-        { !isPreview
-          ? <div>{buttonAddRow}</div>
-          : (
-            <button type="button" onClick={() => { copyRoadmap(); }}>
-              Fork
-            </button>
-          )}
-      </div>
+  const buttonAddRow = dataLen > 0 && (
+    <div className="flex-container">
+      <button className="add-row__btn" type="button" onClick={handleAddRow}>
+        <FontAwesomeIcon icon={faPlus} />
+      </button>
+      <p className="ARlabel">Add New Row</p>
     </div>
+  );
+  return (
+    <>
+      <div>
+        <div className="copy__container">
+          <p className="copy__label">Copy Roadmap</p>
+          <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
+        </div>
+        {topicsRows}
+      </div>
+      {(!isPreview) ? <div className="AR__container">{buttonAddRow}</div> : null}
+      <input
+        type="button"
+        onClick={() => { copyRoadmap(); }}
+      />
+    </>
   );
 };
 
 RoadmapTree.propTypes = {
+  setDetailsOpen: PropTypes.func.isRequired,
   matchId: PropTypes.string.isRequired,
 };
 

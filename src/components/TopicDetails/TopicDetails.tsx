@@ -52,7 +52,7 @@ const UPDATE_TOPIC = gql`
   }
 `;
 
-const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
+const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const client = useApolloClient();
   // Get details of selected topic
   const { data, loading } = useQuery(GET_TOPIC_DETAILS, {
@@ -63,7 +63,7 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [resourcesInput, setResourcesInput] = useState('');
-  const [selectedTab, setSelectedTab] = useState<'preview' | undefined | 'write' >('write');
+  const [selectedTab, setSelectedTab] = useState<'preview' | undefined | 'write'>('write');
 
   // Set the local state to the previous Topic details
   useEffect(() => {
@@ -106,23 +106,30 @@ const TopicDetails : React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   return (
     <div className="topic-details-card">
       <form onSubmit={handleSubmit}>
-        <div className="title-block">
-          <textarea className="topic-title" value={titleInput} onChange={handleChange} autoFocus />
+        <div className="title-block block">
+          <div className="title-block__wrapper">
+            <h4>Title</h4>
+            <textarea className="topic-title" value={titleInput} onChange={handleChange} />
+          </div>
         </div>
-        <div className="description-block">
-          <h4>Description:</h4>
-          <textarea className="topic-description" value={descriptionInput} onChange={handleChange} />
+        <div className="description-block block">
+          <div className="description-block__wrapper">
+            <h4>Description</h4>
+            <textarea className="topic-description" value={descriptionInput} onChange={handleChange} />
+          </div>
         </div>
-        <div className="resources-block">
-          <h4>Resources:</h4>
-          <ReactMde
-            className="topic-resources"
-            value={resourcesInput}
-            selectedTab={selectedTab}
-            onChange={setResourcesInput}
-            onTabChange={setSelectedTab}
-            generateMarkdownPreview={(markdown) => Promise.resolve(converter.makeHtml(markdown))}
-          />
+        <div className="resources-block block">
+          <div className="resources-block__wrapper">
+            <h4>Resources</h4>
+            <ReactMde
+              className="topic-resources"
+              value={resourcesInput}
+              selectedTab={selectedTab}
+              onChange={setResourcesInput}
+              onTabChange={setSelectedTab}
+              generateMarkdownPreview={(markdown) => Promise.resolve(converter.makeHtml(markdown))}
+            />
+          </div>
         </div>
         <button type="submit">Save</button>
       </form>
