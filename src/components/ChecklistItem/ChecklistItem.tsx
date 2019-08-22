@@ -53,7 +53,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
           <div>
             <input type="text" value={checklistTitleInput} onChange={handleChange} placeholder={checklistItem.title} autoFocus />
             <button type="button" onClick={() => handleUpdateButton()}>Save Changes</button>
-            <button type="button" onClick={() => handleDeleteButton()}><span>❌</span></button>
+            <button type="button" onClick={() => handleDeleteButton()}><span role="img" aria-label="Delete checklist item button">❌</span></button>
           </div>
         )
         : (

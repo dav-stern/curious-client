@@ -65,8 +65,16 @@
   color: #FFF;
 }
 
+.form__header>button.selected:hover {
+  background-color: rgb(221, 217, 217);
+}
+
 .form__header>button:not(.selected) {
   background-color: #FFF;
+}
+
+.form__header>button:not(.selected):hover {
+  background-color: rgba(250, 250, 250, 0.863);
 }
 
 form input:hover {

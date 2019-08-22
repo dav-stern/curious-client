@@ -25,5 +25,14 @@
   font-size: 1.15rem;
   color: #F07b7b;
   font-weight: 700;
-  box-shadow: -5px 6px 6px rgba(0, 0, 0, .15);
+  box-shadow: -4px 5px 5px rgba(0, 0, 0, .15);
+  transition: box-shadow .25s;
+}
+
+.submit:hover {
+  background-color: rgb(251, 251, 251);
+}
+
+.submit:active {
+  box-shadow: -2px 3px 4px rgba(0, 0, 0, .2);
 }
