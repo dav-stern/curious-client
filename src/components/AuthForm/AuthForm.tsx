@@ -36,6 +36,7 @@ export const AuthForm: React.SFC<AuthFormProps> = ({
       onChange={handleChange}
       value={inputs[key]}
       placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+      autoComplete="off"
       required
     />
   ));
