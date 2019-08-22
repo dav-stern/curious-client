@@ -1,6 +1,7 @@
 .topic-container {
   width: 15%;
   margin: 0 2%;
+  overflow: hidden;
   height: 60%;
   background-color: #E4E4EF;
   border-radius: 3px;

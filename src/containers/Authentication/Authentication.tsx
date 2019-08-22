@@ -25,6 +25,13 @@ const Authentication: React.FC = () => {
 
   return (
     <div className="LISU__container">
+      <div id="auth-heading">
+        <h1>
+          CURiOUS
+          <span>!</span>
+        </h1>
+        <span><h2>Never stop learning</h2></span>
+      </div>
       <div className="LISU__wrapper">
         <div className="form__header">
           <button

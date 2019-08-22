@@ -61,11 +61,13 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
 
   const handleCreateChecklistItem = async () => {
     try {
+      if (newChecklistItemInput === '') return;
       await createChecklistItem({
         variables: { TopicId: selectedTopicId, title: newChecklistItemInput },
       });
       setNewChecklistItemInput('');
       refetch();
+      return;
     } catch (error) {
       console.log(error); // eslint-disable-line no-console
     }

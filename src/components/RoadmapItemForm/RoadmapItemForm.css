@@ -4,14 +4,17 @@
   align-items: center;
   flex-direction: column;
   margin-bottom: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
   text-align: center;
   background-color: #fff;
+  border: 3px solid #F07B7B;
   box-shadow: -2px 4px 5px rgba(0, 0, 0, .2);
-  height: 450px;
+  height: 350px;
+  width: 350px;
   font-size: 25px;
   font-family: comfortaa;
   color: #201E45;
-  width: 450px;
   text-decoration: none;
 }
 

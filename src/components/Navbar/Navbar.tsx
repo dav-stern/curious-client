@@ -11,38 +11,31 @@ const Navbar: React.FC = () => {
   const { name } = jwtDecode(token);
 
   return (
-    <div className="navbar-container">
-      <div className="navbar-content">
-        <div className="user-info__container">
-          <div className="user-info__avatar">
-            <NavLink to="/dashboard">
-              <img
-                src="https://www.chaarat.com/wp-content/uploads/2017/08/placeholder-user.png"
-                alt="Avatar"
-              />
-            </NavLink>
-          </div>
-          <div className="user-info__user-name">
-            <p>
-              {name}
-            </p>
-          </div>
+    <nav className="navbar">
+      <div className="left">
+        <NavLink to="/dashboard" className="logo">
+          <h1>
+            CURiOUS
+            <span>!</span>
+          </h1>
+        </NavLink>
+        <div id="welcome">
+          <p>Welcome </p>
+          <p>{name}</p>
         </div>
-        <nav className="navbar__nav__container">
-          <ul className="navbar__nav">
-            <li className="navbar__nav__item">
-              <NavLink to="/dashboard">My Roadmaps</NavLink>
-            </li>
-            <li className="navbar__nav__item">
-              <NavLink to="/discover">Discover</NavLink>
-            </li>
-            <li className="navbar__nav__item">
-              <NavLink to="/" onClick={handleLogout}>Sign Out</NavLink>
-            </li>
-          </ul>
-        </nav>
       </div>
-    </div>
+      <ul className="main-nav" id="js-menu">
+        <li>
+          <NavLink to="/dashboard">My Roadmaps</NavLink>
+        </li>
+        <li>
+          <NavLink to="/discover">Discover</NavLink>
+        </li>
+        <li>
+          <NavLink to="/" onClick={handleLogout}>Sign Out</NavLink>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

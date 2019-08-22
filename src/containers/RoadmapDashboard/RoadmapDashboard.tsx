@@ -14,6 +14,7 @@ const CHECK_ROADMAP_USER = gql`
 query roadmapUser($id: ID!) {
   roadmaps(id: $id) {
     UserId
+    title
   }
 }`;
 
@@ -34,6 +35,7 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   return (
     <div className={isPreview ? "roadmap-detail__container" : "roadmap-detail__container no-prev"}>
       <div className='roadmap-tree-container'>
+        <h2>{data.roadmaps[0].title}</h2>
         <RoadmapTree
           matchId={match.params.id}
         />
