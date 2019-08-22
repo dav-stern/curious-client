@@ -34,14 +34,14 @@ h1 span {
   justify-content: flex-start;
   align-items: center;
   padding-left: 2rem;
-  padding-top: 16rem;
+  padding-top: 150px;
 }
 
 .add-roadmap-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-top: 10rem;
+  padding-top: 200px;
   padding-right: 2em;
 }
 
