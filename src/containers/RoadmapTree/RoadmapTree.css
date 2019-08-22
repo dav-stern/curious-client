@@ -1,24 +1,34 @@
 .copy__container {
-  display: flex;
-  justify-content: center;
-  background-color: rgb(58, 134, 255);
-  padding: .5rem 0px;
+  height: 2.5rem;
+  background-color: #404267;
   margin-bottom: .5rem;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  color: #FFF;
+  border-radius: 3px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, .25), 0px -1.2rem 30px rgba(0, 0, 0, .35) inset;
 }
 
 .copy__container:hover {
   cursor: pointer;
-  background-color: rgb(71, 141, 255);
+  background-color: #4e507a;
+}
+
+.copy__btn {
+  width: 100%;
+  color: #FFF;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy__btn:hover {
+  cursor: pointer;
 }
 
 .copy__label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding-right: 1rem;
+  padding-left: 1rem;
+  font-family: 'Comfortaa';
 }
 
 .copy-roadmap {
@@ -57,4 +67,9 @@
   display: flex;
   align-items: center;
   margin-top: 1rem;
+}
+
+.preview-pos {
+  max-width: 70%;
+  min-width: 70%;
 }

@@ -52,7 +52,7 @@ button {
   background-color: transparent;
 }
 
-button, input {
+button, input, textarea {
   border: none;
   outline: none;
 }

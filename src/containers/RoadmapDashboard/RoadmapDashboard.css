@@ -1,16 +1,18 @@
 .roadmap-tree-container {
-  height: 100vh;
   display: inline-flex;
   flex-direction: column;
-  margin: 0px 25vw;
   position: relative;
-  overflow-y: scroll;
-}
-
-.roadmap-tree-container.split {
-  margin: 3rem 5rem;
+  width: 65%;
+  align-items: center;
 }
 
 .roadmap-detail__container {
   font-family: 'Comfortaa';
+  padding: 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.roadmap-detail__container.no-prev {
+  height: 100%;
 }

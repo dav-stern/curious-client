@@ -18,7 +18,6 @@ interface ITopic {
 }
 
 interface TopicsProps {
-  setDetailsOpen?: undefined | ((detailsOpen: boolean) => void);
   isPreview: boolean,
   topics: ITopic[],
   rowNum: string,
@@ -27,7 +26,6 @@ interface TopicsProps {
 }
 
 const TopicsRow: React.SFC<TopicsProps> = ({
-  setDetailsOpen,
   isPreview,
   topics,
   handleAddTopic,
@@ -41,7 +39,6 @@ const TopicsRow: React.SFC<TopicsProps> = ({
       title={topic.title}
       key={topic.id}
       handleDeleteTopic={handleDeleteTopic}
-      setDetailsOpen={setDetailsOpen}
     />
   ));
   if (topics.length < 5 && !isPreview) {
@@ -67,7 +64,6 @@ const TopicsRow: React.SFC<TopicsProps> = ({
 };
 
 TopicsRow.propTypes = {
-  setDetailsOpen: PropTypes.func.isRequired,
   isPreview: PropTypes.bool.isRequired,
   topics: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,

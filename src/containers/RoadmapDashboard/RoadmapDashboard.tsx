@@ -24,7 +24,7 @@ const GET_TOPIC_ID = gql`{
 
 // TODO: Review this component's type
 const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const isPreview = window.location.pathname.includes('preview');
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
   const { data, loading } = useQuery(CHECK_ROADMAP_USER, { variables: { id: match.params.id } });
@@ -33,20 +33,15 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
 
   return (
-    <>
-      <div className="roadmap-detail__container" />
-      <div className={`roadmap-tree-container ${detailsOpen ? 'split' : ''}`} />
-      <div>
+    <div className={isPreview ? "roadmap-detail__container" : "roadmap-detail__container no-prev"}>
+      <div className='roadmap-tree-container'>
         <h2>{data.roadmaps[0].title}</h2>
-        <div className="roadmap-tree-container">
-          <RoadmapTree
-            matchId={match.params.id}
-            setDetailsOpen={setDetailsOpen}
-          />
-        </div>
-        <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
+        <RoadmapTree
+          matchId={match.params.id}
+        />
       </div>
-    </>
+      <TopicDetails selectedTopicId={cacheId.data.selectedTopicId} />
+    </div>
   );
 };
 
