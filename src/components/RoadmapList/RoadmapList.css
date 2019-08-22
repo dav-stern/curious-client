@@ -17,4 +17,34 @@
 
 #discover-title {
   padding-top: 2em;
+  font-weight: 600;
+}
+
+#discover-user {
+  padding-top: 15px;
+  font-weight: 100;
+  color: #F07B7B;
+  font-size: 20px;
+}
+
+/* FADE IN ANYMATION */
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:10; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:10; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity: 10; } }
+
+.fade-in {
+  opacity:0;
+  -webkit-animation:fadeIn ease-in 0.3;
+  -moz-animation:fadeIn ease-in 0.3;
+  animation:fadeIn ease-in 0.3;
+
+  -webkit-animation-fill-mode:forwards;
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:0.3s;
+  -moz-animation-duration:0.3s;
+  animation-duration:0.3s;
 }

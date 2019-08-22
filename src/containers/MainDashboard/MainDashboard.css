@@ -62,7 +62,7 @@ h1 span {
   font-family: comfortaa;
   color: #201E45;
   text-decoration: none;
-  transition: transform 1s;
+  transition: transform 0.5s;
 }
 
 .roadmap-container:hover {

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from 'react';
 import './RoadmapList.css';
 import gql from 'graphql-tag';
@@ -134,7 +135,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
     }
     return (
       <Link
-        className="roadmap-container"
+        className="roadmap-container fade-in"
         id="roadmaps"
         key={item.id}
         to={`/preview/${item.id}`}
@@ -147,7 +148,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
         <div id="middle">
           <FontAwesomeIcon icon={icon} className="category-icon" />
           <div id="discover-title">{item.title}</div>
-          <div>{item.user.name}</div>
+          <div id="discover-user"><p>{item.user.name}</p></div>
         </div>
       </Link>
     );
