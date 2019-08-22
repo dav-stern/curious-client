@@ -159,7 +159,9 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       <div className="discover-list-container">
         {roadmaps}
       </div>
-      {data.roadmaps.length === 20 && <button type="button" onClick={handleNext}>Load More</button>}
+      <div id="load-more-button">
+        {data.roadmaps.length === 20 && <button type="button" onClick={handleNext}>Load More</button>}
+      </div>
     </div>
   );
 };
