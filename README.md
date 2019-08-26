@@ -27,7 +27,6 @@ npm start
 ```
 ## Tech Stack
 * React
-  ** Hooks
 * Typescript
 * Apollo Client
 * Apollo Server
@@ -39,7 +38,7 @@ npm start
 Feel free to have a look at the server of this application: [Curious Server](https://github.com/steelersbcn/curious-server)
 
 ## Developers
-* Andre Lellis Adnet Coutinho [LinkedIn](https://www.linkedin.com/in/andre-lellis-640495bb/) [GitHub](https://github.com/andrelellis)
-* Fábio Tiago Carneiro Videira [LinkedIn](https://www.linkedin.com/in/fabio-videira/) [GitHub](https://github.com/Videiraft)
-* Florian Jost [LinkedIn](https://www.linkedin.com/in/fjost/) [GitHub](https://github.com/steelersbcn)
-* Roberto Antunes [LinkedIn](https://www.linkedin.com/in/robm-antunes/) [GitHub](https://github.com/RobAntunes)
+* Andre Lellis Adnet Coutinho [LinkedIn](https://www.linkedin.com/in/andre-lellis-640495bb/) | [GitHub](https://github.com/andrelellis)
+* Fábio Tiago Carneiro Videira [LinkedIn](https://www.linkedin.com/in/fabio-videira/) | [GitHub](https://github.com/Videiraft)
+* Florian Jost [LinkedIn](https://www.linkedin.com/in/fjost/) | [GitHub](https://github.com/steelersbcn)
+* Roberto Antunes [LinkedIn](https://www.linkedin.com/in/robm-antunes/) | [GitHub](https://github.com/RobAntunes)
