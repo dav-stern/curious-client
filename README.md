@@ -4,7 +4,7 @@ Curious is a web app to help you structure, organize and create long-term plans 
 
 ## Screenshots
 
-<img src='./src/assets/Curious.png' alt='screens' width="1400" height="600">
+<img src='./src/assets/Curious_small.png' alt='screens' width="1400" height="600">
 
    
 ## Installation
