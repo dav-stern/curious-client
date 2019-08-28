@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect, useState } from 'react';
 import './RoadmapList.css';
-import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPalette, faLaptop, faUserTie, faLaptopCode,
@@ -11,20 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
-
-const GET_ROADMAPS = gql`
-query roadmaps($category: String, $title: String, $offset: Int, $limit: Int) {
-  roadmaps (category: $category, title: $title, offset: $offset, limit: $limit) {
-    id
-    title
-    category
-    UserId
-    user {
-      name
-    }
-  }
-}
-`;
+import GET_ROADMAPS from './RoadmapList.Queries';
 
 interface Iuser {
   name: string,
@@ -48,7 +34,6 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   const client = useApolloClient();
   const [showButton, setShowButton] = useState(true);
   // fetching roadmaps from database
-
   const {
     data,
     loading,

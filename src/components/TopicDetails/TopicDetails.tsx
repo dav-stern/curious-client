@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import gql from 'graphql-tag';
 import React, { useState, useEffect } from 'react';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
@@ -7,7 +6,7 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import Checklist from '../Checklist/Checklist';
-
+import { GET_TOPIC_DETAILS, UPDATE_TOPIC } from './TopicDetails.Queries';
 import './TopicDetails.css';
 
 const converter = new Showdown.Converter({
@@ -21,36 +20,6 @@ const converter = new Showdown.Converter({
 interface ITopicDetailsProps {
   selectedTopicId: string
 }
-
-const GET_TOPIC_DETAILS = gql`
-  query gettopics($id: ID!) {
-    topics(TopicId: $id) {
-      id
-      title
-      description
-      resources
-      completed
-      rowNumber
-      checklist {
-        id
-        title
-        completed
-      }
-    }
-  }
-`;
-
-const UPDATE_TOPIC = gql`
-  mutation updateTopic($id: ID! $title: String, $description: String $resources: String $rowNumber: Int) {
-    updateTopic(id: $id title: $title, description: $description, resources: $resources, rowNumber: $rowNumber) {
-      id
-      title
-      description
-      resources
-      rowNumber
-    }
-  }
-`;
 
 const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
   const client = useApolloClient();

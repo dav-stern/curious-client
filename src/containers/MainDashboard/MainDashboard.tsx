@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +9,7 @@ import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
 import categories from '../../categories';
+import { GET_ROADMAPS, CREATE_ROADMAP, DELETE_ROADMAP } from './MainDashboard.Queries';
 
 interface IRoadmap {
   id: string;
@@ -17,46 +17,6 @@ interface IRoadmap {
   category: string;
 }
 
-// roadmaps (query)
-const GET_ROADMAPS = gql`
-query getRoadmap($UserId: ID!) {
-  roadmaps(UserId: $UserId) {
-    id
-    title
-    category
-    topics {
-      id
-      title
-      description
-      resources
-      completed
-      checklist {
-        id
-        title
-        completed
-      }
-    }
-  }
-}
-`;
-
-// create roadmap (mutation)
-const CREATE_ROADMAP = gql`
-  mutation createroadmaps($id: ID!, $title: String!, $category: String!) {
-    createRoadmap(UserId: $id, title: $title, category: $category) {
-      id
-      title
-      category
-    }
-  }
-`;
-
-// delete roadmap (mutation)
-const DELETE_ROADMAP = gql`
-  mutation deleteroadmap($id: ID!) {
-    deleteRoadmap(id: $id)
-  }
-`;
 
 const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');

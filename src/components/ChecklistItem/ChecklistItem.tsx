@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 import './ChecklistItem.css';
 
-interface IchecklistItem {
+interface IChecklistItem {
   id: string
   title: string
   completed: boolean
 }
 
 interface ChecklistItemProps {
-  checklistItem: IchecklistItem
+  checklistItem: IChecklistItem
   handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleDeleteChecklistItem: (checklistItemId: string) => void
   handleUpdateChecklistItem: (checklistItemId: string, checklistItemTitle: string) => void

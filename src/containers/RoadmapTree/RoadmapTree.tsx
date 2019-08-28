@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import gql from 'graphql-tag';
 import {
   useQuery,
   useMutation,
@@ -10,41 +9,15 @@ import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  GET_TOPICS, CREATE_TOPIC, DELETE_TOPIC, COPY_ROADMAP,
+} from './RoadmapTree.Queries';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './RoadmapTree.css';
-// Setup query to get all topics for the Roadmap
-const GET_TOPICS = gql`
-  query gettopics($id: ID!) {
-    topics(RoadmapId: $id) {
-      id
-      title
-      rowNumber
-    }
-}`;
-
-const CREATE_TOPIC = gql`
-  mutation createtopic($RoadmapId: ID!, $title: String!, $rowNumber: Int!) {
-    createTopic(RoadmapId: $RoadmapId, title: $title, rowNumber: $rowNumber) {
-      title
-      id
-    }
-}`;
-
-const DELETE_TOPIC = gql`
-  mutation deleteTopic($topicId: ID!) {
-    deleteTopic(id: $topicId)
-}`;
-
-const COPY_ROADMAP = gql`
-mutation copyRoadmap($id: ID!) {
-  copyRoadmap(id: $id)
-}
-`;
 
 interface ITopic {
-  id: string
-  title: string
+  id: string,
+  title: string,
   rowNumber: number,
 }
 

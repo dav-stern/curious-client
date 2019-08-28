@@ -1,54 +1,22 @@
-import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  GET_CHECKLIST, CREATE_CHECKLIST_ITEM, UPDATE_CHECKLIST_ITEM, DELETE_CHECKLIST_ITEM,
+} from './Checklist.Queries';
 import './Checklist.css';
-
 import ChecklistItem from '../ChecklistItem/ChecklistItem';
-
-const GET_CHECKLIST = gql`
-  query gettopics($id: ID!) {
-    topics(TopicId: $id) {
-      checklist {
-        id
-        title
-        completed
-      }
-    }
-  }
-`;
-
-const CREATE_CHECKLIST_ITEM = gql`
-  mutation createChecklistItem($TopicId: ID! $title: String!) {
-    createChecklistItem(TopicId: $TopicId, title: $title) {
-      id
-      title
-      completed
-    }
-  }
-`;
-
-const UPDATE_CHECKLIST_ITEM = gql`
-  mutation updateChecklistItem($id: ID! $title: String $completed: Boolean) {
-    updateChecklistItem(id: $id, title: $title, completed: $completed) {
-      id
-      title
-      completed
-    }
-  }
-`;
-
-const DELETE_CHECKLIST_ITEM = gql`
-  mutation deleteChecklistItem($id: ID!) {
-    deleteChecklistItem(id: $id)
-  }
-`;
 
 interface ChecklistProps {
   selectedTopicId: string
+}
+
+interface IChecklistItem {
+  id: string
+  title: string
+  completed: boolean
 }
 
 const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
@@ -113,7 +81,7 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
 
   // creating the list
   const { checklist } = data.topics[0];
-  const checklistItems = checklist.map((checklistItem: any) => (
+  const checklistItems = checklist.map((checklistItem: IChecklistItem) => (
     <ChecklistItem
       key={checklistItem.id}
       checklistItem={checklistItem}

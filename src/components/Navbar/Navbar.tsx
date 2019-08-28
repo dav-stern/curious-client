@@ -7,7 +7,6 @@ import './Navbar.css';
 const Navbar: React.FC = () => {
   const handleLogout = () => localStorage.setItem('token', '');
   const token: any = localStorage.getItem('token');
-  // Invalid token will throw err, handling needed??
   const { name } = jwtDecode(token);
 
   return (
