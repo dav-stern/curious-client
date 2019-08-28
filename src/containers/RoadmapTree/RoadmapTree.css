@@ -1,9 +1,9 @@
 .copy__container {
-  height: 2.5rem;
+  height: 40px;
   background-color: #404267;
-  margin-bottom: .5rem;
+  margin-bottom: 8px;
   border-radius: 3px;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, .25), 0px -1.2rem 30px rgba(0, 0, 0, .35) inset;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, .25), 0px -20px 30px rgba(0, 0, 0, .35) inset;
 }
 
 .copy__container:hover {
@@ -27,12 +27,11 @@
 .copy__label {
   display: inline-flex;
   align-items: center;
-  padding-left: 1rem;
-  font-family: 'Comfortaa';
+  padding-left: 16px;
 }
 
 .copy-roadmap {
-  font-size: 1.5rem;
+  font-size: 24px;
 }
 
 .copy-roadmap:hover, .add-row__btn:hover {
@@ -41,7 +40,7 @@
 
 .add-row__btn svg {
   color: #404267;
-  font-size: 1.5rem;
+  font-size: 24px;
 }
 
 .add-row__btn {
@@ -50,8 +49,8 @@
 
 .ARlabel {
   display: none;
-  width: 7rem;
-  font-size: .8rem;
+  width: 112px;
+  font-size: 12px;
   margin-left: 8px;
 }
 
@@ -70,7 +69,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 16px;
   position: relative;
 }
 

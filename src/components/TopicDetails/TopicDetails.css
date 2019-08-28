@@ -24,7 +24,7 @@
 }
 
 .block h4 {
-  padding-bottom: .5rem;
+  padding-bottom: 8px;
   width: 40%;
   font-weight: 700;
 }
@@ -35,7 +35,7 @@
   overflow: hidden;
   border: 1px solid #4042616c;
   border-radius: 3px;
-  padding: .75rem;
+  padding: 12px;
 }
 
 .resources-block__wrapper.block textarea {
@@ -65,7 +65,7 @@
 .save__container>button {
   width: 100%;
   height: 100%;
-  padding: .75rem .25rem;
+  padding: 12px 4px;
   font-size: 18px;
   color: #201E45;
   transition: color .25s;

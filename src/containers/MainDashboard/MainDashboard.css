@@ -33,7 +33,7 @@ h1 span {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 2rem;
+  padding-left: 32px;
   padding-top: 150px;
 }
 
@@ -42,7 +42,7 @@ h1 span {
   justify-content: flex-end;
   align-items: center;
   padding-top: 200px;
-  padding-right: 2em;
+  padding-right: 32px;
 }
 
 .roadmap-container {
@@ -87,13 +87,13 @@ h1 span {
 #add-roadmap-button {
   display: flex;
   justify-content: flex-end;
-  padding-top: 2rem;
-  padding-right: 14rem;
+  padding-top: 32px;
+  padding-right: 224px;
 }
 
 .arrow-icon {
   font-size: 30px;
-  margin-left: 1em;
+  margin-left: 16px;
   transition: transform 0.5s;
   color: #F07B7B;
 }

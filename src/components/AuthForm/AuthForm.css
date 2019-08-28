@@ -2,27 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3rem;
+  margin-top: 48px;
 }
 
 #login-form input {
-  height: 3rem;
+  height: 48px;
   width: 75%;
   border-radius: 3px;
-  padding: 0px 1.5rem;
+  padding: 0px 24px;
 }
 
 #login-form input:not(last-of-type) {
-  margin-bottom: 3rem;
+  margin-bottom: 48px;
 }
 
 .submit {
   width: 60%;
-  padding: 1rem 1.5rem;
+  padding: 16px 24px;
   background-color: #FFF;
   border-radius: 5px;
   font-family: 'Comfortaa';
-  font-size: 1.15rem;
+  font-size: 18px;
   color: #F07b7b;
   font-weight: 700;
   box-shadow: -5px 6px 6px rgba(0, 0, 0, .15);

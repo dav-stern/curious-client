@@ -18,8 +18,7 @@
 }
 
 .roadmap-detail__container {
-  font-family: 'Comfortaa';
-  padding: 5rem;
+  padding: 80px;
   display: flex;
   justify-content: space-between;
 }

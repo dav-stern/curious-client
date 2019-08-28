@@ -26,6 +26,7 @@ code {
 
 *, *:before, *:after {
   box-sizing: inherit;
+  font-family: 'Comfortaa';
 }
 
 body, h1, h2, h3, h4, h5, h6, p, ol, ul {
@@ -53,7 +54,7 @@ button {
 }
 
 input {
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
 button, input, textarea {
@@ -62,7 +63,7 @@ button, input, textarea {
 }
 
 textarea {
-  font-size: 1rem;
+  font-size: 16px;
   font-family: 'Comfortaa';
   resize: none;
   background: rgba(240, 240, 240, 0.719);
@@ -70,7 +71,7 @@ textarea {
 
 ::placeholder {
   font-family: 'Comfortaa';
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 ::-webkit-scrollbar-track {
