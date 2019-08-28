@@ -2,7 +2,6 @@ import React from 'react';
 import {
   BrowserRouter as Router, Route, Redirect, Switch, RouteProps // eslint-disable-line
 } from 'react-router-dom';
-import './App.css';
 import Authentication from './containers/Authentication/Authentication';
 import MainDashboard from './containers/MainDashboard/MainDashboard';
 import RoadmapDashboard from './containers/RoadmapDashboard/RoadmapDashboard';
