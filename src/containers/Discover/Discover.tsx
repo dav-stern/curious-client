@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../../components/Navbar/Navbar';
 import RoadmapList from '../../components/RoadmapList/RoadmapList';
-import Linkbar from '../../components/Linkbar/Linkbar';
+import Linkbar from '../../components/CategoryBar/CategoryBar';
 import categories from '../../categories';
 
 const Discover: React.FC = () => {

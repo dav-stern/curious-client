@@ -1,5 +1,5 @@
 import React from 'react';
-import './Linkbar.css';
+import './CategoryBar.css';
 import PropTypes from 'prop-types';
 import { ICategory } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
