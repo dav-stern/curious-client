@@ -63,7 +63,6 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
       });
       // Get the id of the new topic and save it on cache: property "selectedTopic"
       client.writeData({ data: { selectedTopicId: data.createTopic.id } });
-      // TODO: synchronize the title field on topics details with title <p> on Topic component
       await refetch();
     } catch (err) {
       console.log('not possible to create new topic on this row!!'); // eslint-disable-line no-console

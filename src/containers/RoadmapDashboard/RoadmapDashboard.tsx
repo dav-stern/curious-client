@@ -10,7 +10,6 @@ import { CHECK_ROADMAP_USER, GET_TOPIC_ID } from './RoadmapDashboard.Queries';
 
 interface IRouteParams { id: string; }
 
-// TODO: Review this component's type
 const RoadmapDashboard = ({ match }: RouteComponentProps<IRouteParams>) => {
   const isPreview = window.location.pathname.includes('preview');
   const token: string | null = localStorage.getItem('token');

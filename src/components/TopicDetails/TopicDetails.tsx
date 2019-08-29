@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useEffect } from 'react';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
@@ -77,7 +76,7 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
         <div className="title-block block">
           <div className="title-block-wrapper">
             <h4>Title</h4>
-            <textarea className="topic-title" value={titleInput} onChange={handleChange} autoFocus />
+            <textarea className="topic-title" value={titleInput} onChange={handleChange} />
           </div>
         </div>
         <div className="description-block block">

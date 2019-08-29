@@ -25,7 +25,6 @@ const Signup: React.SFC<SignupProps> = ({ errorMsg, setErrorMsg }) => {
   });
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    // TODO: abstract the signup logic to a service
     e.preventDefault();
     const res: any = await signup();
     if (res.data.signup) {

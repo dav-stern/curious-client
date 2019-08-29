@@ -22,7 +22,6 @@ const MainDashboard: React.FC = () => {
   const [selectionInput, setSelectionInput] = useState('Music');
   const [flag, setFlag] = useState(false);
   // get userID from token
-  // TODO: abstract this into an authentication service
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
 
@@ -31,7 +30,6 @@ const MainDashboard: React.FC = () => {
     variables: { UserId: id },
     fetchPolicy: 'network-only',
   });
-  // creating 'ADD_ROADMAP' mutation
   const [createRoadmap] = useMutation(CREATE_ROADMAP, {
     variables: { id, title: titleInput, category: selectionInput },
   });
