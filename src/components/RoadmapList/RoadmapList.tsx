@@ -11,18 +11,14 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import GET_ROADMAPS from './RoadmapList.Queries';
-
-interface Iuser {
-  name: string,
-}
+import { IUser } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface IRoadmap {
-  title: string;
   id: string;
+  title: string;
   category: string;
   UserId: string;
-  user: Iuser;
-  __typename: string;
+  user: IUser;
 }
 
 interface RoadmapListProps {

@@ -8,10 +8,10 @@ import TopicDetails from '../../components/TopicDetails/TopicDetails';
 import Navbar from '../../components/Navbar/Navbar';
 import { CHECK_ROADMAP_USER, GET_TOPIC_ID } from './RoadmapDashboard.Queries';
 
-type TParams = { id: string };
+interface IRouteParams { id: string; }
 
 // TODO: Review this component's type
-const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
+const RoadmapDashboard = ({ match }: RouteComponentProps<IRouteParams>) => {
   const isPreview = window.location.pathname.includes('preview');
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);

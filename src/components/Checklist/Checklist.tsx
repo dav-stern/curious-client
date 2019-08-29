@@ -8,15 +8,10 @@ import {
 } from './Checklist.Queries';
 import './Checklist.css';
 import ChecklistItem from '../ChecklistItem/ChecklistItem';
+import { IChecklistItem } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface ChecklistProps {
   selectedTopicId: string
-}
-
-interface IChecklistItem {
-  id: string
-  title: string
-  completed: boolean
 }
 
 const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {

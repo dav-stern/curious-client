@@ -25,7 +25,6 @@ const Topic: React.FC<TopicNodeProps> = ({
   }
   const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={isPreview ? 'no-anim topic-container' : 'topic-container'}
       onClick={() => { handleSelectTopic(id); }}

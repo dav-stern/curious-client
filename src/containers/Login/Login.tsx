@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 
-import { AuthForm } from '../../components/AuthForm/AuthForm';
+import AuthForm from '../../components/AuthForm/AuthForm';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {

@@ -5,17 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import Topic from '../Topic/Topic';
 import './TopicsRow.css';
-
-interface IChecklistItem {
-  title: string,
-  completed: boolean,
-}
-
-interface ITopic {
-  id: string
-  rowNumber: number
-  title: string
-}
+import { ITopic } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface TopicsProps {
   isPreview: boolean,

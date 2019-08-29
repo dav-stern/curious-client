@@ -1,14 +1,9 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { IChecklistItem } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 import './ChecklistItem.css';
 
-interface IChecklistItem {
-  id: string
-  title: string
-  completed: boolean
-}
 
 interface ChecklistItemProps {
   checklistItem: IChecklistItem

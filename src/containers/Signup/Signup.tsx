@@ -1,17 +1,11 @@
-import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
+import SIGN_UP from './Signup.Queries';
 
-import { AuthForm } from '../../components/AuthForm/AuthForm';
-
-const SIGN_UP = gql`
-  mutation signup($name: String!, $email: String!, $password: String!) {
-    signup(name: $name, email: $email, password: $password)
-  }
-`;
+import AuthForm from '../../components/AuthForm/AuthForm';
 
 interface SignupProps {
   errorMsg: string,
@@ -33,7 +27,6 @@ const Signup: React.SFC<SignupProps> = ({ errorMsg, setErrorMsg }) => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     // TODO: abstract the signup logic to a service
     e.preventDefault();
-    // TODO: any??
     const res: any = await signup();
     if (res.data.signup) {
       localStorage.setItem('token', res.data.signup);

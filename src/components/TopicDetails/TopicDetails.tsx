@@ -16,9 +16,8 @@ const converter = new Showdown.Converter({
   tasklists: true,
 });
 
-
 interface ITopicDetailsProps {
-  selectedTopicId: string
+  selectedTopicId: string;
 }
 
 const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {

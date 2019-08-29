@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { IinputsType } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 import './AuthForm.css';
 
-interface inputsType {
-  name?: string,
-  email: string,
-  password: string,
-  [key: string]: string | undefined,
-}
-
-export interface AuthFormProps {
-  inputs: inputsType,
+interface AuthFormProps {
+  inputs: IinputsType,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   errorMsg: string,
 }
 
-export const AuthForm: React.SFC<AuthFormProps> = ({
+const AuthForm: React.SFC<AuthFormProps> = ({
   inputs,
   handleSubmit,
   handleChange,

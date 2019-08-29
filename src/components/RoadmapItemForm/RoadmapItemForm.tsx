@@ -1,6 +1,7 @@
 import React from 'react';
 import './RoadmapItemForm.css';
 import PropTypes from 'prop-types';
+import { ICategory } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface RoadmapItemFormProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -9,12 +10,6 @@ interface RoadmapItemFormProps {
   categories: ICategory[],
   titleInput: string,
 }
-
-interface ICategory {
-  id: number;
-  name: string;
-}
-
 
 const RoadmapItemForm: React.FC<RoadmapItemFormProps> = ({
   handleChange, handleSelection, handleSubmit, titleInput, categories,

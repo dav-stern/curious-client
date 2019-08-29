@@ -14,19 +14,10 @@ import {
 } from './TopicTree.Queries';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
 import './TopicTree.css';
-
-interface ITopic {
-  id: string,
-  title: string,
-  rowNumber: number,
-}
+import { ITopic, IRowsData } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface RoadmapTreeProps {
   matchId: string,
-}
-
-interface IRowsData {
-  [keys: string]: ITopic[]
 }
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
