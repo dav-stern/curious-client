@@ -20,10 +20,11 @@
 }
 
 .main-nav :not(:last-of-type)>a {
-  margin-right: 2.3rem;
+  margin-right: 36px;
 }
 
 .navbar {
+  width: 100%;
   font-size: 18px;
   background-color: #E4E4EF;
   border: 1px solid rgba(0, 0, 0, 0.2);

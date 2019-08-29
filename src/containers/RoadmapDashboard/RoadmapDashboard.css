@@ -17,12 +17,12 @@
   padding-bottom: 20px;
 }
 
-.roadmap-detail__container {
+.roadmap-detail-container {
   padding: 80px;
   display: flex;
   justify-content: space-between;
 }
 
-.roadmap-detail__container.no-prev {
+.roadmap-detail-container.no-prev {
   height: 100%;
 }

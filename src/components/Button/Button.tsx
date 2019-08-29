@@ -7,7 +7,7 @@ interface ButtonProps {
   value: string,
 }
 
-const Button: React.FC<ButtonProps> = ({ handleClick, value }) => <button type="button" id="button" onClick={(handleClick)}>{value}</button>;
+const Button: React.FC<ButtonProps> = ({ handleClick, value }) => <button type="submit" id="button" onClick={(handleClick)}>{value}</button>;
 
 Button.propTypes = {
   handleClick: PropTypes.func.isRequired,

@@ -23,7 +23,7 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   return (
     <div className="background-tree">
       <Navbar />
-      <div className={isPreview ? 'roadmap-detail__container' : 'roadmap-detail__container no-prev'}>
+      <div className={isPreview ? 'roadmap-detail-container' : 'roadmap-detail-container no-prev'}>
         <div className="roadmap-tree-container">
           <h2>{data.roadmaps[0].title}</h2>
           <RoadmapTree

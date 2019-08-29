@@ -109,10 +109,10 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   ));
   const buttonAddRow = dataLen > 0 && (
     <div className="flex-container">
-      <button className="add-row__btn" type="button" onClick={handleAddRow}>
+      <button className="add-row-btn" type="button" onClick={handleAddRow}>
         <FontAwesomeIcon icon={faPlus} />
       </button>
-      <p className="ARlabel">Add Row</p>
+      <p className="add-row-label">Add Row</p>
     </div>
   );
   return (
@@ -120,14 +120,14 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
       <div className={isPreview ? 'preview-pos' : 'preview-pos not-preview'}>
         {(isPreview)
           ? (
-            <div className="copy__container">
+            <div className="copy-container">
               <button
                 type="button"
                 onClick={() => { copyRoadmap().then(() => setFlag(true)); }}
-                className="copy__btn"
+                className="copy-btn"
               >
                 <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
-                <p className="copy__label">Copy Roadmap</p>
+                <p className="copy-label">Copy Roadmap</p>
               </button>
             </div>
           ) : null}
@@ -135,7 +135,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
           {topicsRows}
         </div>
       </div>
-      {(!isPreview) ? <div className="AR__container">{buttonAddRow}</div> : null}
+      {(!isPreview) ? <div className="add-row-container">{buttonAddRow}</div> : null}
     </>
   );
 };

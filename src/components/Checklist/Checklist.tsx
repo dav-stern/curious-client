@@ -92,9 +92,9 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
   ));
 
   return (
-    <div className="checklist__wrapper">
+    <div className="checklist-wrapper">
       <h3>Checklist</h3>
-      <div className="add-checklist__item">
+      <div className="add-checklist-item">
         <input className="big-input" type="text" name="newChecklistItem" value={newChecklistItemInput} onChange={handleChange} />
         <button type="button" onClick={handleCreateChecklistItem}>
           <FontAwesomeIcon icon={faPlus} />

@@ -47,7 +47,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
   };
 
   return (
-    <div className="checklist__item">
+    <div className="checklist-item">
       {editing
         ? (
           <div>

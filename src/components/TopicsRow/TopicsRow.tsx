@@ -45,7 +45,7 @@ const TopicsRow: React.SFC<TopicsProps> = ({
     return (
       <div className="topics-row-container">
         <button
-          className="add-topic__btn"
+          className="add-topic-btn"
           type="button"
           onClick={() => { handleAddTopic(rowNum); }}
         >

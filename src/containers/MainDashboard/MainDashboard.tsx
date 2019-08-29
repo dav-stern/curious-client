@@ -88,7 +88,7 @@ const MainDashboard: React.FC = () => {
           </h1>
         </div>
         <div id="add-roadmap-button">
-          <Button handleClick={() => setFlag(true)} value="+" />
+          <Button handleClick={() => setFlag(true)} value="Add" />
         </div>
       </div>
     );

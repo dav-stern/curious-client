@@ -22,11 +22,11 @@
   border-bottom: 1px solid #E4E4EF;
 }
 
-.topics-row-container:hover .add-topic__btn {
+.topics-row-container:hover .add-topic-btn {
   display: block;
 }
 
-.add-topic__btn {
+.add-topic-btn {
   font-size: 24px;
   position: absolute;
   left: 7.5px;
@@ -35,11 +35,11 @@
   display: none;
 }
 
-.add-topic__btn:hover {
+.add-topic-btn:hover {
   cursor: pointer;
 }
 
-.add-topic__btn:hover+.AT-label {
+.add-topic-btn:hover+.AT-label {
   display: inline;
 }
 

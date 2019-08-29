@@ -76,19 +76,19 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     <div className="topic-details-card">
       <form onSubmit={handleSubmit}>
         <div className="title-block block">
-          <div className="title-block__wrapper">
+          <div className="title-block-wrapper">
             <h4>Title</h4>
             <textarea className="topic-title" value={titleInput} onChange={handleChange} autoFocus />
           </div>
         </div>
         <div className="description-block block">
-          <div className="description-block__wrapper">
+          <div className="description-block-wrapper">
             <h4>Description</h4>
             <textarea className="topic-description" value={descriptionInput} onChange={handleChange} />
           </div>
         </div>
         <div className="resources-block block">
-          <div className="resources-block__wrapper block">
+          <div className="resources-block-wrapper block">
             <h4>Resources</h4>
             <ReactMde
               className="topic-resources"
@@ -100,11 +100,11 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
             />
           </div>
         </div>
-        <div className="save__container">
+        <div className="save-container">
           <button type="submit">Save</button>
         </div>
       </form>
-      <div className="checklist__container">
+      <div className="checklist-container">
         <Checklist selectedTopicId={selectedTopicId} />
       </div>
     </div>
