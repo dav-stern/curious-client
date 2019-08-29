@@ -54,7 +54,7 @@
   margin-left: 8px;
 }
 
-.add-row-btn:hover+.ARlabel {
+.add-row-btn:hover+.add-row-label {
   display: block;
   position: absolute;
   bottom: -25px;

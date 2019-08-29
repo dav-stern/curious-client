@@ -3,7 +3,7 @@ h1 span {
   color: #F07B7B;
 }
 
-.container {
+.dashboard-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -15,7 +15,7 @@ h1 span {
   align-self: flex-end;
 }
 
-#middle {
+#roadmap-title-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -59,7 +59,6 @@ h1 span {
   height: 350px;
   width: 350px;
   font-size: 25px;
-  font-family: comfortaa;
   color: #201E45;
   text-decoration: none;
   transition: transform 0.5s;
@@ -77,18 +76,13 @@ h1 span {
   display: block;
 }
 
+/* CSS rules for dashboard without roadmaps */
+
 .background {
   height: 100vh;
   background-image: url('./../../assets/background-discover-2.jpg');
   background-position: bottom center;
   background-size: cover;
-}
-
-#add-roadmap-button {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 32px;
-  padding-right: 224px;
 }
 
 .arrow-icon {
@@ -102,4 +96,40 @@ h1 span {
   -webkit-transform: scale(1.5);
   -ms-transform: scale(1.5);
   transform: scale(1.5);
+}
+
+#add-roadmap-button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 32px;
+  padding-right: 224px;
+}
+
+#add-roadmap-button{
+    text-decoration: none;
+    background-color: #F07b7b;
+    color: #FFF;
+    border-radius: 50%;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    font-weight: 600;
+    outline: none;
+    transition: transform 1s;
+}
+
+#add-roadmap-button:hover {
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+#add-roadmap-button:active{
+    -ms-transform: translateY(2px);
+    -webkit-transform: translateY(2px);
+    transform: translateY(2px);
+    box-shadow: 0 0 1px rgba(255, 246, 246, 0.15);
+    border-bottom: none;
+
 }

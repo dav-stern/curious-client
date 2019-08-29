@@ -10,8 +10,8 @@ const Navbar: React.FC = () => {
   const { name } = jwtDecode(token);
 
   return (
-    <nav className="navbar">
-      <div className="left">
+    <nav className="navbar-container">
+      <div className="left-container">
         <NavLink to="/dashboard" className="logo">
           <h1>
             CURiOUS
@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
           <p>{name}</p>
         </div>
       </div>
-      <ul className="main-nav" id="js-menu">
+      <ul className="right-container" id="js-menu">
         <li>
           <NavLink to="/dashboard">My Roadmaps</NavLink>
         </li>

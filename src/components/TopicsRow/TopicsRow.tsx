@@ -51,7 +51,7 @@ const TopicsRow: React.SFC<TopicsProps> = ({
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>
-        <p className="AT-label">Add Topic</p>
+        <p className="add-topic-label">Add Topic</p>
         <div className="topics-container">{arrTopics}</div>
       </div>
     );

@@ -39,11 +39,11 @@
   cursor: pointer;
 }
 
-.add-topic-btn:hover+.AT-label {
+.add-topic-btn:hover+.add-topic-label {
   display: inline;
 }
 
-.AT-label {
+.add-topic-label {
   display: none;
   position: absolute;
   top: 16px;
