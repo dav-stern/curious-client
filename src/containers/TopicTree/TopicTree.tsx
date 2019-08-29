@@ -45,7 +45,8 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
 
   const [createTopic] = useMutation(CREATE_TOPIC);
   const [deleteTopic] = useMutation(DELETE_TOPIC);
-  if (loading) return <p>Loading...</p>;
+
+  if (loading) return null;
 
   const rowsData = data.topics.reduce(
     (obj: IRowsData, topic: ITopic) => {

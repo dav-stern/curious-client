@@ -17,6 +17,8 @@ const RoadmapDashboard = ({ match }: RouteComponentProps<TParams>) => {
   const { id } = jwtDecode(token!);
   const { data, loading } = useQuery(CHECK_ROADMAP_USER, { variables: { id: match.params.id } });
   const cacheId = useQuery(GET_TOPIC_ID);
+
+
   if (loading) return null;
   if (data.roadmaps[0].UserId !== String(id)) return (<Redirect to="/dashboard" />);
 
