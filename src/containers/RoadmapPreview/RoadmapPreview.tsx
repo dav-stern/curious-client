@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
-import RoadmapTree from '../RoadmapTree/RoadmapTree';
+import RoadmapTree from '../TopicTree/TopicTree';
 
 import './RoadmapPreview.css';
 

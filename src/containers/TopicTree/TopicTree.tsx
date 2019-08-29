@@ -11,9 +11,9 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {
   GET_TOPICS, CREATE_TOPIC, DELETE_TOPIC, COPY_ROADMAP,
-} from './RoadmapTree.Queries';
+} from './TopicTree.Queries';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
-import './RoadmapTree.css';
+import './TopicTree.css';
 
 interface ITopic {
   id: string,

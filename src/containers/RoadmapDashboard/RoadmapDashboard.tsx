@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
 import { useQuery } from '@apollo/react-hooks';
 import './RoadmapDashboard.css';
-import RoadmapTree from '../RoadmapTree/RoadmapTree';
+import RoadmapTree from '../TopicTree/TopicTree';
 import TopicDetails from '../../components/TopicDetails/TopicDetails';
 import Navbar from '../../components/Navbar/Navbar';
 import { CHECK_ROADMAP_USER, GET_TOPIC_ID } from './RoadmapDashboard.Queries';
