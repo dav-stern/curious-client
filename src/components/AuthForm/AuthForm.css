@@ -26,3 +26,11 @@
   font-weight: 700;
   box-shadow: -5px 6px 6px rgba(0, 0, 0, .15);
 }
+
+#error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #D8000C;
+}

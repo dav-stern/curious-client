@@ -43,7 +43,7 @@ const AuthForm: React.SFC<AuthFormProps> = ({
         {inputsJSX}
         <button className="submit" type="submit">{inputsJSX.length > 2 ? 'Sign Up' : 'Login'}</button>
       </form>
-      <div><p>{errorMsg}</p></div>
+      <div id="error-container"><p>{errorMsg}</p></div>
     </div>
   );
 };
