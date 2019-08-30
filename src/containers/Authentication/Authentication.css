@@ -1,4 +1,4 @@
-.LISU__container {
+.authentication-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,10 +10,8 @@
   background-position: 50% 20%;
 }
 
-.LISU__wrapper {
-  display: inline-flex;
-  padding-bottom: 3rem;
-  flex-direction: column;
+.form-wrapper {
+  position: absolute;
   width: 400px;
   background-color: rgba(228, 228, 239, 0.575);
   border-left: 1px solid #E4E4EF;
@@ -23,11 +21,11 @@
   box-shadow: -2px 4px 5px rgba(0, 0, 0, .2);
 }
 
-.LISU__wrapper button {
+.form-wrapper button {
   cursor: pointer;
 }
 
-.form__header {
+.form-header {
   width: 100%;
   display: flex;
   align-self: center;
@@ -35,37 +33,37 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.form__header>button {
-  height: 3.5rem;
+.form-header>button {
+  height: 56px;
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.25rem;
+  font-size: 20px;
   font-family: 'Comfortaa';
 }
 
-.form__header>button:first-of-type {
+.form-header>button:first-of-type {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-.form__header>button:not(:first-of-type) {
+.form-header>button:not(:first-of-type) {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
-.form__header>button>p {
+.form-header>button>p {
   display: inline-block;
 }
 
-.form__header>button.selected {
+.form-header>button.selected {
   background-color: #E4E4EF;
   box-shadow: 0px -20px 50px rgba(0, 0, 0, .25) inset;
   color: #FFF;
 }
 
-.form__header>button:not(.selected) {
+.form-header>button:not(.selected) {
   background-color: #FFF;
 }
 
@@ -81,8 +79,8 @@ form input:hover {
 }
 
 #auth-heading h2 {
-  padding-top: 1rem;
-  padding-left: 0.5em;
+  padding-top: 16px;
+  padding-left: 8px;
   font-size: 20px;
 }
 
@@ -90,13 +88,13 @@ form input:hover {
   color: #F07B7B;
 }
 
-.login__selector {
-  height: 4rem;
+.login-selector {
+  height: 64px;
   background-color: #FFF;
 }
 
 @media screen and (max-width: 1500px) {
-  .LISU__wrapper {
+  .form-wrapper {
     display: block;
     margin: 0 auto;
   }
@@ -104,6 +102,8 @@ form input:hover {
     font-size: 30px;
     padding-bottom: 20px;
     align-self: flex-start;
-    padding-left: 120px;
+    padding-left: 160px;
+    top: 110px;
+    position: absolute;
   }
 }

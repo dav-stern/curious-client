@@ -1,17 +1,12 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { IChecklistItem } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 import './ChecklistItem.css';
 
-interface IchecklistItem {
-  id: string
-  title: string
-  completed: boolean
-}
 
 interface ChecklistItemProps {
-  checklistItem: IchecklistItem
+  checklistItem: IChecklistItem
   handleChecked: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleDeleteChecklistItem: (checklistItemId: string) => void
   handleUpdateChecklistItem: (checklistItemId: string, checklistItemTitle: string) => void
@@ -47,7 +42,7 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({
   };
 
   return (
-    <div className="checklist__item">
+    <div className="checklist-item">
       {editing
         ? (
           <div>

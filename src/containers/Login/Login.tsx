@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/react-hooks';
 
-import { AuthForm } from '../../components/AuthForm/AuthForm';
+import AuthForm from '../../components/AuthForm/AuthForm';
 
 const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
@@ -24,10 +24,10 @@ const Login: React.SFC<LoginProps> = ({ errorMsg, setErrorMsg }) => {
   const [loginInputs, setLoginInputs] = useState({ email: '', password: '' });
   const [login] = useMutation(LOGIN, {
     variables: { email: loginInputs.email, password: loginInputs.password },
+    errorPolicy: 'all',
   });
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    // TODO: abstract the signup logic to a service
     e.preventDefault();
     const res: any = await login();
     if (res.data.login) {

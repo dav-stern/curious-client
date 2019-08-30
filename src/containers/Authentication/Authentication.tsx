@@ -17,14 +17,16 @@ const Authentication: React.FC = () => {
     if (tab === 'login' && e.target === signUpRef.current) {
       setLoginSelected('');
       setTab('signUp');
+      setErrorMsg('');
     } else if (tab === 'signUp' && e.target === loginRef.current) {
       setLoginSelected('selected');
       setTab('login');
+      setErrorMsg('');
     }
   };
 
   return (
-    <div className="LISU__container">
+    <div className="authentication-container">
       <div id="auth-heading">
         <h1>
           CURiOUS
@@ -32,13 +34,13 @@ const Authentication: React.FC = () => {
         </h1>
         <span><h2>Never stop learning</h2></span>
       </div>
-      <div className="LISU__wrapper">
-        <div className="form__header">
+      <div className="form-wrapper">
+        <div className="form-header">
           <button
             type="button"
             ref={loginRef}
             onClick={handleTabToggle}
-            className={`login__selector ${loginSelected === 'selected' ? 'selected' : ''}`}
+            className={`login-selector ${loginSelected === 'selected' ? 'selected' : ''}`}
           >
             Login
           </button>
@@ -46,7 +48,7 @@ const Authentication: React.FC = () => {
             type="button"
             ref={signUpRef}
             onClick={handleTabToggle}
-            className={`login__selector ${loginSelected === '' ? 'selected' : ''}`}
+            className={`login-selector ${loginSelected === '' ? 'selected' : ''}`}
           >
             Sign-Up
           </button>

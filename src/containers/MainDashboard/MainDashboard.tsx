@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import gql from 'graphql-tag';
 import jwtDecode from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import Button from '../../components/Button/Button';
 import './MainDashboard.css';
 import RoadmapItemForm from '../../components/RoadmapItemForm/RoadmapItemForm';
 import Navbar from '../../components/Navbar/Navbar';
 import categories from '../../categories';
+import { GET_ROADMAPS, CREATE_ROADMAP, DELETE_ROADMAP } from './MainDashboard.Queries';
 
 interface IRoadmap {
   id: string;
@@ -17,62 +16,19 @@ interface IRoadmap {
   category: string;
 }
 
-// roadmaps (query)
-const GET_ROADMAPS = gql`
-query getRoadmap($UserId: ID!) {
-  roadmaps(UserId: $UserId) {
-    id
-    title
-    category
-    topics {
-      id
-      title
-      description
-      resources
-      completed
-      checklist {
-        id
-        title
-        completed
-      }
-    }
-  }
-}
-`;
-
-// create roadmap (mutation)
-const CREATE_ROADMAP = gql`
-  mutation createroadmaps($id: ID!, $title: String!, $category: String!) {
-    createRoadmap(UserId: $id, title: $title, category: $category) {
-      id
-      title
-      category
-    }
-  }
-`;
-
-// delete roadmap (mutation)
-const DELETE_ROADMAP = gql`
-  mutation deleteroadmap($id: ID!) {
-    deleteRoadmap(id: $id)
-  }
-`;
 
 const MainDashboard: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
   const [selectionInput, setSelectionInput] = useState('Music');
   const [flag, setFlag] = useState(false);
   // get userID from token
-  // TODO: abstract this into an authentication service
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
-
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
     variables: { UserId: id },
     fetchPolicy: 'network-only',
   });
-  // creating 'ADD_ROADMAP' mutation
   const [createRoadmap] = useMutation(CREATE_ROADMAP, {
     variables: { id, title: titleInput, category: selectionInput },
   });
@@ -127,8 +83,8 @@ const MainDashboard: React.FC = () => {
             <span> roadmap!</span>
           </h1>
         </div>
-        <div id="add-roadmap-button">
-          <Button handleClick={() => setFlag(true)} value="+" />
+        <div id="add-roadmap-button-container">
+          <button id="add-roadmap-button" type="submit" onClick={() => setFlag(true)}>+</button>
         </div>
       </div>
     );
@@ -140,7 +96,7 @@ const MainDashboard: React.FC = () => {
       <div id="delete-button">
         <button type="button" onClick={(e) => handleDelete(e, item.id)}><span id="delete-x" role="img" aria-label="delete">❌</span></button>
       </div>
-      <div id="middle">
+      <div id="roadmap-title-container">
         {item.title}
       </div>
     </Link>
@@ -148,7 +104,7 @@ const MainDashboard: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="container">
+      <div className="dashboard-container">
         {results}
         <RoadmapItemForm
           handleChange={handleChange}

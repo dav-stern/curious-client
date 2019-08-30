@@ -24,10 +24,8 @@ const Topic: React.FC<TopicNodeProps> = ({
     client.writeData({ data: { selectedTopicId: topicId } });
   }
   const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
+
   return (
-    // TODO: "Coding for the keyboard is important for users with physical disabilities
-    // who cannot use a mouse, AT compatibility, and screenreader users."
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={isPreview ? 'no-anim topic-container' : 'topic-container'}
       onClick={() => { handleSelectTopic(id); }}

@@ -1,51 +1,14 @@
-import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  GET_CHECKLIST, CREATE_CHECKLIST_ITEM, UPDATE_CHECKLIST_ITEM, DELETE_CHECKLIST_ITEM,
+} from './Checklist.Queries';
 import './Checklist.css';
-
 import ChecklistItem from '../ChecklistItem/ChecklistItem';
-
-const GET_CHECKLIST = gql`
-  query gettopics($id: ID!) {
-    topics(TopicId: $id) {
-      checklist {
-        id
-        title
-        completed
-      }
-    }
-  }
-`;
-
-const CREATE_CHECKLIST_ITEM = gql`
-  mutation createChecklistItem($TopicId: ID! $title: String!) {
-    createChecklistItem(TopicId: $TopicId, title: $title) {
-      id
-      title
-      completed
-    }
-  }
-`;
-
-const UPDATE_CHECKLIST_ITEM = gql`
-  mutation updateChecklistItem($id: ID! $title: String $completed: Boolean) {
-    updateChecklistItem(id: $id, title: $title, completed: $completed) {
-      id
-      title
-      completed
-    }
-  }
-`;
-
-const DELETE_CHECKLIST_ITEM = gql`
-  mutation deleteChecklistItem($id: ID!) {
-    deleteChecklistItem(id: $id)
-  }
-`;
+import { IChecklistItem } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface ChecklistProps {
   selectedTopicId: string
@@ -113,7 +76,7 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
 
   // creating the list
   const { checklist } = data.topics[0];
-  const checklistItems = checklist.map((checklistItem: any) => (
+  const checklistItems = checklist.map((checklistItem: IChecklistItem) => (
     <ChecklistItem
       key={checklistItem.id}
       checklistItem={checklistItem}
@@ -124,9 +87,9 @@ const Checklist: React.FC<ChecklistProps> = ({ selectedTopicId }) => {
   ));
 
   return (
-    <div className="checklist__wrapper">
+    <div className="checklist-wrapper">
       <h3>Checklist</h3>
-      <div className="add-checklist__item">
+      <div className="add-checklist-item">
         <input className="big-input" type="text" name="newChecklistItem" value={newChecklistItemInput} onChange={handleChange} />
         <button type="button" onClick={handleCreateChecklistItem}>
           <FontAwesomeIcon icon={faPlus} />

@@ -5,17 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import Topic from '../Topic/Topic';
 import './TopicsRow.css';
-
-interface IChecklistItem {
-  title: string,
-  completed: boolean,
-}
-
-interface ITopic {
-  id: string
-  rowNumber: number
-  title: string
-}
+import { ITopic } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface TopicsProps {
   isPreview: boolean,
@@ -45,13 +35,13 @@ const TopicsRow: React.SFC<TopicsProps> = ({
     return (
       <div className="topics-row-container">
         <button
-          className="add-topic__btn"
+          className="add-topic-btn"
           type="button"
           onClick={() => { handleAddTopic(rowNum); }}
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>
-        <p className="AT-label">Add Topic</p>
+        <p className="add-topic-label">Add Topic</p>
         <div className="topics-container">{arrTopics}</div>
       </div>
     );
