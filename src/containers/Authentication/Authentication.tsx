@@ -17,9 +17,11 @@ const Authentication: React.FC = () => {
     if (tab === 'login' && e.target === signUpRef.current) {
       setLoginSelected('');
       setTab('signUp');
+      setErrorMsg('');
     } else if (tab === 'signUp' && e.target === loginRef.current) {
       setLoginSelected('selected');
       setTab('login');
+      setErrorMsg('');
     }
   };
 
