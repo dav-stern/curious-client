@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactMde from 'react-mde';
 import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -20,6 +20,7 @@ interface ITopicDetailsProps {
 }
 
 const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
+  const node:any = useRef(null);
   const client = useApolloClient();
   // Get details of selected topic
   const { data, loading } = useQuery(GET_TOPIC_DETAILS, {
@@ -50,11 +51,29 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     },
   });
 
+  const handleOutsideClick = (e: MouseEvent) => {
+    const { target } = e;
+    // if user clicks on TopicDetails container nothing happens
+    if (node.current && node.current.contains(target)) {
+      return;
+    }
+    // if outside -> make TopicDetails container disappear
+    client.writeData({ data: { selectedTopicId: '' } });
+  };
+
+  useEffect(() => {
+    // add when mounted
+    document.addEventListener('mousedown', handleOutsideClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
   // If there is no selected Topic remove the details component
   if (!selectedTopicId) return null;
   if (loading) return <p>Loading...</p>;
   if (!data) return null;
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputClass = e.target.className;
     if (inputClass === 'topic-title') {
@@ -70,8 +89,9 @@ const TopicDetails: React.FC<ITopicDetailsProps> = ({ selectedTopicId }) => {
     client.writeData({ data: { selectedTopicId: '', selectedTopicTitle: '' } });
   };
 
+
   return (
-    <div className="topic-details-card">
+    <div className="topic-details-card" ref={node}>
       <form onSubmit={handleSubmit}>
         <div className="title-block block">
           <div className="title-block-wrapper">

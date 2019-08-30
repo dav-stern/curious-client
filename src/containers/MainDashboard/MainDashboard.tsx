@@ -24,7 +24,6 @@ const MainDashboard: React.FC = () => {
   // get userID from token
   const token: string | null = localStorage.getItem('token');
   const { id } = jwtDecode(token!);
-
   // fetching roadmaps from database
   const { loading, data, refetch } = useQuery(GET_ROADMAPS, {
     variables: { UserId: id },

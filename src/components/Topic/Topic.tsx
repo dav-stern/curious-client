@@ -24,6 +24,7 @@ const Topic: React.FC<TopicNodeProps> = ({
     client.writeData({ data: { selectedTopicId: topicId } });
   }
   const { data } = useQuery(gql`{ selectedTopicTitle, selectedTopicId }`);
+
   return (
     <div
       className={isPreview ? 'no-anim topic-container' : 'topic-container'}

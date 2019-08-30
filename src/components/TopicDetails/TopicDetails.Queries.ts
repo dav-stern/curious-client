@@ -19,6 +19,10 @@ const GET_TOPIC_DETAILS = gql`
   }
 `;
 
+const GET_TOPIC_ID = gql`{
+  selectedTopicId
+}`;
+
 // MUTATIONS
 const UPDATE_TOPIC = gql`
   mutation updateTopic($id: ID! $title: String, $description: String $resources: String $rowNumber: Int) {
@@ -32,4 +36,4 @@ const UPDATE_TOPIC = gql`
   }
 `;
 
-export { GET_TOPIC_DETAILS, UPDATE_TOPIC };
+export { GET_TOPIC_DETAILS, UPDATE_TOPIC, GET_TOPIC_ID };
