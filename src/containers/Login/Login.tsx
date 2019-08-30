@@ -30,7 +30,6 @@ const Login: React.SFC<LoginProps> = ({ errorMsg, setErrorMsg }) => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res: any = await login();
-    console.log(res);
     if (res.data.login) {
       localStorage.setItem('token', res.data.login);
       const { id, name, email } = res.data.login && jwtDecode(res.data.login);
