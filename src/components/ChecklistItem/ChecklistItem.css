@@ -1,10 +1,6 @@
-.checklist__item>div {
+.checklist-item>div {
   display: flex;
   width: 50%;
   align-items: center;
   justify-content: flex-start;
-}
-
-.checklist__item>div>* {
-  font-family: 'Comfortaa';
 }

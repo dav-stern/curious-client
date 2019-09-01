@@ -1,11 +1,7 @@
 import React from 'react';
-import './Linkbar.css';
+import './CategoryBar.css';
 import PropTypes from 'prop-types';
-
-interface ICategory {
-  id: number;
-  name: string;
-}
+import { ICategory } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface LinkBarProps {
   categories: ICategory[]

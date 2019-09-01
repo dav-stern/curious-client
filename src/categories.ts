@@ -1,4 +1,9 @@
-const categories = [
+interface ICategories {
+  id: number,
+  name: string
+}
+
+const categories: ICategories[] = [
   { id: 1, name: 'Music' },
   { id: 2, name: 'Development' },
   { id: 3, name: 'Sports' },

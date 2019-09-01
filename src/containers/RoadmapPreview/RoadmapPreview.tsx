@@ -1,12 +1,12 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom'; // eslint-disable-line
-import RoadmapTree from '../RoadmapTree/RoadmapTree';
+import RoadmapTree from '../TopicTree/TopicTree';
 
 import './RoadmapPreview.css';
 
-type TParams = { id: string };
+interface IRouteParams { id: string; }
 
-const RoadmapPreview = ({ match }: RouteComponentProps<TParams>) => {
+const RoadmapPreview = ({ match }: RouteComponentProps<IRouteParams>) => {
   const isPreview = window.location.pathname.includes('preview');
   return (
     <div className={isPreview ? 'roadmap-tree-container parent-preview' : 'roadmap-tree-container'}>

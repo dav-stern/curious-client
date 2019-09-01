@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import gql from 'graphql-tag';
 import {
   useQuery,
   useMutation,
@@ -10,50 +9,15 @@ import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  GET_TOPICS, CREATE_TOPIC, DELETE_TOPIC, COPY_ROADMAP,
+} from './TopicTree.Queries';
 import TopicsRow from '../../components/TopicsRow/TopicsRow';
-import './RoadmapTree.css';
-// Setup query to get all topics for the Roadmap
-const GET_TOPICS = gql`
-  query gettopics($id: ID!) {
-    topics(RoadmapId: $id) {
-      id
-      title
-      rowNumber
-    }
-}`;
-
-const CREATE_TOPIC = gql`
-  mutation createtopic($RoadmapId: ID!, $title: String!, $rowNumber: Int!) {
-    createTopic(RoadmapId: $RoadmapId, title: $title, rowNumber: $rowNumber) {
-      title
-      id
-    }
-}`;
-
-const DELETE_TOPIC = gql`
-  mutation deleteTopic($topicId: ID!) {
-    deleteTopic(id: $topicId)
-}`;
-
-const COPY_ROADMAP = gql`
-mutation copyRoadmap($id: ID!) {
-  copyRoadmap(id: $id)
-}
-`;
-
-interface ITopic {
-  id: string
-  title: string
-  rowNumber: number,
-}
+import './TopicTree.css';
+import { ITopic, IRowsData } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 
 interface RoadmapTreeProps {
   matchId: string,
-}
-
-interface IRowsData {
-  [keys: string]: ITopic[]
 }
 
 const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
@@ -72,7 +36,8 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
 
   const [createTopic] = useMutation(CREATE_TOPIC);
   const [deleteTopic] = useMutation(DELETE_TOPIC);
-  if (loading) return <p>Loading...</p>;
+
+  if (loading) return null;
 
   const rowsData = data.topics.reduce(
     (obj: IRowsData, topic: ITopic) => {
@@ -98,7 +63,6 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
       });
       // Get the id of the new topic and save it on cache: property "selectedTopic"
       client.writeData({ data: { selectedTopicId: data.createTopic.id } });
-      // TODO: synchronize the title field on topics details with title <p> on Topic component
       await refetch();
     } catch (err) {
       console.log('not possible to create new topic on this row!!'); // eslint-disable-line no-console
@@ -136,10 +100,10 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
   ));
   const buttonAddRow = dataLen > 0 && (
     <div className="flex-container">
-      <button className="add-row__btn" type="button" onClick={handleAddRow}>
+      <button className="add-row-btn" type="button" onClick={handleAddRow}>
         <FontAwesomeIcon icon={faPlus} />
       </button>
-      <p className="ARlabel">Add Row</p>
+      <p className="add-row-label">Add Row</p>
     </div>
   );
   return (
@@ -147,14 +111,14 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
       <div className={isPreview ? 'preview-pos' : 'preview-pos not-preview'}>
         {(isPreview)
           ? (
-            <div className="copy__container">
+            <div className="copy-container">
               <button
                 type="button"
                 onClick={() => { copyRoadmap().then(() => setFlag(true)); }}
-                className="copy__btn"
+                className="copy-btn"
               >
                 <FontAwesomeIcon className="copy-roadmap" icon={faCopy} />
-                <p className="copy__label">Copy Roadmap</p>
+                <p className="copy-label">Copy Roadmap</p>
               </button>
             </div>
           ) : null}
@@ -162,7 +126,7 @@ const RoadmapTree: React.SFC<RoadmapTreeProps> = ({ matchId }) => {
           {topicsRows}
         </div>
       </div>
-      {(!isPreview) ? <div className="AR__container">{buttonAddRow}</div> : null}
+      {(!isPreview) ? <div className="add-row-container">{buttonAddRow}</div> : null}
     </>
   );
 };
