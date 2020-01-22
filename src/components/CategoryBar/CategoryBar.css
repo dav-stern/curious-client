@@ -26,10 +26,16 @@
   color: #fff;
   font-weight: 900;
   text-decoration: none;
+  cursor: pointer;
 }
 
 #linkbar-category {
   color: #686f7a;
   font-size: 13px;
   font-weight: 300;
+}
+
+#linkbar-category.current,#linkbar-category.current:hover{
+  border-color:#F07B7B;
+  color:#F07B7B;
 }

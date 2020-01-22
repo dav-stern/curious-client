@@ -36,7 +36,7 @@ const Discover: React.FC = () => {
             </div>
           </label>
         </div>
-        <Linkbar categories={categories} handleClick={handleClick} />
+        <Linkbar categories={categories} handleClick={handleClick} currCategory={currCategory} />
         <RoadmapList
           searchInput={searchInput}
           currCategory={currCategory}

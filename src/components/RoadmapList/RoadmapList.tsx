@@ -105,5 +105,4 @@ RoadmapList.propTypes = {
   currCategory: PropTypes.string.isRequired,
 };
 
-
 export default RoadmapList;
