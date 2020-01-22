@@ -10,7 +10,7 @@
 
 #linkbar-container button {
   color: #fff;
-  border: 1px solid #201E45;
+  border: 3px solid #201E45;
   border-radius: 5px;
   background-color: #201E45;
   font-weight: 400;
@@ -19,7 +19,7 @@
   width: 140px;
   margin-right: 5px;
   margin-top: 20px;
-  padding: 20px;
+  padding: 17px;
 }
 
 #linkbar-container button:hover {
