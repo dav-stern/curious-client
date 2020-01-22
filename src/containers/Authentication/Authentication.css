@@ -111,3 +111,26 @@ form input:hover {
   }
 }
 
+@media(max-height:530px){
+  .authentication-container{
+    flex-direction: row;
+    
+  }
+
+  #auth-heading{
+    width:50vw;
+    padding:20px;
+    font-size:20px;
+  }
+  .form-wrapper{
+    width:50vw;
+    padding:20px
+  }
+  #login-form{
+    margin-top:10px;
+  }
+  #login-form input:not(last-of-type){
+    margin-bottom:10px;
+  }
+}
+
