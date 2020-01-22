@@ -11,7 +11,6 @@
 }
 
 .form-wrapper {
-  position: absolute;
   width: 400px;
   background-color: rgba(228, 228, 239, 0.575);
   border-left: 1px solid #E4E4EF;
@@ -73,13 +72,10 @@ form input:hover {
 
 #auth-heading {
   font-size: 30px;
-  padding-bottom: 20px;
-  align-self: flex-start;
-  padding-left: 120px;
+  padding-bottom: 20px;   
 }
 
 #auth-heading h2 {
-  padding-top: 16px;
   padding-left: 8px;
   font-size: 20px;
 }
@@ -93,17 +89,25 @@ form input:hover {
   background-color: #FFF;
 }
 
-@media screen and (max-width: 1500px) {
+@media (max-width:440px){
+  .form-wrapper{
+    width:90%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .auth-heading h2{
+    padding-top: 16px;
+  }
   .form-wrapper {
     display: block;
     margin: 0 auto;
   }
   #auth-heading {
-    font-size: 30px;
-    padding-bottom: 20px;
-    align-self: flex-start;
     padding-left: 160px;
     top: 110px;
+    left:0;
     position: absolute;
   }
 }
+
