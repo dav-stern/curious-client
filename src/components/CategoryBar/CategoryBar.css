@@ -20,22 +20,27 @@
   margin-right: 5px;
   margin-top: 20px;
   padding: 17px;
+  transition: all .3s;
+  cursor: pointer;
 }
 
-#linkbar-container button:hover {
+/* #linkbar-container button:hover {
   color: #fff;
   font-weight: 900;
   text-decoration: none;
-  cursor: pointer;
-}
+  
+} */
 
 #linkbar-category {
   color: #686f7a;
   font-size: 13px;
   font-weight: 300;
 }
+#linkbar-category:hover{
+  color:#F07B7B;
+}
 
-#linkbar-category.current,#linkbar-category.current:hover{
+#linkbar-category.current{
   border-color:#F07B7B;
   color:#F07B7B;
 }
