@@ -4,8 +4,6 @@ import './RoadmapList.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
-import GET_ROADMAPS from './RoadmapList.Queries';
 import { IUser } from '../../types/interfaces'; // eslint-disable-line no-unused-vars
 import categoryLib from './categoryLib';
 
@@ -18,54 +16,19 @@ interface IRoadmap {
 }
 
 interface RoadmapListProps {
-  searchInput: string;
-  currCategory: string;
+  data:any;
+  handleNext():any;
+  clientWriteSelectedRoadmapUID:any;
 }
 
-const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) => {
-  const client = useApolloClient();
+const RoadmapList: React.FC<RoadmapListProps> = ({
+  data, handleNext, clientWriteSelectedRoadmapUID,
+}) => {
   const [showButton, setShowButton] = useState(true);
   // fetching roadmaps from database
-  const {
-    data,
-    loading,
-    refetch,
-    fetchMore,
-  } = useQuery(GET_ROADMAPS);
 
-  // filter for clicked category only
-  const renderCategories = (clickedCat: string) => {
-    if (clickedCat === 'Popular') refetch({ category: '' });
-    else refetch({ category: clickedCat });
-  };
 
-  const renderSearchResults = () => {
-    if (currCategory === 'Popular' || currCategory === '') refetch({ title: searchInput });
-    else refetch({ title: searchInput, category: currCategory });
-  };
-
-  const handleNext = () => {
-    fetchMore({
-      variables: { offset: data.roadmaps.length },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
-        if (fetchMoreResult.length < 20) setShowButton(false);
-        return { ...prev, roadmaps: [...prev.roadmaps, ...fetchMoreResult.roadmaps] };
-      },
-    });
-  };
-
-  // on click render roadmaps of this category
-  useEffect(() => {
-    renderCategories(currCategory);
-  }, [currCategory]);
-
-  // render when user types in searchbar only
-  useEffect(() => {
-    renderSearchResults();
-  }, [searchInput]);
-
-  if (loading) return null;
+  if (!data) return null;
   if (data.roadmaps.length < 20 && showButton) setShowButton(false);
 
   const roadmaps = data && data.roadmaps.map((item: IRoadmap) => (
@@ -74,11 +37,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
       id="roadmaps"
       key={item.id}
       to={`/preview/${item.id}`}
-      onClick={() => client.writeData({
-        data: {
-          selectedRoadmapUID: item.UserId,
-        },
-      })}
+      onClick={() => clientWriteSelectedRoadmapUID(item.UserId)}
     >
       <div id="middle">
         <FontAwesomeIcon icon={categoryLib[item.category]} className="category-icon" />
@@ -100,9 +59,8 @@ const RoadmapList: React.FC<RoadmapListProps> = ({ searchInput, currCategory }) 
   );
 };
 
-RoadmapList.propTypes = {
-  searchInput: PropTypes.string.isRequired,
-  currCategory: PropTypes.string.isRequired,
-};
+// RoadmapList.propTypes = {
+//   data: PropTypes.object.isRequired,
+// };
 
 export default RoadmapList;
